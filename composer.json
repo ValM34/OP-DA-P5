@@ -1,0 +1,12 @@
+{
+    "name": "vmoreau/op-da-p5",
+    "autoload": {
+        "psr-4": {
+            "Vmoreau\\OpDaP5\\": "src/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.4",
+        "scssphp/scssphp": "^1.10"
+    }
+}
