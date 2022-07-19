@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../style/css/style.css"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
+		<title>
+			{% block title %}
+			blog
+			{% endblock %}
+		</title>
+	</head>
+
+	<body>
+		<header>
+			<div class="h-navlinks">
+					<a href="http://localhost/op-p5-blog/views/home.php" class="h-navlink title">Accueil</a>
+					<a href="http://localhost/op-p5-blog/views/blogpostlist.php" class="h-navlink title">Articles</a>
+					<a href="http://localhost/op-p5-blog/views/Admin-15645.php" class="h-navlink title">Admin</a>
+					<a href="http://localhost/op-p5-blog/views/connexion.php" class="h-navlink title">Connexion</a>
+					<a href="http://localhost/op-p5-blog/views/suscribe.php" class="h-navlink title">S'inscrire</a>
+			</div>
+		</header>
+		{% block mainContent %}{% endblock %}
+		<footer>footer</footer>
+
+		<script src="http://localhost/op-p5-blog/javascript/index.js"></script>
+	</body>
+
+</html>
