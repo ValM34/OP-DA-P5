@@ -25,5 +25,6 @@ Ca met une erreur je sais pas pourquoi
 
 
 $contact->sendEmail($dest, $sujet, $corp, $headers);
-header('Location: http://op-da-p5');
+$message = urlencode("Votre email a bien été envoyé");
+header('Location: http://op-da-p5?message='.$message);
 ?>

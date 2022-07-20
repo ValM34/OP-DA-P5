@@ -4,6 +4,13 @@
 {% endblock %}
 {% block mainContent %}
 	<section>
+		{% if message == true %}
+			<div class="validation-msg-container">
+				<b class="validation-msg">
+					{{message}}
+				</b>
+			</div>
+		{% endif %}
 		<h1>Valentin Moreau</h1>
 		<div class="flex-center"><img src="../images/photoValentin.jfif" class="img-valentin"/></div>
 		<h2>Valentin Moreau, le développeur qu'il vous faut !</h2>
@@ -12,12 +19,12 @@
 		<div>
 			<h2>Me contacter</h2>
 			<form class="flex-col-center" action="../app/Controllers/Contact.php" method="POST">
-				<label>Nom</label><input id="lastName" name="lastName" class="input-txt"/>
-				<label>Prénom</label><input id="name" name="name" class="input-txt"/>
-                <label>Email</label><input id="email" name="email" class="input-txt"/>
-				<label>Titre</label><input id="sujet" name="sujet" class="input-txt"/>
+				<label>Nom</label><input id="lastName" name="lastName" class="input-txt" required/>
+				<label>Prénom</label><input id="name" name="name" class="input-txt" required/>
+				<label>Email</label><input type="email" id="email" name="email" class="input-txt" required/>
+				<label>Titre</label><input id="sujet" name="sujet" class="input-txt" required/>
 				<label>Message</label>
-				<textarea id="corp" name="corp"></textarea>
+				<textarea id="corp" name="corp" required></textarea>
 				<button type="submit">Envoyer</button>
 			</form>
 		</div>

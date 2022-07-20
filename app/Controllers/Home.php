@@ -7,6 +7,10 @@ class Home
     public function displayHome()
     {
         include('../templates/configTwig.php');
-        $twig->display('home.twig');
+        $message = '';
+        if(isset($_GET['message'])){
+            $message = $_GET['message'];
+        }
+        $twig->display('home.twig', ['message' => $message]);
     }
 }

@@ -284,4 +284,16 @@ button:hover {
   height: 500px;
 }
 
+.validation-msg-container {
+  display: flex;
+  justify-content: center;
+}
+
+.validation-msg {
+  text-align: center;
+  padding: 15px 30px;
+  border: 2px solid green;
+  background-color: #b3ffb3;
+}
+
 /*# sourceMappingURL=style.css.map */
