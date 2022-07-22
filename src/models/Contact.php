@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Contact 
 {
     private $sujet;

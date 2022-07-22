@@ -2,9 +2,7 @@
     "name": "vmoreau/op-da-p5",
     "autoload": {
         "psr-4": {
-            "Vmoreau\\OpDaP5\\": "src/",
-            "Router\\": "routes/",
-            "App\\": "app/"
+            "Vmoreau\\OpDaP5\\": "src/"
         }
     },
     "require": {
