@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Tous les articles
+{% endblock %}
+{% block mainContent %}
+	<section class="blogPostsList">
+		<h1>Tous mes articles de blog</h1>
+
+		<div class="blogPostsList__container">
+			{% for post in postList %}
+				<div class="blogPostsList__container__sub">
+					<div class="thumbnail-blogPostsList">
+						<img class="thumbnail-small" src="../images/photoValentin.jfif"/>
+						<div>
+							<h3 class="thumbnail-blogPostsList__title">{{ post.title }}</h3>
+							<p class="thumbnail-blogPostsList__p">{{ post.updated_at }}</p>
+							<a class="thumbnail-blogPostsList__link" href="http://localhost/op-p5-blog/views/blogpost.php?id={{ post.id }}">En savoir plus</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+
+{% endblock %}

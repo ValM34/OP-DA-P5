@@ -4,6 +4,7 @@ namespace Router;
 
 use Controllers\Home;
 use Controllers\ContactController;
+use Controllers\ConnectDbController;
 
 class Router
 {
@@ -37,6 +38,10 @@ class Router
                 $home = new Home();
                 $home->displayHome();
                 echo 'autrre';
+                break;
+            case 'connectdb':
+                $connectDb = new ConnectDbController();
+                $connectDb->setDbConnexion();
                 break;
         }
         /*if ($data[0] === 'post') {

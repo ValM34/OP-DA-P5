@@ -6,7 +6,7 @@ class Home
 {
     public function displayHome()
     {
-        include('../templates/configTwig.php');
+        include('../src/templates/configTwig.php');
         $message = '';
         if(isset($_GET['message'])){
             $message = $_GET['message'];
