@@ -5,6 +5,8 @@ namespace Router;
 use Controllers\Home;
 use Controllers\ContactController;
 use Controllers\PostListController;
+use Controllers\Suscribe\SuscribeControllerRead;
+use Controllers\Suscribe\SuscribeControllerPost;
 
 class Router
 {
@@ -42,6 +44,14 @@ class Router
             case 'connectdb':
                 $connectDb = new PostListController();
                 $connectDb->setDbConnexion();
+                break;
+            case 'inscription':
+                $suscribe = new SuscribeControllerRead();
+                $suscribe->setSuscribePage();
+                break;
+            case 'inscription-valider':
+                $validateSuscribe = new SuscribeControllerPost();
+                $validateSuscribe->suscribe();
                 break;
         }
         /*if ($data[0] === 'post') {

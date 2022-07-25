@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	S'enregistrer
+{% endblock %}
+{% block mainContent %}
+	<section>
+		{% if suscribedSuccessfully == true %}
+			<div class="validation-msg-container">
+				<b class="validation-msg">
+					{{suscribedSuccessfully}}
+				</b>
+			</div>
+		{% endif %}
+        {% if suscribedFailed == true %}
+			<div class="error-msg-container">
+				<b class="error-msg">
+					{{suscribedFailed}}
+				</b>
+			</div>
+		{% endif %}
+		<h1>Inscription</h1>
+		<form class="flex-col-center" action="../../inscription-valider/5/create" method="POST">
+			<label for="name">Prénom</label><input class="input-txt" id="name" name="name" required/>
+			<label for="surname">Nom</label><input class="input-txt" id="surname" name="surname" required/>
+			<label for="email">Email</label><input class="input-txt" type="email" required id="email" name="email"/>
+			<label for="password">Mot de passe</label><input class="input-txt" type="password" required id="password" name="password"/>
+			<button type="submit">Valider</button>
+		</form>
+	</section>
+{% endblock %}

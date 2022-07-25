@@ -299,14 +299,21 @@ button:hover {
     height: 500px;
 }
 
-.validation-msg-container {
+.validation-msg-container, .error-msg-container {
     display: flex;
     justify-content: center;
 }
 
-.validation-msg {
+.error-msg, .validation-msg {
     text-align: center;
     padding: 15px 30px;
-    border: 2px solid $green;
+}
+
+.validation-msg {
+    border: 2px solid $green; 
     background-color: lighten($green, 60%);
+}
+.error-msg {
+    border: 2px solid $red;
+    background-color: lighten($red, 40%);
 }
