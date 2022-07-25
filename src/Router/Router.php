@@ -4,7 +4,7 @@ namespace Router;
 
 use Controllers\Home;
 use Controllers\ContactController;
-use Controllers\ConnectDbController;
+use Controllers\PostListController;
 
 class Router
 {
@@ -40,7 +40,7 @@ class Router
                 echo 'autrre';
                 break;
             case 'connectdb':
-                $connectDb = new ConnectDbController();
+                $connectDb = new PostListController();
                 $connectDb->setDbConnexion();
                 break;
         }

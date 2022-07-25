@@ -2,7 +2,6 @@
 
 namespace Models;
 
-echo 'je suis sur connect db';
 /*$host = 'localhost';
 $database = 'blogp5';
 $user = 'root';
@@ -96,4 +95,3 @@ class ConnectDb
 
     
 }
-echo '(models)';

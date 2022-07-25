@@ -4,8 +4,7 @@ namespace Controllers;
 
 use Models\ConnectDb;
 
-echo 'début controller';
-class ConnectDbController
+class PostListController
 {
     function setDbConnexion()
     {
@@ -21,27 +20,14 @@ class ConnectDbController
 
         try {
             $pdo = new \PDO($dataSourceName, $user, $password, $options);
-            echo 'Connecté à la bdd !';
             $getPostListQuery = 'SELECT * FROM blog_posts;';
             $getPostList = $pdo->prepare($getPostListQuery);
             $getPostList->execute();
             $fetchPostList = $getPostList->fetchAll();
-            echo var_dump($fetchPostList);
-            $allow_cache = false;
-            if ($allow_cache == true) {
-                $cache = ['cache' => __DIR__ . '/tmp'];
-            } else {
-                $cache = [];
-            }
-
-            $loader = new \Twig\Loader\FilesystemLoader(__DIR__);
-            $twig = new \Twig\Environment($loader, $cache);
-            echo __DIR__;
-            $template = $twig->load('templates/base.html.twig');
+            include_once(__DIR__ . '/../templates/configTwig.php');
             echo $twig->render('postList.twig', ['postList' => $fetchPostList]);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
         }
     }
 }
-echo 'fin controller';
