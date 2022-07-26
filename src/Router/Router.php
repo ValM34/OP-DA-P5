@@ -16,15 +16,19 @@ class Router
 
     public function __construct()
     {
+        // On enlève les '/' au début et à la fin de l'url (s'il y en a)
         $this->url = trim($_GET['url'], '/');
     }
 
     public function execute()
     {
         echo $this->url;
+        // On divise l'url dans un tableau $data en fonction de "/" 
+        // Exemple : post/ajouter => ['post', 'ajouter']
         $data = explode("/", $this->url);
         print_r($data);
         echo $data[2];
+        // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
         switch ($data[0]) {
             case 'post':
                 if ($data[2] === 'create') {
@@ -54,22 +58,12 @@ class Router
                 $validateSuscribe->suscribe();
                 break;
         }
-        /*if ($data[0] === 'post') {
-            $home = new Home();
-            if($data[2] === 'display') {
-                $home->displayHome();
-                echo $data[1];
-            } elseif ($data[2] === 'create'){
-                echo 'create';
-            }
-            // $home->displayHome();
-        }*/
     }
-
+    /*
     public function get(string $path, string $action)
     {
         $this->routes['GET'][] = new Route($path, $action);
-    }
+    }*/
     /*
     public function run()
     {

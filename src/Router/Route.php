@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace Router;
 
 class Route
@@ -34,4 +34,4 @@ class Route
 
         return isset($this->matches[1]) ? $controller->$method($this->matches[1]) : $controller->$method();
     }*/
-}
+//}
