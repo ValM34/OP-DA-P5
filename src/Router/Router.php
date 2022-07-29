@@ -27,23 +27,19 @@ class Router
         // Exemple : post/ajouter => ['post', 'ajouter']
         $data = explode("/", $this->url);
         print_r($data);
-        echo $data[2];
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
+        echo var_dump($data);
+        $nombreDeMots = count($data);
         switch ($data[0]) {
-            case 'post':
-                if ($data[2] === 'create') {
+            case 'accueil':
+                if (!isset($data[1])) {
                     $home = new Home();
-                    $home->displayHome();
-                    echo $data[1];
-                } elseif ($data[2] === 'Contact.php') {
+                    $nombreDeMots = count($data);
+                    $home->displayHome($nombreDeMots);
+                } elseif ($data[1] === 'contact') {
                     $container = new ContactController();
                     $container->displayContainer();
                 }
-                break;
-            case 'autre':
-                $home = new Home();
-                $home->displayHome();
-                echo 'autrre';
                 break;
             case 'connectdb':
                 $connectDb = new PostListController();
@@ -51,29 +47,12 @@ class Router
                 break;
             case 'inscription':
                 $suscribe = new SuscribeControllerRead();
-                $suscribe->setSuscribePage();
+                $suscribe->setSuscribePage($nombreDeMots);
                 break;
             case 'inscription-valider':
                 $validateSuscribe = new SuscribeControllerPost();
-                $validateSuscribe->suscribe();
+                $validateSuscribe->suscribe($nombreDeMots);
                 break;
         }
     }
-    /*
-    public function get(string $path, string $action)
-    {
-        $this->routes['GET'][] = new Route($path, $action);
-    }*/
-    /*
-    public function run()
-    {
-        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
-            if ($route->matches($this->url)) {
-                return $route->execute();
-            }
-        }
-
-        throw header('HTTP/1.0 404 Not Found');
-    }
-    */
 }

@@ -2,11 +2,15 @@
 
 namespace Controllers\Suscribe;
 
+use Router\PathToPublic;
+
 class SuscribeControllerRead
 {
-    public function setSuscribePage()
+    public function setSuscribePage($nombreDeMots)
     {
-        include_once(__DIR__ . '/../../templates/configTwig.php');
-        echo $twig->render('suscribe.twig');
+        include('../src/templates/configTwig.php');
+        $pathToPublic = new PathToPublic();
+        $path = $pathToPublic->link($nombreDeMots);
+        $twig->display('suscribe.twig', ['pathToPublic' => $path]);
     }
 }

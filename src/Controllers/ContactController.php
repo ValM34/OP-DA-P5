@@ -28,10 +28,10 @@ class ContactController
         
         $contact->sendEmail($dest, $sujet, $corp, $headers);
         $message = urlencode("Votre email a bien été envoyé");
-        header('Location: http://op-da-p5/public/post/5/create?message='.$message);
+        header('Location: http://op-da-p5/public/accueil?message='.$message);
     }
     
 }
-
+echo 'PAGE Contact';
 
 ?>

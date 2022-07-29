@@ -1,5 +1,8 @@
 RewriteEngine On
 
+#Si le chemin spécifié n'existe pas, alors la règle de réécriture pourra s'appliquer.
+#Sinon, c'est le fichier dont le chemin est spécifié qui est appelé.
 RewriteCond %{REQUEST_FILENAME} !-f
 
+#^(.*) redirige chaque requête vers index.php?url=$1
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
