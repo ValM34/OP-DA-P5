@@ -27,12 +27,8 @@ class SuscribeControllerPost
             ]);
             return;
         }
-        $user = new User();
-
-        $user->setName($_POST['name']);
-        $user->setSurname($_POST['surname']);
-        $user->setEmail($_POST['email']);
-        $user->setPassword($_POST['password']);
+        $user = $this->getUser();
+        
 
         $name = $user->getName();
         $surname = $user->getSurname();
@@ -84,5 +80,19 @@ class SuscribeControllerPost
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
         }
+    }
+    // Renvoie l'utilisateur
+    public function getUser()
+    {
+        $user = new User();
+
+        $user
+            ->setName($_POST['name'])
+            ->setSurname($_POST['surname'])
+            ->setEmail($_POST['email'])
+            ->setPassword($_POST['password'])
+        ;
+        
+        return $user;
     }
 }

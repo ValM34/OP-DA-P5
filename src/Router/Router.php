@@ -7,6 +7,7 @@ use Controllers\ContactController;
 use Controllers\PostListController;
 use Controllers\Suscribe\SuscribeControllerRead;
 use Controllers\Suscribe\SuscribeControllerPost;
+use Controllers\Connexion\ConnexionControllerRead;
 
 class Router
 {
@@ -53,6 +54,9 @@ class Router
                 $validateSuscribe = new SuscribeControllerPost();
                 $validateSuscribe->suscribe($nombreDeMots);
                 break;
+            case 'connexion':
+                $connexionRead = new ConnexionControllerRead();
+                $connexionRead->displayConnexionControllerRead($nombreDeMots);
         }
     }
 }

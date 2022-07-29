@@ -9,37 +9,45 @@ class User
     private $email;
     private $password;
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
-    public function getSurname()
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
-    public function setSurname($surname)
+    public function setSurname(?string $surname): self
     {
         $this->surname = $surname;
+
+        return $this;
     }
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
-    public function setPassword($password)
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 }
