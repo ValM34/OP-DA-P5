@@ -2,14 +2,14 @@
 
 namespace Router;
 
-class PathToPublic
+class Helpers
 {
 
-    public function link($nombreDeMots)
+    public function pathToPublic($numberOfPaths)
     {
         $link = '';
         $link2 = $link;
-        for ($i = 1; $i < $nombreDeMots; $i++) {
+        for ($i = 1; $i < $numberOfPaths; $i++) {
             $link2 = sprintf("%s%s", $link, '../');
             $link = $link2;
         }

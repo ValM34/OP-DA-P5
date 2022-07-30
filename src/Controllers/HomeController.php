@@ -2,16 +2,24 @@
 
 namespace Controllers;
 
-// include_once('../../models/Contact.php');
-
-
-
+use Router\Helpers;
 use Models\Contact;
 
-class ContactController
+class HomeController
 {
+    public function display($numberOfPaths)
+    {
+        include('../src/templates/configTwig.php');
+        $message = '';
+        if (isset($_GET['message'])) {
+            $message = $_GET['message'];
+        }
+        $pathToPublic = new Helpers();
+        $path = $pathToPublic->pathToPublic($numberOfPaths);
+        $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path]);
+    }
 
-    public function displayContainer()
+    public function sendMail()
     {
         $contact = new Contact ();
 
@@ -30,8 +38,4 @@ class ContactController
         $message = urlencode("Votre email a bien été envoyé");
         header('Location: http://op-da-p5/public/accueil?message='.$message);
     }
-    
 }
-echo 'PAGE Contact';
-
-?>

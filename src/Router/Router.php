@@ -2,18 +2,14 @@
 
 namespace Router;
 
-use Controllers\Home;
-use Controllers\ContactController;
+use Controllers\HomeController;
 use Controllers\PostListController;
-use Controllers\Suscribe\SuscribeControllerRead;
-use Controllers\Suscribe\SuscribeControllerPost;
-use Controllers\Connexion\ConnexionControllerRead;
+use Controllers\SubscribeController;
+use Controllers\ConnexionController;
 
 class Router
 {
-
     private $url;
-    private $routes = [];
 
     public function __construct()
     {
@@ -30,16 +26,15 @@ class Router
         print_r($data);
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
         echo var_dump($data);
-        $nombreDeMots = count($data);
+        $numberOfPaths = count($data);
         switch ($data[0]) {
             case 'accueil':
                 if (!isset($data[1])) {
-                    $home = new Home();
-                    $nombreDeMots = count($data);
-                    $home->displayHome($nombreDeMots);
+                    $home = new HomeController();
+                    $home->display($numberOfPaths);
                 } elseif ($data[1] === 'contact') {
-                    $container = new ContactController();
-                    $container->displayContainer();
+                    $home = new HomeController();
+                    $home->sendMail();
                 }
                 break;
             case 'connectdb':
@@ -47,16 +42,16 @@ class Router
                 $connectDb->setDbConnexion();
                 break;
             case 'inscription':
-                $suscribe = new SuscribeControllerRead();
-                $suscribe->setSuscribePage($nombreDeMots);
+                $suscribe = new SubscribeController();
+                $suscribe->display($numberOfPaths);
                 break;
             case 'inscription-valider':
-                $validateSuscribe = new SuscribeControllerPost();
-                $validateSuscribe->suscribe($nombreDeMots);
+                $validateSuscribe = new SubscribeController();
+                $validateSuscribe->suscribe($numberOfPaths);
                 break;
             case 'connexion':
-                $connexionRead = new ConnexionControllerRead();
-                $connexionRead->displayConnexionControllerRead($nombreDeMots);
+                $connexionRead = new ConnexionController();
+                $connexionRead->display($numberOfPaths);
         }
     }
 }
