@@ -27,6 +27,9 @@ class Router
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
         echo var_dump($data);
         $numberOfPaths = count($data);
+        // Je prépare ma variable qui me permet de créer mes liens dynamiques
+        $pathToPublic = new Helpers();
+        $path = $pathToPublic->pathToPublic($numberOfPaths);
         switch ($data[0]) {
             case 'accueil':
                 if (!isset($data[1])) {
@@ -37,10 +40,6 @@ class Router
                     $home->sendMail();
                 }
                 break;
-            case 'connectdb':
-                $connectDb = new PostListController();
-                $connectDb->setDbConnexion();
-                break;
             case 'inscription':
                 $suscribe = new SubscribeController();
                 $suscribe->display($numberOfPaths);
@@ -50,8 +49,32 @@ class Router
                 $validateSuscribe->suscribe($numberOfPaths);
                 break;
             case 'connexion':
-                $connexionRead = new ConnexionController();
-                $connexionRead->display($numberOfPaths);
+                /*if (!empty($_SESSION['logged'])) {
+                    header("location: " . $path . "accueil");
+                }*/
+                if (!isset($data[1])) {
+                    $connexion = new ConnexionController();
+                    $connexion->display($numberOfPaths);
+                } elseif ($data[1] === 'valider') {
+                    $connexion = new ConnexionController();
+                    $connexion->connexion();
+                    $connexion->display($numberOfPaths);
+                }
+                break;
+            case 'deconnexion':
+                if (empty($_SESSION['logged'])) {
+                    header("location: " . $path . "connexion");
+                }
+                if (!isset($data[1])) {
+                    $deconnexion = new ConnexionController();
+                    $deconnexion->deconnexion($numberOfPaths);
+                }
+            case 'touslesarticles':
+                if (!isset($data[1])) {
+                    $postList = new PostListController();
+                    $postList->display($numberOfPaths);
+                }
+                break;
         }
     }
 }

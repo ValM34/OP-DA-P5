@@ -6,7 +6,7 @@ use Models\ConnectDb;
 
 class PostListController
 {
-    function setDbConnexion()
+    function display()
     {
         $connectDb = new ConnectDb();
         $user = $connectDb->getUser();
@@ -25,7 +25,7 @@ class PostListController
             $getPostList->execute();
             $fetchPostList = $getPostList->fetchAll();
             include_once(__DIR__ . '/../templates/configTwig.php');
-            echo $twig->render('postList.twig', ['postList' => $fetchPostList]);
+            $twig->display('postList.twig', ['postList' => $fetchPostList]);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
         }
