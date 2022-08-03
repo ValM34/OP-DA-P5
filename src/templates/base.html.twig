@@ -18,11 +18,11 @@
 	<body>
 		<header>
 			<div class="h-navlinks">
-					<a href="http://op-da-p5/" class="h-navlink title">Accueil</a>
-					<a href="http://localhost/op-da-p5/views/blogpostlist.php" class="h-navlink title">Articles</a>
+					<a href="{{pathToPublic}}accueil" class="h-navlink title">Accueil</a>
+					<a href="{{pathToPublic}}touslesarticles" class="h-navlink title">Articles</a>
 					<a href="http://localhost/op-da-p5/views/Admin-15645.php" class="h-navlink title">Admin</a>
-					<a href="http://localhost/op-da-p5/views/connexion.php" class="h-navlink title">Connexion</a>
-					<a href="http://localhost/op-da-p5/views/suscribe.php" class="h-navlink title">S'inscrire</a>
+					<a href="{{pathToPublic}}connexion" class="h-navlink title">Connexion</a>
+					<a href="{{pathToPublic}}inscription" class="h-navlink title">S'inscrire</a>
 			</div>
 		</header>
 		{% block mainContent %}{% endblock %}
