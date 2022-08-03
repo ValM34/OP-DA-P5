@@ -60,18 +60,14 @@ class ConnexionController
                 $verifyHash = password_verify($password, $fetchUser[0]['password']);
 
                 if ($verifyHash !== true) {
-                    echo "c'est pas égal connexion refusée";
                     $_GET['message'] = "connexionFailed";
                     $_GET['errorMessage'] = "passwordError";
                 } else {
-                    echo 'Connexion acceptée !';
                     $_GET['message'] = 'loggedSuccessfully';
-                    // Ajouter le cookie pour connecter l'utilisateur --------------------------
                     $_SESSION['logged'] = 1;
                 }
             } else {
                 $_GET['message'] = "connexionFailed";
-                echo $_GET['message'];
                 $_GET['errorMessage'] = "emailError";
             }
         }
