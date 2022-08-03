@@ -6,6 +6,7 @@ use Controllers\HomeController;
 use Controllers\PostListController;
 use Controllers\SubscribeController;
 use Controllers\ConnexionController;
+use Controllers\PostController;
 
 class Router
 {
@@ -19,13 +20,10 @@ class Router
 
     public function execute()
     {
-        echo $this->url;
         // On divise l'url dans un tableau $data en fonction de "/" 
         // Exemple : post/ajouter => ['post', 'ajouter']
         $data = explode("/", $this->url);
-        print_r($data);
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
-        echo var_dump($data);
         $numberOfPaths = count($data);
         // Je prépare ma variable qui me permet de créer mes liens dynamiques
         $pathToPublic = new Helpers();
@@ -75,6 +73,15 @@ class Router
                     $postList->display($numberOfPaths);
                 }
                 break;
+            case 'post':
+                echo var_dump($data);
+                if(!isset($data[2])) {
+                    $post = new PostController();
+                    $post->display($numberOfPaths, $data[1]);
+                } elseif($data[2] === "add") {
+                    $post = new PostController();
+                    $post->add($numberOfPaths, $data[1]);
+                }
         }
     }
 }

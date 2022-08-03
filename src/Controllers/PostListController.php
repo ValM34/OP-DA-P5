@@ -3,10 +3,11 @@
 namespace Controllers;
 
 use Models\ConnectDb;
+use Router\Helpers;
 
 class PostListController
 {
-    function display()
+    function display($numberOfPaths)
     {
         $connectDb = new ConnectDb();
         $user = $connectDb->getUser();
@@ -24,8 +25,10 @@ class PostListController
             $getPostList = $pdo->prepare($getPostListQuery);
             $getPostList->execute();
             $fetchPostList = $getPostList->fetchAll();
+            $pathToPublic = new Helpers();
+            $path = $pathToPublic->pathToPublic($numberOfPaths);
             include_once(__DIR__ . '/../templates/configTwig.php');
-            $twig->display('postList.twig', ['postList' => $fetchPostList]);
+            $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path]);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
         }

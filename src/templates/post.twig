@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Titre de l'article de manière dynamique
+{% endblock %}
+{% block mainContent %}
+
+
+	<section class="blogPost-main">
+		<div class="blogPost-main__container">
+			<h1>{{post.title}}</h1>
+			<p>{{post.content}}</p>
+		</div>
+	</section>
+
+	<section class="blogPost-comment">
+		<div class="blogPost-comment__container">
+			{% if isLogged == true %}
+				<form class="blogPost-comment__form" action="{{pathToPublic}}post/{{post.id}}/add" method="POST">
+					<label for="content">Ajouter un commentaire</label>
+					<textarea class="blogPost-comment__form__textarea" id="content" name="content"></textarea>
+					<button type="submit">Envoyer</button>
+				</form>
+            {% elseif isLogged == false %}
+            <a href="../../public/accueil">Veuillez vous connecter pour pouvoir poster un commentaire</a>
+			{% endif %}
+		</div>
+	</section>
+
+	<section class="blogPost-comments">
+
+		{% for comment in comments %}
+
+
+			<div class="blogPost-comments__container">
+				<div>{{comment.name}}
+					{{comment.surname}}
+					-
+					{{comment.updated_at}}</div>
+				<p>{{comment.content}}</p>
+			</div>
+		{% endfor %}
+	</section>
+{% endblock %}
