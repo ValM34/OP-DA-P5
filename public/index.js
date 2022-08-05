@@ -1,2 +1,2 @@
-import {functionTest} from './js/adminPostList.js';
-functionTest();
+import {checkbox} from './js/adminPostList.js';
+checkbox();

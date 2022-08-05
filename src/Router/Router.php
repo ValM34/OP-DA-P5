@@ -87,6 +87,15 @@ class Router
                 if ($data[1] === 'touslesarticles') {
                     $adminPostList = new AdminPostListController();
                     $adminPostList->display($numberOfPaths);
+                } elseif ($data[1] === 'article' & $data[3] === 'masquer') {
+                    $adminHidePost = new AdminPostListController();
+                    $adminHidePost->hide($numberOfPaths, $data[2]);
+                } elseif ($data[1] === 'article' & $data[3] === 'publier') {
+                    $adminHidePost = new AdminPostListController();
+                    $adminHidePost->publish($numberOfPaths, $data[2]);
+                } elseif ($data[1] === 'article' & $data[3] === 'supprimer') {
+                    $adminHidePost = new AdminPostListController();
+                    $adminHidePost->delete($numberOfPaths, $data[2]);
                 }
         }
     }
