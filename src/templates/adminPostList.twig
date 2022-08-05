@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Tous les articles
+{% endblock %}
+{% block mainContent %}
+	<section>
+		<h1>Liste des articles</h1>
+		<div class="postListAdmin">
+			<div class="checkbox-all">
+				<input name="checkbox-all" id="checkbox-all" class="blogPostListAdminCheckbox" type="checkbox"/>
+				<label for="checkbox-all">Tout sélectionner</label>
+			</div>
+			{% for post in postList %}
+				{% if post.status == 'hidden' %}
+					<div class="postListAdmin__post">
+						<input class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost" />
+						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="../images/photoValentin.jfif"/></div>
+						<div class="postAdmin__container">
+							<div class="postAdmin__title">
+								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}">
+									<b>{{post.title}} (masqué)</b>
+								</a>
+							</div>
+							<div class="postAdmin__linkContainer">
+								<div class="postAdmin__link">
+									<a href="http://localhost/op-p5-blog/views/updateBlogPostAdmin.php?id={{ post.id }}">Modifier</a>
+								</div>
+								<div class="postAdmin__link">
+									<a href="http://localhost/op-p5-blog/controllers/updatePost/publishBlogPostAdmin.php?id={{ post.id }}">Publier l'article</a>
+								</div>
+								<div class="postAdmin__link">
+									<a href="#">Supprimer</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="postListAdmin__post">
+						<input class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost" />
+						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="../images/photoValentin.jfif"/></div>
+						<div class="postAdmin__container">
+							<div class="postAdmin__title">
+								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}">
+									<b>{{post.title}} - publié le {{post.created_at}}</b>
+								</a>
+							</div>
+							<div class="postAdmin__linkContainer">
+								<div class="postAdmin__link">
+									<a href="http://localhost/op-p5-blog/views/updateBlogPostAdmin.php?id={{ post.id }}">Modifier</a>
+								</div>
+								<div class="postAdmin__link">
+									<a href="http://localhost/op-p5-blog/controllers/updatePost/hideBlogPostAdmin.php?id={{ post.id }}">Masquer l'article</a>
+								</div>
+								<div class="postAdmin__link">
+									<a href="#">Supprimer</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</section>
+{% endblock %}

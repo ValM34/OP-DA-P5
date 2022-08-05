@@ -7,6 +7,7 @@ use Controllers\PostListController;
 use Controllers\SubscribeController;
 use Controllers\ConnexionController;
 use Controllers\PostController;
+use Controllers\AdminPostListController;
 
 class Router
 {
@@ -81,6 +82,11 @@ class Router
                 } elseif($data[2] === "add") {
                     $post = new PostController();
                     $post->add($numberOfPaths, $data[1]);
+                }
+            case 'admin-15645' :
+                if ($data[1] === 'touslesarticles') {
+                    $adminPostList = new AdminPostListController();
+                    $adminPostList->display($numberOfPaths);
                 }
         }
     }

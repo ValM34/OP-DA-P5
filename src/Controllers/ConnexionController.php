@@ -8,22 +8,16 @@ use Models\ConnectDb;
 
 class ConnexionController
 {
+    // Affiche le formulaire de connexion
     public function display($numberOfPaths)
     {
         include('../src/templates/configTwig.php');
-        $message = '';
-        $errorMessage = '';
-        if (isset($_GET['message'])) {
-            $message = $_GET['message'];
-        }
-        if (isset($_GET['errorMessage'])) {
-            $errorMessage = $_GET['errorMessage'];
-        }
         $pathToPublic = new Helpers();
         $path = $pathToPublic->pathToPublic($numberOfPaths);
         if (!empty($_SESSION['logged'])) {
             header("location: " . $path . "accueil");
         } else {
+            $errorMessage = isset($_GET['errorMessage']) ? $_GET['errorMessage'] : "";
             $twig->display('connexion.twig', ['message' => $message, 'errorMessage' => $errorMessage, 'pathToPublic' => $path]);
         }
     }
@@ -34,17 +28,21 @@ class ConnexionController
         $email = $user->getEmail();
         $password = $user->getPassword();
 
-        $connectDb = new ConnectDb();
-        $userDb = $connectDb->getUser();
-        $passwordDb = $connectDb->getPassword();
-        $options = $connectDb->getOptions();
-        $dataSourceName = $connectDb->getDataSourceName();
 
-        if (!$email || !$password) {
+
+        // L'utilisateur n'est pas défini
+        if (null === $email || null === $password) {
             echo 'erreur';
+        // L'utilisateur est défini
         } else {
+            $connectDb = new ConnectDb();
+            $userDb = $connectDb->getUser();
+            $passwordDb = $connectDb->getPassword();
+            $options = $connectDb->getOptions();
+            $dataSourceName = $connectDb->getDataSourceName();
+
             $pdo = new \PDO($dataSourceName, $userDb, $passwordDb, $options);
-            $getUserQuery = 'SELECT email, password, id FROM users WHERE email = :email;';
+            $getUserQuery = 'SELECT email, password, id, role FROM users WHERE email = :email;';
             $getUser = $pdo->prepare($getUserQuery);
             $getUser->execute([
                 'email' => $email
@@ -52,11 +50,9 @@ class ConnexionController
             $fetchUser = $getUser->fetchAll();
 
             if (isset($fetchUser[0]['id'])) {
-                $idUser = json_encode($fetchUser[0]['id']);
-
+                $idUser = $fetchUser[0]['id'];
                 $_SESSION['id'] = $idUser;
-                echo $idUser;
-
+                // $_SESSION['user']['id'] = $idUser;
                 $verifyHash = password_verify($password, $fetchUser[0]['password']);
 
                 if ($verifyHash !== true) {
@@ -64,7 +60,9 @@ class ConnexionController
                     $_GET['errorMessage'] = "passwordError";
                 } else {
                     $_GET['message'] = 'loggedSuccessfully';
+                    // Mettre true à la place de 1;
                     $_SESSION['logged'] = 1;
+                    $_SESSION['role'] = $fetchUser[0]['role'];
                 }
             } else {
                 $_GET['message'] = "connexionFailed";
