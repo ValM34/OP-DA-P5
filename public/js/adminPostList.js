@@ -1,5 +1,5 @@
 // check all checkbox or uncheck all
-export function functionTest(){
+export function checkbox(){
     let selectAllCheckbox = document.querySelectorAll('input[name="checkboxPost"]');
     let globalCheckbox = document.querySelector('#checkbox-all');
     console.log(selectAllCheckbox)

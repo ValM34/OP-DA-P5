@@ -18,18 +18,18 @@
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}">
-									<b>{{post.title}} (masqué)</b>
+									<b>{{post.title}} (masqué) - publié le {{post.created_at}}</b>
 								</a>
 							</div>
 							<div class="postAdmin__linkContainer">
 								<div class="postAdmin__link">
-									<a href="http://localhost/op-p5-blog/views/updateBlogPostAdmin.php?id={{ post.id }}">Modifier</a>
+									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/modifier">Modifier</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="http://localhost/op-p5-blog/controllers/updatePost/publishBlogPostAdmin.php?id={{ post.id }}">Publier l'article</a>
+									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/publier">Publier l'article</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="#">Supprimer</a>
+									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/supprimer">Supprimer</a>
 								</div>
 							</div>
 						</div>
@@ -46,13 +46,13 @@
 							</div>
 							<div class="postAdmin__linkContainer">
 								<div class="postAdmin__link">
-									<a href="http://localhost/op-p5-blog/views/updateBlogPostAdmin.php?id={{ post.id }}">Modifier</a>
+									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/modifier">Modifier</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="http://localhost/op-p5-blog/controllers/updatePost/hideBlogPostAdmin.php?id={{ post.id }}">Masquer l'article</a>
+									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/masquer">Masquer l'article</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="#">Supprimer</a>
+									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/supprimer">Supprimer</a>
 								</div>
 							</div>
 						</div>
