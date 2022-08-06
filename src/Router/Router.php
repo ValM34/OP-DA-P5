@@ -8,6 +8,7 @@ use Controllers\SubscribeController;
 use Controllers\ConnexionController;
 use Controllers\PostController;
 use Controllers\AdminPostListController;
+use Controllers\ErrorPageController;
 
 class Router
 {
@@ -37,15 +38,28 @@ class Router
                 } elseif ($data[1] === 'contact') {
                     $home = new HomeController();
                     $home->sendMail();
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
                 }
                 break;
             case 'inscription':
-                $suscribe = new SubscribeController();
-                $suscribe->display($numberOfPaths);
+                if (!isset($data[1])) {
+                    $suscribe = new SubscribeController();
+                    $suscribe->display($numberOfPaths);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
+                }
                 break;
             case 'inscription-valider':
-                $validateSuscribe = new SubscribeController();
-                $validateSuscribe->suscribe($numberOfPaths);
+                if (!isset($data[1])) {
+                    $validateSuscribe = new SubscribeController();
+                    $validateSuscribe->suscribe($numberOfPaths);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
+                }
                 break;
             case 'connexion':
                 /*if (!empty($_SESSION['logged'])) {
@@ -58,6 +72,9 @@ class Router
                     $connexion = new ConnexionController();
                     $connexion->connexion();
                     $connexion->display($numberOfPaths);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
                 }
                 break;
             case 'deconnexion':
@@ -67,11 +84,17 @@ class Router
                 if (!isset($data[1])) {
                     $deconnexion = new ConnexionController();
                     $deconnexion->deconnexion($numberOfPaths);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
                 }
             case 'touslesarticles':
                 if (!isset($data[1])) {
                     $postList = new PostListController();
                     $postList->display($numberOfPaths);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
                 }
                 break;
             case 'post':
@@ -82,6 +105,9 @@ class Router
                 } elseif ($data[2] === "add") {
                     $post = new PostController();
                     $post->add($numberOfPaths, $data[1]);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
                 }
             case 'admin-15645':
                 if ($data[1] === 'touslesarticles' & !isset($data[3])) {
@@ -106,11 +132,20 @@ class Router
                     } elseif ($data[1] === 'article' & $data[3] === 'modifier') {
                         $updatePost = new AdminPostListController();
                         $updatePost->updatePost($numberOfPaths, $data[2]);
+                    } else {
+                        $errorPage = new ErrorPageController();
+                        $errorPage->display($numberOfPaths);
                     }
                 } elseif ($data[1] === 'article' & $data[2] === 'ajouterunarticle') {
                     $addPostPage = new AdminPostListController();
                     $addPostPage->displayAddPostPage($numberOfPaths);
+                } else {
+                    $errorPage = new ErrorPageController();
+                    $errorPage->display($numberOfPaths);
                 }
+            default:
+                $errorPage = new ErrorPageController();
+                $errorPage->display($numberOfPaths);
         }
     }
 }
