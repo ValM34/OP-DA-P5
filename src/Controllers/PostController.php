@@ -7,7 +7,7 @@ use Router\Helpers;
 
 class PostController
 {
-    function display($numberOfPaths, $id_post)
+    function display($numberOfPaths, $id_post, $isLogged)
     {
         $connectDb = new ConnectDb();
         $user = $connectDb->getUser();
@@ -21,7 +21,6 @@ class PostController
             $getPost = $pdo->prepare($getPostQuery);
             $getPost->execute(['id' => $id_post]);
             $fetchPost = $getPost->fetchAll();
-
 
             $getCommentsQuery = '
                 SELECT J.id, J.id_post, J.id_user, J.content, J.created_at, J.updated_at, P.name, P.surname
@@ -37,12 +36,6 @@ class PostController
             ]);
             $fetchComments = $getComments->fetchAll();
 
-            // Je vérifie si la personne est connectée pour lui afficher un message ou un autre au niveau des commentaires 
-            $isLogged = false;
-            if(!empty($_SESSION['id'])){
-                $isLogged = true;
-            }
-            // -------------------------------------------------
             $pathToPublic = new Helpers();
             $path = $pathToPublic->pathToPublic($numberOfPaths);
             include_once(__DIR__ . '/../templates/configTwig.php');
@@ -50,14 +43,14 @@ class PostController
                 'post' => $fetchPost[0], 
                 'comments' => $fetchComments, 
                 'pathToPublic' => $path,
-                'isLogged' => $isLogged    
+                'isLogged' => $isLogged
             ]);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
         }
     }
 
-    function add($numberOfPaths, $id_post_owner)
+    function addComment($numberOfPaths, $id_post_owner)
     {
         $connectDb = new ConnectDb();
         $user = $connectDb->getUser();

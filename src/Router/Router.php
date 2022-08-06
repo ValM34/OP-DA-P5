@@ -27,6 +27,13 @@ class Router
         $data = explode("/", $this->url);
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
         $numberOfPaths = count($data);
+        $isLogged = 0;
+        if (isset($_SESSION['logged'])){
+            $isLogged = $_SESSION['logged'];
+            echo '<br>'.$isLogged;
+        }
+
+        
         // Je prépare ma variable qui me permet de créer mes liens dynamiques
         $pathToPublic = new Helpers();
         $path = $pathToPublic->pathToPublic($numberOfPaths);
@@ -34,22 +41,22 @@ class Router
             case 'accueil':
                 if (!isset($data[1])) {
                     $home = new HomeController();
-                    $home->display($numberOfPaths);
+                    $home->display($numberOfPaths, $isLogged);
                 } elseif ($data[1] === 'contact') {
                     $home = new HomeController();
                     $home->sendMail();
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
                 break;
             case 'inscription':
                 if (!isset($data[1])) {
                     $suscribe = new SubscribeController();
-                    $suscribe->display($numberOfPaths);
+                    $suscribe->display($numberOfPaths, $isLogged);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
                 break;
             case 'inscription-valider':
@@ -58,7 +65,7 @@ class Router
                     $validateSuscribe->suscribe($numberOfPaths);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
                 break;
             case 'connexion':
@@ -67,14 +74,14 @@ class Router
                 }*/
                 if (!isset($data[1])) {
                     $connexion = new ConnexionController();
-                    $connexion->display($numberOfPaths);
+                    $connexion->display($numberOfPaths, $isLogged);
                 } elseif ($data[1] === 'valider') {
                     $connexion = new ConnexionController();
                     $connexion->connexion();
-                    $connexion->display($numberOfPaths);
+                    $connexion->display($numberOfPaths, $isLogged);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
                 break;
             case 'deconnexion':
@@ -86,33 +93,33 @@ class Router
                     $deconnexion->deconnexion($numberOfPaths);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
             case 'touslesarticles':
                 if (!isset($data[1])) {
                     $postList = new PostListController();
-                    $postList->display($numberOfPaths);
+                    $postList->display($numberOfPaths, $isLogged);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
                 break;
             case 'post':
-                echo var_dump($data);
                 if (!isset($data[2])) {
                     $post = new PostController();
-                    $post->display($numberOfPaths, $data[1]);
+                    $post->display($numberOfPaths, $data[1], $isLogged);
                 } elseif ($data[2] === "add") {
                     $post = new PostController();
-                    $post->add($numberOfPaths, $data[1]);
+                    $post->addComment($numberOfPaths, $data[1], $isLogged);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
+                break;
             case 'admin-15645':
                 if ($data[1] === 'touslesarticles' & !isset($data[3])) {
                     $adminPostList = new AdminPostListController();
-                    $adminPostList->display($numberOfPaths);
+                    $adminPostList->display($numberOfPaths, $isLogged);
                 } elseif (isset($data[3])) {
                     if ($data[1] === 'article' & $data[3] === 'masquer') {
                         $adminHidePost = new AdminPostListController();
@@ -128,24 +135,25 @@ class Router
                         $addPost->addPost($numberOfPaths);
                     } elseif ($data[1] === 'article' & $data[3] === 'afficher') {
                         $updatePost = new AdminPostListController();
-                        $updatePost->displayUpdatePostPage($numberOfPaths, $data[2]);
+                        $updatePost->displayUpdatePostPage($numberOfPaths, $data[2], $isLogged);
                     } elseif ($data[1] === 'article' & $data[3] === 'modifier') {
                         $updatePost = new AdminPostListController();
                         $updatePost->updatePost($numberOfPaths, $data[2]);
                     } else {
                         $errorPage = new ErrorPageController();
-                        $errorPage->display($numberOfPaths);
+                        $errorPage->display($numberOfPaths, $isLogged);
                     }
                 } elseif ($data[1] === 'article' & $data[2] === 'ajouterunarticle') {
                     $addPostPage = new AdminPostListController();
-                    $addPostPage->displayAddPostPage($numberOfPaths);
+                    $addPostPage->displayAddPostPage($numberOfPaths, $isLogged);
                 } else {
                     $errorPage = new ErrorPageController();
-                    $errorPage->display($numberOfPaths);
+                    $errorPage->display($numberOfPaths, $isLogged);
                 }
+                break;
             default:
                 $errorPage = new ErrorPageController();
-                $errorPage->display($numberOfPaths);
+                $errorPage->display($numberOfPaths, $isLogged);
         }
     }
 }

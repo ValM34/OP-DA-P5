@@ -16,4 +16,9 @@ class Helpers
         // $link = $link2;
         return $link;
     }
+
+    public function isLogged()
+    {
+        
+    }
 }

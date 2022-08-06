@@ -7,7 +7,7 @@ use Models\ConnectDb;
 
 class AdminPostListController
 {
-    function display($numberOfPaths)
+    function display($numberOfPaths, $isLogged)
     {
         // Ici je vais afficher la liste de posts
         // Un bouton pour supprimer et un bouton pour dépublier les articles
@@ -33,9 +33,9 @@ class AdminPostListController
             $path = $pathToPublic->pathToPublic($numberOfPaths);
             include_once(__DIR__ . '/../templates/configTwig.php');
             if (isset($_SESSION['logged'])) {
-                $_SESSION['role'] === 'admin' ? $this->isAdmin($twig, $fetchPostList, $path, 'adminPostList.twig') : $this->isUser($twig, $path, 'home.twig');
+                $_SESSION['role'] === 'admin' ? $this->isAdmin($twig, $fetchPostList, $path, 'adminPostList.twig', $isLogged) : $this->isUser($twig, $path, $isLogged);
             } else {
-                $this->isUser($twig, $path, 'home.twig');
+                $this->isUser($twig, $path, $isLogged);
             }
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
@@ -124,15 +124,15 @@ class AdminPostListController
         }
     }
 
-    function displayAddPostPage($numberOfPaths)
+    function displayAddPostPage($numberOfPaths, $isLogged)
     {
         $pathToPublic = new Helpers();
         $path = $pathToPublic->pathToPublic($numberOfPaths);
         include_once(__DIR__ . '/../templates/configTwig.php');
         if (isset($_SESSION['logged'])) {
-            $_SESSION['role'] === 'admin' ? $this->isAdmin($twig, null, $path, 'adminAddPost.twig') : $this->isUser($twig, $path, 'home.twig');
+            $_SESSION['role'] === 'admin' ? $this->isAdmin($twig, null, $path, 'adminAddPost.twig', $isLogged) : $this->isUser($twig, $path, $isLogged);
         } else {
-            $this->isUser($twig, $path, 'home.twig');
+            $this->isUser($twig, $path, $isLogged);
         }
     }
 
@@ -173,7 +173,7 @@ class AdminPostListController
         }
     }
 
-    function displayUpdatePostPage($numberOfPaths, $id_post)
+    function displayUpdatePostPage($numberOfPaths, $id_post, $isLogged)
     {
         $connectDb = new ConnectDb();
         $user = $connectDb->getUser();
@@ -194,7 +194,7 @@ class AdminPostListController
             include_once(__DIR__ . '/../templates/configTwig.php');
 
             if (isset($_SESSION['role'])) {
-                $_SESSION['role'] === 'admin' ? $this->isAdmin($twig, $fetchPost[0], $path, 'adminUpdatePostPage.twig') : $this->isUser($twig, $path, 'home.twig');
+                $_SESSION['role'] === 'admin' ? $this->isAdmin($twig, $fetchPost[0], $path, 'adminUpdatePostPage.twig', $isLogged) : $this->isUser($twig, $path, $isLogged);
             }
 
         } catch (\PDOException $e) {
@@ -241,16 +241,16 @@ class AdminPostListController
         }
     }
 
-    function isAdmin($twig, $fetchPostList, $path, $twigPage)
+    function isAdmin($twig, $fetchPostList, $path, $twigPage, $isLogged)
     {
         if (null === $fetchPostList) {
-            $twig->display($twigPage, ['pathToPublic' => $path]);
+            $twig->display($twigPage, ['pathToPublic' => $path, 'isLogged' => $isLogged]);
         } else {
-            $twig->display($twigPage, ['postList' => $fetchPostList, 'pathToPublic' => $path]);
+            $twig->display($twigPage, ['postList' => $fetchPostList, 'pathToPublic' => $path, 'isLogged' => $isLogged]);
         }
     }
-    function isUser($twig, $path, $twigPage)
+    function isUser($twig, $path, $isLogged)
     {
-        $twig->display('home.twig', ['pathToPublic' => $path]);
+        $twig->display('home.twig', ['pathToPublic' => $path, 'isLogged' => $isLogged]);
     }
 }

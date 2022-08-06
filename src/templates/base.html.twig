@@ -23,6 +23,7 @@
 					<a href="http://localhost/op-da-p5/views/Admin-15645.php" class="h-navlink title">Admin</a>
 					<a href="{{pathToPublic}}connexion" class="h-navlink title">Connexion</a>
 					<a href="{{pathToPublic}}inscription" class="h-navlink title">S'inscrire</a>
+					{% if isLogged == 1 %}<a href="{{pathToPublic}}deconnexion" class="h-navlink title">Déconnexion</a>{% endif %}
 			</div>
 		</header>
 		{% block mainContent %}{% endblock %}

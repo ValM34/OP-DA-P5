@@ -8,12 +8,16 @@ use Router\Helpers;
 
 class SubscribeController
 {
-    public function display($numberOfPaths)
+    public function display($numberOfPaths, $isLogged)
     {
         include('../src/templates/configTwig.php');
         $pathToPublic = new Helpers();
         $path = $pathToPublic->pathToPublic($numberOfPaths);
-        $twig->display('subscribe.twig', ['pathToPublic' => $path]);
+        if(1 === $isLogged) {
+            $twig->display('subscribe.twig', ['pathToPublic' => $path, 'isLogged' => $isLogged]);
+        } else {
+            $twig->display('subscribe.twig', ['pathToPublic' => $path]);
+        }
     }
     public function suscribe($numberOfPaths)
     {
