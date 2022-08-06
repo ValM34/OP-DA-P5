@@ -7,7 +7,7 @@ use Router\Helpers;
 
 class PostListController
 {
-    function display($numberOfPaths)
+    function display($numberOfPaths, $isLogged)
     {
         $connectDb = new ConnectDb();
         $user = $connectDb->getUser();
@@ -28,7 +28,12 @@ class PostListController
             $pathToPublic = new Helpers();
             $path = $pathToPublic->pathToPublic($numberOfPaths);
             include_once(__DIR__ . '/../templates/configTwig.php');
-            $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path]);
+            if(1 === $isLogged) {
+                $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path, 'isLogged' => $isLogged]);
+            } else {
+                $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path]);
+            }
+            
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), $e->getCode());
         }

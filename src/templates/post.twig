@@ -21,7 +21,7 @@
 					<button type="submit">Envoyer</button>
 				</form>
             {% elseif isLogged == false %}
-            <a href="../../public/accueil">Veuillez vous connecter pour pouvoir poster un commentaire</a>
+            <a href="{{pathToPublic}}connexion">Veuillez vous connecter pour pouvoir poster un commentaire</a>
 			{% endif %}
 		</div>
 	</section>

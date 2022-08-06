@@ -9,7 +9,7 @@ use Models\ConnectDb;
 class ConnexionController
 {
     // Affiche le formulaire de connexion
-    public function display($numberOfPaths)
+    public function display($numberOfPaths, $isLogged)
     {
         include('../src/templates/configTwig.php');
         $pathToPublic = new Helpers();
@@ -18,7 +18,11 @@ class ConnexionController
             header("location: " . $path . "accueil");
         } else {
             $errorMessage = isset($_GET['errorMessage']) ? $_GET['errorMessage'] : "";
-            $twig->display('connexion.twig', ['message' => $message, 'errorMessage' => $errorMessage, 'pathToPublic' => $path]);
+            if(1 === $isLogged) {
+                $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $path, 'isLogged' => $isLogged]);
+            } else {
+                $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $path, 'isLogged' => $isLogged]);
+            }
         }
     }
 

@@ -7,7 +7,7 @@ use Models\Contact;
 
 class HomeController
 {
-    public function display($numberOfPaths)
+    public function display($numberOfPaths, $isLogged)
     {
         include('../src/templates/configTwig.php');
         $message = '';
@@ -16,7 +16,17 @@ class HomeController
         }
         $pathToPublic = new Helpers();
         $path = $pathToPublic->pathToPublic($numberOfPaths);
-        $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path]);
+        // $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path]);
+        if(1 === $isLogged) {
+            $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path, 'isLogged' => $isLogged]);
+        } else {
+            $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path]);
+        }
+        
+        
+
+
+
     }
 
     public function sendMail()
