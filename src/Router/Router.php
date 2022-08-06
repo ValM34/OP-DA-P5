@@ -76,26 +76,40 @@ class Router
                 break;
             case 'post':
                 echo var_dump($data);
-                if(!isset($data[2])) {
+                if (!isset($data[2])) {
                     $post = new PostController();
                     $post->display($numberOfPaths, $data[1]);
-                } elseif($data[2] === "add") {
+                } elseif ($data[2] === "add") {
                     $post = new PostController();
                     $post->add($numberOfPaths, $data[1]);
                 }
-            case 'admin-15645' :
-                if ($data[1] === 'touslesarticles') {
+            case 'admin-15645':
+                if ($data[1] === 'touslesarticles' & !isset($data[3])) {
                     $adminPostList = new AdminPostListController();
                     $adminPostList->display($numberOfPaths);
-                } elseif ($data[1] === 'article' & $data[3] === 'masquer') {
-                    $adminHidePost = new AdminPostListController();
-                    $adminHidePost->hide($numberOfPaths, $data[2]);
-                } elseif ($data[1] === 'article' & $data[3] === 'publier') {
-                    $adminHidePost = new AdminPostListController();
-                    $adminHidePost->publish($numberOfPaths, $data[2]);
-                } elseif ($data[1] === 'article' & $data[3] === 'supprimer') {
-                    $adminHidePost = new AdminPostListController();
-                    $adminHidePost->delete($numberOfPaths, $data[2]);
+                } elseif (isset($data[3])) {
+                    if ($data[1] === 'article' & $data[3] === 'masquer') {
+                        $adminHidePost = new AdminPostListController();
+                        $adminHidePost->hide($numberOfPaths, $data[2]);
+                    } elseif ($data[1] === 'article' & $data[3] === 'publier') {
+                        $adminHidePost = new AdminPostListController();
+                        $adminHidePost->publish($numberOfPaths, $data[2]);
+                    } elseif ($data[1] === 'article' & $data[3] === 'supprimer') {
+                        $adminHidePost = new AdminPostListController();
+                        $adminHidePost->delete($numberOfPaths, $data[2]);
+                    } elseif ($data[1] === 'article' & $data[3] === 'envoyer') {
+                        $addPost = new AdminPostListController();
+                        $addPost->addPost($numberOfPaths);
+                    } elseif ($data[1] === 'article' & $data[3] === 'afficher') {
+                        $updatePost = new AdminPostListController();
+                        $updatePost->displayUpdatePostPage($numberOfPaths, $data[2]);
+                    } elseif ($data[1] === 'article' & $data[3] === 'modifier') {
+                        $updatePost = new AdminPostListController();
+                        $updatePost->updatePost($numberOfPaths, $data[2]);
+                    }
+                } elseif ($data[1] === 'article' & $data[2] === 'ajouterunarticle') {
+                    $addPostPage = new AdminPostListController();
+                    $addPostPage->displayAddPostPage($numberOfPaths);
                 }
         }
     }

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Modifier un article
+{% endblock %}
+{% block mainContent %}
+<section>
+        <h1>Modifier un article</h1>
+        <div class="container-col-center">
+            <form action="{{pathToPublic}}admin-15645/article/{{postList.id}}/modifier" method="POST" class="col-center">
+                <div>
+                    <label for="title">Titre de l'article</label>
+                    <textarea name="title" id="title" class="postTitle-textarea">{{ postList.title }}</textarea>
+                </div>
+                <div>
+                    <label for="content">Contenu de l'article</label>
+                    <textarea name="content" id="content" class="postContent-textarea">{{ postList.content }}</textarea>
+                </div>
+                <div>
+                    <button type="submit">Valider</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
