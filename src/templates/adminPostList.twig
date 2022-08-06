@@ -10,6 +10,7 @@
 				<input name="checkbox-all" id="checkbox-all" class="blogPostListAdminCheckbox" type="checkbox"/>
 				<label for="checkbox-all">Tout sélectionner</label>
 			</div>
+            <a href="{{pathToPublic}}admin-15645/article/ajouterunarticle">Ajouter un article</a>
 			{% for post in postList %}
 				{% if post.status == 'hidden' %}
 					<div class="postListAdmin__post">
@@ -17,7 +18,7 @@
 						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="../images/photoValentin.jfif"/></div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
-								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}">
+								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}/afficher">
 									<b>{{post.title}} (masqué) - publié le {{post.created_at}}</b>
 								</a>
 							</div>
@@ -40,7 +41,7 @@
 						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="../images/photoValentin.jfif"/></div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
-								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}">
+								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}/afficher">
 									<b>{{post.title}} - publié le {{post.created_at}}</b>
 								</a>
 							</div>
