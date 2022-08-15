@@ -6,10 +6,14 @@ Modifier un article
 <section>
         <h1>Modifier un article</h1>
         <div class="container-col-center">
-            <form action="{{pathToPublic}}admin-15645/article/{{postList.id}}/modifier" method="POST" class="col-center">
+            <form action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" class="col-center">
                 <div>
                     <label for="title">Titre de l'article</label>
                     <textarea name="title" id="title" class="postTitle-textarea">{{ postList.title }}</textarea>
+                </div>
+                <div>
+                    <label for="chapo">Chapô</label>
+                    <textarea name="chapo" id="chapo" class="chapo-textarea">{{ postList.chapo }}</textarea>
                 </div>
                 <div>
                     <label for="content">Contenu de l'article</label>

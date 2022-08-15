@@ -9,51 +9,66 @@
 			<div class="checkbox-all">
 				<input name="checkbox-all" id="checkbox-all" class="blogPostListAdminCheckbox" type="checkbox"/>
 				<label for="checkbox-all">Tout sélectionner</label>
+				<div class="postAdmin__linkContainer">
+					<div class="postAdmin__link">
+						<a id="publishSelected" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Publier les articles séléctionnés</a>
+					</div>
+					<div class="postAdmin__link">
+						<a id="hideSelected" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Masquer les articles séléctionnés</a>
+					</div>
+					<div class="postAdmin__link">
+						<a id="deleteAll" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer les articles séléctionnés</a>
+					</div>
+				</div>
 			</div>
-            <a href="{{pathToPublic}}admin-15645/article/ajouterunarticle">Ajouter un article</a>
+			<a href="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle">Ajouter un article</a>
 			{% for post in postList %}
 				{% if post.status == 'hidden' %}
 					<div class="postListAdmin__post">
-						<input class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost" />
-						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="../images/photoValentin.jfif"/></div>
+						<input id="checkbox-{{post.id}}" class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost"/>
+						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}images/photoValentin.jfif"/></div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
-								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}/afficher">
-									<b>{{post.title}} (masqué) - publié le {{post.created_at}}</b>
+								<a href="{{pathToPublic}}{{adminLink}}/article/{{post.id}}/afficher">
+									<b>{{post.title}}
+										(masqué) - publié le
+										{{post.created_at}}</b>
 								</a>
 							</div>
 							<div class="postAdmin__linkContainer">
 								<div class="postAdmin__link">
-									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/afficher">Modifier</a>
+									<a id="update-{{post.id}}" class="update" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/afficher">Modifier</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/publier">Publier l'article</a>
+									<a id="publish-{{post.id}}" class="publish" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Publier l'article</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/supprimer">Supprimer</a>
+									<a id="delete-{{post.id}}" class="delete" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				{% else %}
 					<div class="postListAdmin__post">
-						<input class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost" />
-						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="../images/photoValentin.jfif"/></div>
+						<input id="checkbox-{{post.id}}" class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost"/>
+						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}images/photoValentin.jfif"/></div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
-								<a href="{{pathToPublic}}admin-15645/article/{{post.id}}/afficher">
-									<b>{{post.title}} - publié le {{post.created_at}}</b>
+								<a href="{{pathToPublic}}{{adminLink}}/article/{{post.id}}/afficher">
+									<b>{{post.title}}
+										- publié le
+										{{post.created_at}}</b>
 								</a>
 							</div>
 							<div class="postAdmin__linkContainer">
 								<div class="postAdmin__link">
-									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/afficher">Modifier</a>
+									<a id="update-{{post.id}}" class="update" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/afficher">Modifier</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/masquer">Masquer l'article</a>
+									<a id="publish-{{post.id}}" class="publish" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/masquer">Masquer l'article</a>
 								</div>
 								<div class="postAdmin__link">
-									<a href="{{pathToPublic}}admin-15645/article/{{ post.id }}/supprimer">Supprimer</a>
+									<a id="delete-{{post.id}}" class="delete" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer</a>
 								</div>
 							</div>
 						</div>
@@ -63,3 +78,5 @@
 		</div>
 	</section>
 {% endblock %}
+
+{% block scriptJs %}<script type="module" src="{{pathToPublic}}index.js"></script>{% endblock %}

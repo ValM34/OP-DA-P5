@@ -6,10 +6,14 @@
 	<section>
         <h1>Ajouter un article</h1>
         <div class="container-col-center">
-            <form action="{{pathToPublic}}admin-15645/article/ajouterunarticle/envoyer" method="POST" class="col-center">
+            <form action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" class="col-center">
                 <div>
                     <label for="postTitle">Titre de l'article</label>
                     <textarea name="postTitle" id="postTitle" class="postTitle-textarea"></textarea>
+                </div>
+                <div>
+                    <label for="postChapo">Chapô</label>
+                    <textarea name="postChapo" id="postChapo" class="postChapo-textarea"></textarea>
                 </div>
                 <div>
                     <label for="postContent">Contenu de l'article</label>

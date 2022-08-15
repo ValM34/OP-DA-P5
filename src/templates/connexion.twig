@@ -4,13 +4,6 @@
 {% endblock %}
 {% block mainContent %}
 	<section>
-		{% if 1 is same as(isLogged) %}
-			<div class="validation-msg-container">
-				<b class="validation-msg">
-					Connexion réussie
-				</b>
-			</div>
-		{% endif %}
 		{% if errorMessage is same as("emailError") or errorMessage is same as("passwordError") %}
 			<div class="error-msg-container">
 				<b class="error-msg">
@@ -21,8 +14,8 @@
 		{% endif %}
 		<h1>Connexion</h1>
 		<form class="flex-col-center" action="{{pathToPublic}}connexion/valider" method="POST">
-			<label for="email">Email</label><input class="input-txt" id="email" name="email" type="email" required/>
-			<label for="password">Mot de passe</label><input class="input-txt" id="password" name="password" type="password" required/>
+			<label for="email">Email</label><input class="input-txt" id="email" name="email" type="email" />
+			<label for="password">Mot de passe</label><input class="input-txt" id="password" name="password" type="password" />
 			<button type="submit">Envoyer</button>
 		</form>
 	</section>

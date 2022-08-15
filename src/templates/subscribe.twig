@@ -19,11 +19,11 @@
 			</div>
 		{% endif %}
 		<h1>Inscription</h1>
-		<form class="flex-col-center" action="{{pathToPublic}}inscription-valider/5/create" method="POST">
-			<label for="name">Prénom</label><input class="input-txt" id="name" name="name" required/>
-			<label for="surname">Nom</label><input class="input-txt" id="surname" name="surname" required/>
-			<label for="email">Email</label><input class="input-txt" type="email" required id="email" name="email"/>
-			<label for="password">Mot de passe</label><input class="input-txt" type="password" required id="password" name="password"/>
+		<form class="flex-col-center" action="{{pathToPublic}}inscription-valider" method="POST">
+			<label for="name">Prénom</label><input class="input-txt" id="name" name="name" />
+			<label for="surname">Nom</label><input class="input-txt" id="surname" name="surname" />
+			<label for="email">Email</label><input class="input-txt" type="email" id="email" name="email"/>
+			<label for="password">Mot de passe</label><input class="input-txt" type="password" id="password" name="password"/>
 			<button type="submit">Valider</button>
 		</form>
 	</section>
