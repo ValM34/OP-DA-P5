@@ -11,7 +11,7 @@
 				{% if post.status is same as('published') %}
 					<div class="blogPostsList__container__sub">
 						<div class="thumbnail-blogPostsList">
-							<img class="thumbnail-small" src="{{pathToPublic}}images/photoValentin.jfif"/>
+							<img class="thumbnail-small" src="{{pathToPublic}}{{post.img_src}}"/>
 							<div>
 								<h3 class="thumbnail-blogPostsList__title">{{ post.title }}</h3>
 								<b class="thumbnail-blogPostsList__p">{{post.chapo}}</b>
