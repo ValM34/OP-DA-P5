@@ -64,18 +64,20 @@ class AdminPostController
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
 
-        if (isset($_SESSION['user']['role'])) {
-            if ($_SESSION['user']['role'] === 'admin') {
-                $hidePostQuery = 'DELETE FROM blog_posts WHERE id = :id;';
-                $hidePost = $this->pdo->prepare($hidePostQuery);
-                $hidePost->execute(['id' => $id_post]);
-                header('Location: ' . $path . $this->adminLink . '/touslesarticles');
-            } else {
-                header('Location: ' . $path . 'accueil');
-            }
-        } else {
-            header('Location: ' . $path . 'accueil');
+        $getImgSrcQuery = "SELECT img_src FROM blog_posts WHERE id = :id;";
+        $getImgSrc = $this->pdo->prepare($getImgSrcQuery);
+        $getImgSrc->execute(['id' => $id_post]);
+        $fetchImgSrc = $getImgSrc->fetchAll();
+
+        if (($fetchImgSrc[0]['img_src'] === null) !== true) {
+            $pathToDeleteImg = "C:\wamp64\www\OP-DA-P5\public/" . $fetchImgSrc[0]['img_src'];
+            unlink($pathToDeleteImg);
         }
+
+        $hidePostQuery = 'DELETE FROM blog_posts WHERE id = :id;';
+        $hidePost = $this->pdo->prepare($hidePostQuery);
+        $hidePost->execute(['id' => $id_post]);
+        header('Location: ' . $path . $this->adminLink . '/touslesarticles');
     }
 
     public function displayAddPostPage($numberOfPaths, $userSession)
@@ -85,15 +87,47 @@ class AdminPostController
         $twig->display('adminAddPost.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
-    public function addPost($numberOfPaths)
+    public function addPost($numberOfPaths, $userSession)
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
-        if ($_SESSION['user']['role'] === 'admin') {
-            $id = $_SESSION['user']['id'];
-            $title = htmlspecialchars($_POST['postTitle']);
-            $content = htmlspecialchars($_POST['postContent']);
-            $chapo = htmlspecialchars($_POST['postChapo']);
+        if (!isset($_POST['postTitle'])) {
+            header('Location: ' . $path . $this->adminLink . '/touslesarticles');
+        }
+        $id = $_SESSION['user']['id'];
+        $title = htmlspecialchars($_POST['postTitle']);
+        $content = htmlspecialchars($_POST['postContent']);
+        $chapo = htmlspecialchars($_POST['postChapo']);
 
+        if ($_FILES['postFile']['size'] !== 0) {
+            $maxSize = 3000000;
+            $validExt = ['.jpg', '.jpeg', '.png'];
+            $fileSize = $_FILES['postFile']['size'];
+            $fileName = htmlspecialchars($_FILES['postFile']['name']);
+            $fileExt = '.' . strtolower(substr(strrchr($fileName, '.'), 1));
+            $tmpName = $_FILES['postFile']['tmp_name'];
+            $uniqueName = md5(uniqid(rand(), true));
+            $fileName = "C:\wamp64\www\OP-DA-P5\public\images/" . $uniqueName . $fileExt;
+            if ($_FILES['postFile']['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
+                include_once(__DIR__ . '/../templates/configTwig.php');
+                $twig->display('adminAddPost.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+                return;
+            }
+            move_uploaded_file($tmpName, $fileName);
+
+            $src = "images/" . $uniqueName . $fileExt;
+
+
+            $addPostQuery = 'INSERT INTO blog_posts (idUser, title, content, chapo, img_src) VALUES (:idUser, :title, :content, :chapo, :img_src);';
+            $addPost = $this->pdo->prepare($addPostQuery);
+            $addPost->execute([
+                'idUser' => $id,
+                'title' => $title,
+                'content' => $content,
+                'chapo' => $chapo,
+                'img_src' => $src
+            ]);
+            header('Location: ' . $path . $this->adminLink . '/touslesarticles');
+        } else {
             $addPostQuery = 'INSERT INTO blog_posts (idUser, title, content, chapo) VALUES (:idUser, :title, :content, :chapo);';
             $addPost = $this->pdo->prepare($addPostQuery);
             $addPost->execute([
@@ -103,8 +137,6 @@ class AdminPostController
                 'chapo' => $chapo
             ]);
             header('Location: ' . $path . $this->adminLink . '/touslesarticles');
-        } else {
-            header('Location: ' . $path . 'accueil');
         }
     }
 
@@ -116,36 +148,71 @@ class AdminPostController
         $displayUpdatePost = $this->pdo->prepare($displayUpdatePostQuery);
         $displayUpdatePost->execute(['id' => $id_post]);
         $fetchPost = $displayUpdatePost->fetchAll();
-        var_dump($fetchPost);
+
         include_once(__DIR__ . '/../templates/configTwig.php');
         $twig->display('adminUpdatePostPage.twig', ['postList' => $fetchPost[0], 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
-    public function updatePost($numberOfPaths, $id_post)
+    public function updatePost($numberOfPaths, $id_post, $userSession)
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        if (!isset($_POST['title'])) {
+            header('Location: ' . $path . $this->adminLink . '/touslesarticles');
+        }
+        $title = htmlspecialchars($_POST['title']);
+        $content = htmlspecialchars($_POST['content']);
+        $chapo = htmlspecialchars($_POST['chapo']);
 
-        if (isset($_SESSION['user']['role'])) {
-            if ($_SESSION['user']['role'] === 'admin') {
-
-                $title = htmlspecialchars($_POST['title']);
-                $content = htmlspecialchars($_POST['content']);
-                $chapo = htmlspecialchars($_POST['chapo']);
-
-                $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
-                $updatePost = $this->pdo->prepare($updatePostQuery);
-                $updatePost->execute([
-                    'id' => $id_post,
-                    'title' => $title,
-                    'content' => $content,
-                    'chapo' => $chapo
-                ]);
-                header('Location: ' . $path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
-            } else {
-                header('Location: ' . $path . 'accueil');
+        if ($_FILES['postFile']['size'] !== 0) {
+            $maxSize = 3000000;
+            $validExt = ['.jpg', '.jpeg', '.png'];
+            $fileSize = $_FILES['postFile']['size'];
+            $fileName = htmlspecialchars($_FILES['postFile']['name']);
+            $fileExt = '.' . strtolower(substr(strrchr($fileName, '.'), 1));
+            $tmpName = $_FILES['postFile']['tmp_name'];
+            $uniqueName = md5(uniqid(rand(), true));
+            $fileName = "C:\wamp64\www\OP-DA-P5\public\images/" . $uniqueName . $fileExt;
+            if ($_FILES['postFile']['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
+                include_once(__DIR__ . '/../templates/configTwig.php');
+                $twig->display('adminUpdatePostPage.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+                return;
             }
+            $getImgSrcQuery = "SELECT img_src FROM blog_posts WHERE id = :id;";
+            $getImgSrc = $this->pdo->prepare($getImgSrcQuery);
+            $getImgSrc->execute(['id' => $id_post]);
+            $fetchImgSrc = $getImgSrc->fetchAll();
+            // Suppression de l'ancienne l'image
+            if (($fetchImgSrc[0]['img_src'] === null) !== true) {
+                $pathToDeleteImg = "C:\wamp64\www\OP-DA-P5\public/" . $fetchImgSrc[0]['img_src'];
+                unlink($pathToDeleteImg);
+            }
+
+
+
+
+            move_uploaded_file($tmpName, $fileName);
+            $src = "images/" . $uniqueName . $fileExt;
+
+            $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, img_src = :img_src, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
+            $updatePost = $this->pdo->prepare($updatePostQuery);
+            $updatePost->execute([
+                'id' => $id_post,
+                'title' => $title,
+                'content' => $content,
+                'chapo' => $chapo,
+                'img_src' => $src
+            ]);
+            header('Location: ' . $path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
         } else {
-            header('Location: ' . $path . 'accueil');
+            $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
+            $updatePost = $this->pdo->prepare($updatePostQuery);
+            $updatePost->execute([
+                'id' => $id_post,
+                'title' => $title,
+                'content' => $content,
+                'chapo' => $chapo
+            ]);
+            header('Location: ' . $path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
         }
     }
 
@@ -234,7 +301,6 @@ class AdminPostController
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
         $id = $data;
-        echo var_dump($id);
 
         $rejectCommentQuery = 'UPDATE comments SET status = "rejected" WHERE id = :id;';
         $rejectComment = $this->pdo->prepare($rejectCommentQuery);

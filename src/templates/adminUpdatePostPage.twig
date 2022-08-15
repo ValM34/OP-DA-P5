@@ -1,28 +1,41 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-Modifier un article
+	Modifier un article
 {% endblock %}
 {% block mainContent %}
-<section>
-        <h1>Modifier un article</h1>
-        <div class="container-col-center">
-            <form action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" class="col-center">
-                <div>
-                    <label for="title">Titre de l'article</label>
-                    <textarea name="title" id="title" class="postTitle-textarea">{{ postList.title }}</textarea>
-                </div>
-                <div>
-                    <label for="chapo">Chapô</label>
-                    <textarea name="chapo" id="chapo" class="chapo-textarea">{{ postList.chapo }}</textarea>
-                </div>
-                <div>
-                    <label for="content">Contenu de l'article</label>
-                    <textarea name="content" id="content" class="postContent-textarea">{{ postList.content }}</textarea>
-                </div>
-                <div>
-                    <button type="submit">Valider</button>
-                </div>
-            </form>
-        </div>
-    </section>
+	<section>
+		<h1>Modifier un article</h1>
+		{% if errorMsg is same as(true) %}
+			<p class="error-msg">
+				Le transfert du fichier n'a pas fonctionné.
+				<br/>
+				Taille maximale autorisée : 3Mo
+				<br/>
+				Extensions acceptées : .jpg, .jpeg, .png
+			</p>
+		{% endif %}
+		<div class="container-col-center">
+			<form action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" enctype="multipart/form-data" class="col-center">
+				<div>
+					<label for="postFile">Ajouter/Modifier une image</label>
+					<input name="postFile" id="postFile" type="file">
+				</div>
+				<div>
+					<label for="title">Titre de l'article</label>
+					<textarea name="title" id="title" class="postTitle-textarea">{{ postList.title }}</textarea>
+				</div>
+				<div>
+					<label for="chapo">Chapô</label>
+					<textarea name="chapo" id="chapo" class="chapo-textarea">{{ postList.chapo }}</textarea>
+				</div>
+				<div>
+					<label for="content">Contenu de l'article</label>
+					<textarea name="content" id="content" class="postContent-textarea">{{ postList.content }}</textarea>
+				</div>
+				<div>
+					<button type="submit">Valider</button>
+				</div>
+			</form>
+		</div>
+	</section>
 {% endblock %}

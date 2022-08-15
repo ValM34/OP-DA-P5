@@ -26,7 +26,7 @@
 				{% if post.status == 'hidden' %}
 					<div class="postListAdmin__post">
 						<input id="checkbox-{{post.id}}" class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost"/>
-						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}images/photoValentin.jfif"/></div>
+						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}{{post.img_src}}"/></div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}{{adminLink}}/article/{{post.id}}/afficher">
@@ -51,7 +51,7 @@
 				{% else %}
 					<div class="postListAdmin__post">
 						<input id="checkbox-{{post.id}}" class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost"/>
-						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}images/photoValentin.jfif"/></div>
+						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}{{post.img_src}}"/></div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}{{adminLink}}/article/{{post.id}}/afficher">

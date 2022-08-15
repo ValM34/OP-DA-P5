@@ -141,13 +141,13 @@ class Router
                         $adminHidePost->delete($numberOfPaths, $data[2]);
                     } elseif ($data[1] === 'article' & $data[3] === 'envoyer') {
                         $addPost = new AdminPostController($numberOfPaths);
-                        $addPost->addPost($numberOfPaths);
+                        $addPost->addPost($numberOfPaths, $userSession);
                     } elseif ($data[1] === 'article' & $data[3] === 'afficher') {
                         $updatePost = new AdminPostController($numberOfPaths);
                         $updatePost->displayUpdatePostPage($numberOfPaths, $data[2], $userSession);
                     } elseif ($data[1] === 'article' & $data[3] === 'modifier') {
                         $updatePost = new AdminPostController($numberOfPaths);
-                        $updatePost->updatePost($numberOfPaths, $data[2]);
+                        $updatePost->updatePost($numberOfPaths, $data[2], $userSession);
                     } elseif ($data[1] === 'touslesarticles' & $data[2] === 'publishselected') {
                         $hideSelected = new AdminPostController($numberOfPaths);
                         $hideSelected->publishSelected($numberOfPaths, $userSession, $data[3]);
