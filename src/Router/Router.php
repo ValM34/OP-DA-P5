@@ -117,6 +117,18 @@ class Router
                 if ($data[1] === 'touslesarticles' & !isset($data[3])) {
                     $adminPostList = new AdminPostController($numberOfPaths);
                     $adminPostList->display($numberOfPaths, $userSession);
+                } elseif ($data[1] === 'commentaires' & !isset($data[2])) {
+                    $adminCommentsList = new AdminPostController($numberOfPaths);
+                    $adminCommentsList->displayCommentsList($numberOfPaths, $userSession);
+                } elseif ($data[1] === 'commentaires' & $data[2] === 'publier') {
+                    $adminCommentsPublish = new AdminPostController($numberOfPaths);
+                    $adminCommentsPublish->publishComment($numberOfPaths, $data[3]);
+                } elseif ($data[1] === 'commentaires' & $data[2] === 'rejeter') {
+                    $adminRejectComment = new AdminPostController($numberOfPaths);
+                    $adminRejectComment->rejectComment($numberOfPaths, $data[3]);
+                } elseif ($data[1] === 'commentaires' & $data[2] === 'supprimer') {
+                    $adminCommentsDelete = new AdminPostController($numberOfPaths);
+                    $adminCommentsDelete->deleteComment($numberOfPaths, $userSession, $data[3]);
                 } elseif (isset($data[3])) {
                     if ($data[1] === 'article' & $data[3] === 'masquer') {
                         $adminHidePost = new AdminPostController($numberOfPaths);
