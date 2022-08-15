@@ -9,41 +9,41 @@ class Post {
     private $created_at;
     private $updated_at;
 
-    function getId(){
+    public function getId(){
         return $this->id;
     }
-    function getIdPost(){
+    public function getIdPost(){
         return $this->id_post;
     }
-    function getIdUser(){
+    public function getIdUser(){
         return $this->id_user;
     }
-    function getContent(){
+    public function getContent(){
         return $this->content;
     }
-    function getCreatedAt(){
+    public function getCreatedAt(){
         return $this->created_at;
     }
-    function getUpdatedAt(){
+    public function getUpdatedAt(){
         return $this->updated_at;
     }
 
-    function setId($id){
+    public function setId($id){
         $this->id = $id;
     }
-    function setIdPost($id_post){
+    public function setIdPost($id_post){
         $this->id_post = $id_post;
     }
-    function setIdUser($id_user){
+    public function setIdUser($id_user){
         $this->id_user = $id_user;
     }
-    function setContent($content){
+    public function setContent($content){
         $this->content = $content;
     }
-    function setCreatedAt($created_at){
+    public function setCreatedAt($created_at){
         $this->created_at = $created_at;
     }
-    function setUpdatedAt($updated_at){
+    public function setUpdatedAt($updated_at){
         $this->updated_ad = $updated_at;
     }
     

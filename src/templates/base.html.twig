@@ -20,16 +20,15 @@
 			<div class="h-navlinks">
 					<a href="{{pathToPublic}}accueil" class="h-navlink title">Accueil</a>
 					<a href="{{pathToPublic}}touslesarticles" class="h-navlink title">Articles</a>
-					<a href="http://localhost/op-da-p5/views/Admin-15645.php" class="h-navlink title">Admin</a>
 					<a href="{{pathToPublic}}connexion" class="h-navlink title">Connexion</a>
 					<a href="{{pathToPublic}}inscription" class="h-navlink title">S'inscrire</a>
-					{% if isLogged == 1 %}<a href="{{pathToPublic}}deconnexion" class="h-navlink title">Déconnexion</a>{% endif %}
+					{% if userSession.logged is same as(true) %}<a href="{{pathToPublic}}deconnexion" class="h-navlink title">Déconnexion</a>{% endif %}
 			</div>
 		</header>
 		{% block mainContent %}{% endblock %}
-		<footer>footer</footer>
+		<footer>{% if userSession.role is same as('admin') %}<a href="{{pathToPublic}}{{userSession.adminLink}}/touslesarticles">Administration</a>{% endif %}</footer>
 
-		<script type="module" src="{{pathToPublic}}index.js"></script>
+		{% block scriptJs %}{% endblock %}
 	</body>
 
 </html>

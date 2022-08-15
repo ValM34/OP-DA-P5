@@ -8,16 +8,19 @@
 
 		<div class="blogPostsList__container">
 			{% for post in postList %}
-				<div class="blogPostsList__container__sub">
-					<div class="thumbnail-blogPostsList">
-						<img class="thumbnail-small" src="../images/photoValentin.jfif"/>
-						<div>
-							<h3 class="thumbnail-blogPostsList__title">{{ post.title }}</h3>
-							<p class="thumbnail-blogPostsList__p">{{ post.updated_at }}</p>
-							<a class="thumbnail-blogPostsList__link" href="{{pathToPublic}}post/{{ post.id }}">En savoir plus</a>
+				{% if post.status is same as('published') %}
+					<div class="blogPostsList__container__sub">
+						<div class="thumbnail-blogPostsList">
+							<img class="thumbnail-small" src="{{pathToPublic}}images/photoValentin.jfif"/>
+							<div>
+								<h3 class="thumbnail-blogPostsList__title">{{ post.title }}</h3>
+								<b class="thumbnail-blogPostsList__p">{{post.chapo}}</b>
+								<p class="thumbnail-blogPostsList__p">{{ post.updated_at }}</p>
+								<a class="thumbnail-blogPostsList__link" href="{{pathToPublic}}post/{{ post.id }}">En savoir plus</a>
+							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 	</section>
