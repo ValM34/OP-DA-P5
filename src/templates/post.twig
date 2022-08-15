@@ -42,6 +42,19 @@
 			{% endif %}
 			{% if (userSession.role is same as('admin')) and (comment.status is same as('pending')) %}
 				<div class="blogPost-comments__container">
+					<div>Ce commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
+					<div>
+						{{comment.name}}
+						{{comment.surname}}
+						-
+						{{comment.updated_at}}
+					</div>
+					<p>{{comment.content}}</p>
+				</div>
+			{% endif %}
+			{% if (userSession.role is same as('admin')) and (comment.status is same as('rejected')) %}
+				<div class="blogPost-comments__container">
+					<div>Ce commentaire a été rejeté et n'est pas visible pour les utilisateurs</div>
 					<div>
 						{{comment.name}}
 						{{comment.surname}}

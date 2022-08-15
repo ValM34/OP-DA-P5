@@ -29,7 +29,7 @@ class AdminPostController
         $path = $this->helpers->pathToPublic($numberOfPaths);
         include_once(__DIR__ . '/../templates/configTwig.php');
         $fetchPostList = $this->helpers->dateConverter($fetchPostList);
-        $twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);        
+        $twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
     public function hide($numberOfPaths, $id_post)
@@ -51,9 +51,9 @@ class AdminPostController
         $path = $this->helpers->pathToPublic($numberOfPaths);
 
         if ($_SESSION['user']['role'] === 'admin') {
-            $hidePostQuery = 'UPDATE blog_posts SET status = "published" WHERE id = :id;';
-            $hidePost = $this->pdo->prepare($hidePostQuery);
-            $hidePost->execute(['id' => $id_post]);
+            $publishPostQuery = 'UPDATE blog_posts SET status = "published" WHERE id = :id;';
+            $publishPost = $this->pdo->prepare($publishPostQuery);
+            $publishPost->execute(['id' => $id_post]);
             header('Location: ' . $path . $this->adminLink . '/touslesarticles');
         } else {
             header('Location: ' . $path . 'accueil');
@@ -197,5 +197,59 @@ class AdminPostController
         }
         $path = $this->helpers->pathToPublic($numberOfPaths);
         header('Location: ' . $path . $this->adminLink . '/touslesarticles');
+    }
+
+    public function displayCommentsList($numberOfPaths, $userSession)
+    {
+        $getCommentsListQuery = '
+                SELECT U.name, U.surname, C.id as commentId, C.created_at, C.updated_at, C.content, C.status, B.title as postTitle, B.id as postId
+                FROM comments C
+                JOIN users U
+                ON C.id_user = U.id
+                JOIN blog_posts B
+                ON c.id_user = B.idUser
+                ORDER BY created_at;
+        ';
+        $getCommentsList = $this->pdo->prepare($getCommentsListQuery);
+        $getCommentsList->execute();
+        $fetchCommentsList = $getCommentsList->fetchAll();
+        $path = $this->helpers->pathToPublic($numberOfPaths);
+        include_once(__DIR__ . '/../templates/configTwig.php');
+        $fetchCommentsList = $this->helpers->dateConverter($fetchCommentsList);
+        $twig->display('adminCommentsList.twig', ['CommentsList' => $fetchCommentsList, 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+    }
+
+    public function publishComment($numberOfPaths, $data)
+    {
+        $path = $this->helpers->pathToPublic($numberOfPaths);
+        $id = $data;
+
+        $publishCommentQuery = 'UPDATE comments SET status = "published" WHERE id = :id;';
+        $publishComment = $this->pdo->prepare($publishCommentQuery);
+        $publishComment->execute(['id' => $id]);
+        header('Location: ' . $path . $this->adminLink . '/commentaires');
+    }
+
+    public function rejectComment($numberOfPaths, $data)
+    {
+        $path = $this->helpers->pathToPublic($numberOfPaths);
+        $id = $data;
+        echo var_dump($id);
+
+        $rejectCommentQuery = 'UPDATE comments SET status = "rejected" WHERE id = :id;';
+        $rejectComment = $this->pdo->prepare($rejectCommentQuery);
+        $rejectComment->execute(['id' => $id]);
+        header('Location: ' . $path . $this->adminLink . '/commentaires');
+    }
+
+    public function deleteComment($numberOfPaths, $data)
+    {
+        $path = $this->helpers->pathToPublic($numberOfPaths);
+        $id = $data;
+
+        $deleteCommentQuery = 'DELETE from comments WHERE id = :id;';
+        $deleteComment = $this->pdo->prepare($deleteCommentQuery);
+        $deleteComment->execute(['id' => $id]);
+        header('Location: ' . $path . $this->adminLink . '/commentaires');
     }
 }
