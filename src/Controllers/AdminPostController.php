@@ -20,6 +20,13 @@ class AdminPostController
         $this->adminLink = $_ENV['adminLink'];
     }
 
+    public function displayHomePage($numberOfPaths, $userSession)
+    {
+        include_once(__DIR__ . '/../templates/configTwig.php');
+        $path = $this->helpers->pathToPublic($numberOfPaths);
+        $twig->display('adminHomePage.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+    }
+
     public function display($numberOfPaths, $userSession)
     {
         $getPostListQuery = 'SELECT * FROM blog_posts ORDER BY created_at desc;';
