@@ -115,8 +115,8 @@ class Router
                 break;
             case $this->adminLink:
                 if (!isset($data[1])) {
-                    // $adminHomePage = new AdminPostController($numberOfPaths);
-                    // $adminHomePage->displayHomePage($numberOfPaths, $userSession);
+                    $adminHomePage = new AdminPostController($numberOfPaths);
+                    $adminHomePage->displayHomePage($numberOfPaths, $userSession);
                 } elseif ($data[1] === 'touslesarticles' & !isset($data[3])) {
                     $adminPostList = new AdminPostController($numberOfPaths);
                     $adminPostList->display($numberOfPaths, $userSession);
