@@ -15,10 +15,11 @@ class UserController
         $this->helpers = new Helpers();
     }
 
-    public function displaySubscription($numberOfPaths, $userSession)
+    public function displaySubscription($numberOfPaths)
     {
         include('../src/templates/configTwig.php');
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         if (true === $userSession['logged']) {
             $twig->display('subscribe.twig', ['pathToPublic' => $path, 'userSession' => $userSession]);
         } else {
@@ -159,10 +160,11 @@ class UserController
     
 
     // Affiche le formulaire de connexion
-    public function displayConnexion($numberOfPaths, $userSession)
+    public function displayConnexion($numberOfPaths)
     {
         include('../src/templates/configTwig.php');
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         if (!empty($_SESSION['user']['logged'])) {
             header("location: " . $path . "accueil");
         } else {
@@ -175,7 +177,7 @@ class UserController
         }
     }
 
-    public function connexion($userSession)
+    public function connexion()
     {
         $user = new User();
         $user->setEmail(htmlspecialchars($_POST['email']));
@@ -183,6 +185,7 @@ class UserController
         $email = $user->getEmail();
         $password = $user->getPassword();
         $path = $this->helpers->pathToPublic('dsqdqs');
+        $userSession = $this->helpers->isLogged();
 
         include('../src/templates/configTwig.php');
         if (null !== $email || null !== $password) {

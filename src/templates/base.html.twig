@@ -20,13 +20,17 @@
 			<div class="h-navlinks">
 					<a href="{{pathToPublic}}accueil" class="h-navlink title">Accueil</a>
 					<a href="{{pathToPublic}}touslesarticles" class="h-navlink title">Articles</a>
+					{% if userSession.logged is same as(false) %}
 					<a href="{{pathToPublic}}connexion" class="h-navlink title">Connexion</a>
 					<a href="{{pathToPublic}}inscription" class="h-navlink title">S'inscrire</a>
-					{% if userSession.logged is same as(true) %}<a href="{{pathToPublic}}deconnexion" class="h-navlink title">Déconnexion</a>{% endif %}
+					{% endif %}
+					{% if userSession.logged is same as(true) %}
+					<a href="{{pathToPublic}}deconnexion" class="h-navlink title">Déconnexion</a>
+					{% endif %}
 			</div>
 		</header>
 		{% block mainContent %}{% endblock %}
-		<footer>{% if userSession.role is same as('admin') %}<a href="{{pathToPublic}}{{userSession.adminLink}}/touslesarticles">Administration</a>{% endif %}</footer>
+		<footer>{% if userSession.role is same as('admin') %}<a href="{{pathToPublic}}{{userSession.adminLink}}">Administration</a>{% endif %}</footer>
 
 		{% block scriptJs %}{% endblock %}
 	</body>

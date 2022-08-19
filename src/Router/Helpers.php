@@ -5,7 +5,12 @@ namespace Router;
 class Helpers
 {
     // private $dateConverter;
+    private $adminLink;
 
+    public function __construct()
+    {
+        $this->adminLink = $_ENV['adminLink'];
+    }
     /*public function pathToPublic($numberOfPaths)
     {
         $link = '';
@@ -34,6 +39,22 @@ class Helpers
 
     public function isLogged()
     {
+        if (isset($_SESSION['user'])) {
+            if (isset($_SESSION['user']['logged']) & $_SESSION['user']['logged'] === true & isset($_SESSION['user']['role']) & $_SESSION['user']['role'] === 'admin') {
+                echo 'Vous êtes connecté.';
+                $_SESSION['user']['adminLink'] = $this->adminLink;
+                return $_SESSION['user'];
+            } elseif (isset($_SESSION['user']['logged']) & $_SESSION['user']['logged'] === true) {
+                echo 'Vous êtes connecté.';
+                return $_SESSION['user'];
+            } else {
+                echo 'Vous êtes déconnecté';
+                return $_SESSION['user'];
+            }
+        } else {
+            echo 'Vous êtes déconnecté';
+            return $_SESSION['user'];
+        }
     }
 
     public function isAdmin($numberOfPaths)
@@ -60,6 +81,8 @@ class Helpers
             $fragmentedDate = explode(" ", $date);
             $array[$i]['created_at'] = $fragmentedDate[2] . "/" . $fragmentedDate[1] . "/" . $fragmentedDate[0] . " à " . $fragmentedDate[3] . ":" . $fragmentedDate[4];
             if (isset($array[$i]['updated_at'])) {
+                $date = str_replace(["-", ":"], [" ", " "], $array[$i]['updated_at']);
+                $fragmentedDate = explode(" ", $date);
                 $array[$i]['updated_at'] = $fragmentedDate[2] . "/" . $fragmentedDate[1] . "/" . $fragmentedDate[0] . " à " . $fragmentedDate[3] . ":" . $fragmentedDate[4];
             }
         }

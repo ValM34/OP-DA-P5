@@ -18,22 +18,25 @@ class AdminPostController
         $this->helpers = new Helpers();
         $this->helpers->isAdmin($numberOfPaths);
         $this->adminLink = $_ENV['adminLink'];
+        $this->path = $this->helpers->pathToPublic($numberOfPaths);
     }
 
-    public function displayHomePage($numberOfPaths, $userSession)
+    public function displayHomePage($numberOfPaths)
     {
         include_once(__DIR__ . '/../templates/configTwig.php');
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         $twig->display('adminHomePage.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
-    public function display($numberOfPaths, $userSession)
+    public function display($numberOfPaths)
     {
         $getPostListQuery = 'SELECT * FROM blog_posts ORDER BY created_at desc;';
         $getPostList = $this->pdo->prepare($getPostListQuery);
         $getPostList->execute();
         $fetchPostList = $getPostList->fetchAll();
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         include_once(__DIR__ . '/../templates/configTwig.php');
         $fetchPostList = $this->helpers->dateConverter($fetchPostList);
         $twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
@@ -69,34 +72,34 @@ class AdminPostController
 
     public function delete($numberOfPaths, $id_post)
     {
-        $path = $this->helpers->pathToPublic($numberOfPaths);
-
-        $getImgSrcQuery = "SELECT img_src FROM blog_posts WHERE id = :id;";
+        $getImgSrcQuery = 'SELECT img_src FROM blog_posts WHERE id = :id;';
         $getImgSrc = $this->pdo->prepare($getImgSrcQuery);
         $getImgSrc->execute(['id' => $id_post]);
         $fetchImgSrc = $getImgSrc->fetchAll();
 
-        if (($fetchImgSrc[0]['img_src'] === null) !== true) {
-            $pathToDeleteImg = "C:\wamp64\www\OP-DA-P5\public/" . $fetchImgSrc[0]['img_src'];
+        if ($fetchImgSrc[0]['img_src'] !== null) {
+            $pathToDeleteImg = __DIR__ . "/../../public/". $fetchImgSrc[0]['img_src'];
             unlink($pathToDeleteImg);
         }
 
         $hidePostQuery = 'DELETE FROM blog_posts WHERE id = :id;';
         $hidePost = $this->pdo->prepare($hidePostQuery);
         $hidePost->execute(['id' => $id_post]);
-        header('Location: ' . $path . $this->adminLink . '/touslesarticles');
+        header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
     }
 
-    public function displayAddPostPage($numberOfPaths, $userSession)
+    public function displayAddPostPage($numberOfPaths)
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         include_once(__DIR__ . '/../templates/configTwig.php');
         $twig->display('adminAddPost.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
-    public function addPost($numberOfPaths, $userSession)
+    public function addPost($numberOfPaths)
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         if (!isset($_POST['postTitle'])) {
             header('Location: ' . $path . $this->adminLink . '/touslesarticles');
         }
@@ -104,6 +107,12 @@ class AdminPostController
         $title = htmlspecialchars($_POST['postTitle']);
         $content = htmlspecialchars($_POST['postContent']);
         $chapo = htmlspecialchars($_POST['postChapo']);
+
+        if (empty($title) || empty($content) || empty($chapo)) {
+            include_once(__DIR__ . '/../templates/configTwig.php');
+            $twig->display('adminAddPost.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+            return;
+        }
 
         if ($_FILES['postFile']['size'] !== 0) {
             $maxSize = 3000000;
@@ -143,13 +152,14 @@ class AdminPostController
                 'content' => $content,
                 'chapo' => $chapo
             ]);
-            header('Location: ' . $path . $this->adminLink . '/touslesarticles');
+            // header('Location: ' . $path . $this->adminLink . '/touslesarticles');
         }
     }
 
-    public function displayUpdatePostPage($numberOfPaths, $id_post, $userSession)
+    public function displayUpdatePostPage($numberOfPaths, $id_post)
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
 
         $displayUpdatePostQuery = 'SELECT * FROM blog_posts WHERE id = :id;';
         $displayUpdatePost = $this->pdo->prepare($displayUpdatePostQuery);
@@ -160,15 +170,22 @@ class AdminPostController
         $twig->display('adminUpdatePostPage.twig', ['postList' => $fetchPost[0], 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
-    public function updatePost($numberOfPaths, $id_post, $userSession)
+    public function updatePost($numberOfPaths, $id_post)
     {
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         if (!isset($_POST['title'])) {
             header('Location: ' . $path . $this->adminLink . '/touslesarticles');
         }
         $title = htmlspecialchars($_POST['title']);
         $content = htmlspecialchars($_POST['content']);
         $chapo = htmlspecialchars($_POST['chapo']);
+
+        if (empty($title) || empty($content) || empty($chapo)) {
+            include_once(__DIR__ . '/../templates/configTwig.php');
+            $twig->display('adminAddPost.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+            return;
+        }
 
         if ($_FILES['postFile']['size'] !== 0) {
             $maxSize = 3000000;
@@ -223,12 +240,13 @@ class AdminPostController
         }
     }
 
-    public function isUser($twig, $path, $userSession)
+    public function isUser($twig, $path)
     {
+        $userSession = $this->helpers->isLogged();
         $twig->display('home.twig', ['pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
-    public function publishSelected($numberOfPaths, $userSession, $idPostList)
+    public function publishSelected($numberOfPaths, $idPostList)
     {
         $arrayIdPosts = explode("-", $idPostList);
         array_shift($arrayIdPosts);
@@ -240,10 +258,11 @@ class AdminPostController
             ]);
         }
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        // $userSession = $this->helpers->isLogged();
         header('Location: ' . $path . $this->adminLink . '/touslesarticles');
     }
 
-    public function hideSelected($numberOfPaths, $userSession, $idPostList)
+    public function hideSelected($numberOfPaths, $idPostList)
     {
         $arrayIdPosts = explode("-", $idPostList);
         array_shift($arrayIdPosts);
@@ -255,10 +274,11 @@ class AdminPostController
             ]);
         }
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        // $userSession = $this->helpers->isLogged();
         header('Location: ' . $path . $this->adminLink . '/touslesarticles');
     }
 
-    public function deleteSelected($numberOfPaths, $userSession, $idPostList)
+    public function deleteSelected($numberOfPaths, $idPostList)
     {
         $arrayIdPosts = explode("-", $idPostList);
         array_shift($arrayIdPosts);
@@ -270,24 +290,25 @@ class AdminPostController
             ]);
         }
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        // $userSession = $this->helpers->isLogged();
         header('Location: ' . $path . $this->adminLink . '/touslesarticles');
     }
 
-    public function displayCommentsList($numberOfPaths, $userSession)
+    public function displayCommentsList($numberOfPaths)
     {
         $getCommentsListQuery = '
-                SELECT U.name, U.surname, C.id as commentId, C.created_at, C.updated_at, C.content, C.status, B.title as postTitle, B.id as postId
-                FROM comments C
-                JOIN users U
-                ON C.id_user = U.id
-                JOIN blog_posts B
-                ON c.id_user = B.idUser
-                ORDER BY created_at;
+            SELECT U.name, U.surname, C.id as commentId, C.created_at, C.updated_at, C.content, C.status, B.title as postTitle, B.id as postId 
+            FROM comments C, users U, blog_posts B
+            WHERE C.id_user = U.id
+            AND C.id_post = B.id
+            AND C.id_user = B.idUser
+            ORDER BY created_at;
         ';
         $getCommentsList = $this->pdo->prepare($getCommentsListQuery);
         $getCommentsList->execute();
         $fetchCommentsList = $getCommentsList->fetchAll();
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
         include_once(__DIR__ . '/../templates/configTwig.php');
         $fetchCommentsList = $this->helpers->dateConverter($fetchCommentsList);
         $twig->display('adminCommentsList.twig', ['CommentsList' => $fetchCommentsList, 'pathToPublic' => $path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);

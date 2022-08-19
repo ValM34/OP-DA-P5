@@ -12,7 +12,7 @@ class HomeController
         $this->helpers = new Helpers();
     }
 
-    public function display($numberOfPaths, $userSession)
+    public function display($numberOfPaths)
     {
         include('../src/templates/configTwig.php');
         $message = '';
@@ -20,11 +20,8 @@ class HomeController
             $message = $_GET['message'];
         }
         $path = $this->helpers->pathToPublic($numberOfPaths);
-        if (true === $userSession['logged']) {
-            $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path, 'userSession' => $userSession]);
-        } else {
-            $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path]);
-        }
+        $userSession = $this->helpers->isLogged();
+        $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $path, 'userSession' => $userSession]);
     }
 
     public function sendMail()

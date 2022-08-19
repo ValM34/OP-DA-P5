@@ -11,10 +11,11 @@ class ErrorPageController
         $this->helpers = new Helpers();
     }
 
-    public function display($numberOfPaths, $userSession)
+    public function display($numberOfPaths)
     {
         include('../src/templates/configTwig.php');
         $path = $this->helpers->pathToPublic($numberOfPaths);
+        $userSession = $this->helpers->isLogged();
 
         if (true === $userSession['logged']) {
             $twig->display('errorPage.twig', ['pathToPublic' => $path, 'userSession' => $userSession]);
