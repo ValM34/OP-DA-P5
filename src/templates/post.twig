@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{post.title}}
+{% endblock %}
+{% block mainContent %}
+
+	<section class="blogPost-main">
+		<div class="blogPost-main__container">
+			<h1>{{post.title}}</h1>
+			<img src="{{pathToPublic}}{{post.img_src}}" />
+			<p>{{post.created_at}}</p>
+			<b>{{post.chapo}}</b>
+			<p>{{post.content}}</p>
+		</div>
+	</section>
+
+	<section class="blogPost-comment">
+		<div class="blogPost-comment__container">
+			{% if true is same as(userSession.logged) %}
+				<form class="blogPost-comment__form" action="{{pathToPublic}}post/{{post.id}}/add" method="POST">
+					<label for="content">Ajouter un commentaire</label>
+					<textarea class="blogPost-comment__form__textarea" id="content" name="content"></textarea>
+					<button type="submit">Envoyer</button>
+				</form>
+			{% elseif false is same as(userSession.logged) %}
+				<a href="{{pathToPublic}}connexion">Veuillez vous connecter pour pouvoir poster un commentaire</a>
+			{% endif %}
+		</div>
+	</section>
+	<section class="blogPost-comments">
+
+		{% for comment in comments %}
+			{% if comment.status is same as('published') %}
+				<div class="blogPost-comments__container">
+					<div>
+						{{comment.name}}
+						{{comment.surname}}
+						-
+						{{comment.updated_at}}
+					</div>
+					<p>{{comment.content}}</p>
+				</div>
+			{% endif %}
+			{% if (userSession.role is same as('admin')) and (comment.status is same as('pending')) %}
+				<div class="blogPost-comments__container">
+					<div>Ce commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
+					<div>
+						{{comment.name}}
+						{{comment.surname}}
+						-
+						{{comment.updated_at}}
+					</div>
+					<p>{{comment.content}}</p>
+				</div>
+			{% endif %}
+			{% if (userSession.role is same as('admin')) and (comment.status is same as('rejected')) %}
+				<div class="blogPost-comments__container">
+					<div>Ce commentaire a été rejeté et n'est pas visible pour les utilisateurs</div>
+					<div>
+						{{comment.name}}
+						{{comment.surname}}
+						-
+						{{comment.updated_at}}
+					</div>
+					<p>{{comment.content}}</p>
+				</div>
+			{% endif %}
+		{% endfor %}
+
+	</section>
+{% endblock %}

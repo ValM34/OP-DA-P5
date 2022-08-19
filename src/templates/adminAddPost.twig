@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Ajouter un article
+{% endblock %}
+{% block mainContent %}
+	<section>
+        <h1>Ajouter un article</h1>
+        {% if errorMsg is same as(true) %}
+            <p class="error-msg">
+            Le transfert du fichier n'a pas fonctionné. <br />
+            Taille maximale autorisée : 3Mo <br />
+            Extensions acceptées : .jpg, .jpeg, .png
+            </p>
+        {% endif %}
+        <div class="container-col-center">
+            <form action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
+                <div>
+                    <label for="postFile">Ajouter une image</label>
+                    <input name="postFile" id="postFile" type="file">
+                </div>
+                <div>
+                    <label for="postTitle">Titre de l'article</label>
+                    <textarea name="postTitle" id="postTitle" class="postTitle-textarea"></textarea>
+                </div>
+                <div>
+                    <label for="postChapo">Chapô</label>
+                    <textarea name="postChapo" id="postChapo" class="postChapo-textarea"></textarea>
+                </div>
+                <div>
+                    <label for="postContent">Contenu de l'article</label>
+                    <textarea name="postContent" id="postContent" class="postContent-textarea"></textarea>
+                </div>
+                <div>
+                    <button type="submit">Valider</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

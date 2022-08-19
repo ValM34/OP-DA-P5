@@ -1,15 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-Connexion
+	Connexion
 {% endblock %}
 {% block mainContent %}
-<section>
-            <h1>Connexion</h1>
-            <form class="flex-col-center" action="../controllers/connexion.php" method="POST">
-                <label for="email">Email</label><input class="input-txt" id="email" name="email" />
-                <label for="password">Mot de passe</label><input class="input-txt" id="password" name="password" />
-                
-                <button type="submit">Envoyer</button>
-            </form>
-    </section>
+	<section>
+		{% if errorMessage is same as("emailError") or errorMessage is same as("passwordError") %}
+			<div class="error-msg-container">
+				<b class="error-msg">
+					{% if errorMessage is same as("emailError")%}Connexion refusée (L'email n'existe pas){% endif %}
+                    {% if errorMessage is same as("passwordError")%}Connexion refusée (mot de passe incorrect){% endif %}
+                </b>
+			</div>
+		{% endif %}
+		<h1>Connexion</h1>
+		<form class="flex-col-center" action="{{pathToPublic}}connexion/valider" method="POST">
+			<label for="email">Email</label><input class="input-txt" id="email" name="email" type="email" />
+			<label for="password">Mot de passe</label><input class="input-txt" id="password" name="password" type="password" />
+			<button type="submit">Envoyer</button>
+		</form>
+	</section>
 {% endblock %}
