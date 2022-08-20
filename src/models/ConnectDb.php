@@ -7,6 +7,7 @@ use PDOException;
 
 class ConnectDb
 {
+    // Se connecte à la base de données
     public function connect()
     {
         try {

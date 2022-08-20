@@ -9,30 +9,26 @@ class Contact
     private $name;
     private $lastName;
     private $email;
+    private $dest;
+    private $headers;
 
-    private static $dest = "valentin.moreau34750@gmail.com";
     private static $contactTitle = 'Blog-Valentin: ';
-    private static $headers = 'From: valentin.moreau34750@gmail.com';
 
-    public function getDest()
-    {
-        return Contact::$dest;
-    }
-    public function getContactTitle()
-    {
-        return $this->contactTitle;
-    }
-    public function getHeaders()
-    {
-        return Contact::$headers;
-    }
     public function getTitle()
     {
-        return Contact::$contactTitle . $this->name . " " . $this->lastName . " (" . $this->email . ") vous a envoyé: " . $this->sujet;
+        return Contact::$contactTitle . $this->name . ' ' . $this->lastName . ' (' . $this->email . ') vous a envoyé: ' . $this->sujet;
     }
     public function getCorp()
     {
         return $this->corp;
+    }
+    public function getDest()
+    {
+        return $this->dest;
+    }
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     public function setSujet($sujet)
@@ -55,11 +51,20 @@ class Contact
     {
         $this->email = $email;
     }
+    public function setDest($dest)
+    {
+        $this->dest = $dest;
+    }
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
+    }
 
+    // Envoie le message de succès ou d'erreur à l'issue de l'envoi d'un mail
     public function sendEmail($dest, $sujet, $corp, $headers)
     {
         if (mail($dest, $sujet, $corp, $headers)) {
-            echo "Email envoyé avec succès à" . $dest . "...";
+            echo 'Email envoyé avec succès à' . $dest . '...';
         } else {
             echo "Échec de l'envoi de l'email...";
         }

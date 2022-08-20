@@ -13,30 +13,28 @@ class UserController
         $connectDb = new ConnectDb();
         $this->pdo = $connectDb->connect();
         $this->helpers = new Helpers();
+        $this->path = $this->helpers->pathToPublic();
+        $this->userSession = $this->helpers->isLogged();
     }
 
-    public function displaySubscription($numberOfPaths)
+    // Affiche la page d'inscription
+    public function displaySubscription()
     {
         include('../src/templates/configTwig.php');
-        $path = $this->helpers->pathToPublic($numberOfPaths);
-        $userSession = $this->helpers->isLogged();
-        if (true === $userSession['logged']) {
-            $twig->display('subscribe.twig', ['pathToPublic' => $path, 'userSession' => $userSession]);
-        } else {
-            $twig->display('subscribe.twig', ['pathToPublic' => $path]);
-        }
+        $twig->display('subscribe.twig', ['pathToPublic' => $this->path, 'userSession' => $this->userSession]);
     }
 
-    public function suscribe($numberOfPaths)
+    // Inscrit un utilisateur
+    public function suscribe()
     {
-        $path = $this->helpers->pathToPublic($numberOfPaths);
         $verify = $this->verifieSiLesChampsSontRemplis();
         if (false === $verify) {
             include_once(__DIR__ . '../../templates/configTwig.php');
             echo $twig->render('subscribe.twig', [
                 'suscribedSuccessfully' => false,
                 'suscribedFailed' => false,
-                'pathToPublic' => $path
+                'pathToPublic' => $this->path,
+                'userSession' => $this->userSession
             ]);
             return;
         } else {
@@ -56,7 +54,8 @@ class UserController
                 echo $twig->render('subscribe.twig', [
                     'suscribedSuccessfully' => false,
                     'suscribedFailed' => $suscribedFailed,
-                    'pathToPublic' => $path
+                    'pathToPublic' => $this->path,
+                    'userSession' => $this->userSession
                 ]);
             } else {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
@@ -73,11 +72,13 @@ class UserController
                 echo $twig->render('subscribe.twig', [
                     'suscribedSuccessfully' => $suscribedSuccessfully,
                     'suscribedFailed' => false,
-                    'pathToPublic' => $path
+                    'pathToPublic' => $this->path,
+                    'userSession' => $this->userSession
                 ]);
             }
         }
     }
+
     // Renvoie l'utilisateur
     public function getUser()
     {
@@ -92,6 +93,7 @@ class UserController
         return $user;
     }
 
+    // Vérifie si les champs remplis correctement
     public function verifieSiLesChampsSontRemplis()
     {
         // Il faut une adresse email valide format : adresse@email.com
@@ -104,8 +106,8 @@ class UserController
             return $verify;
         } else {
             if (
-                !$_POST['name'] ||
-                !$_POST['surname'] ||
+                empty($_POST['name']) ||
+                empty($_POST['surname']) ||
                 $emailRegex !== 1 ||
                 $passwordRegex !== 1
             ) {
@@ -117,6 +119,7 @@ class UserController
         }
     }
 
+    // Vérifie si l'email est rempli correctement
     public function verifyEmail()
     {
         // Il faut une adresse email valide format : adresse@email.com
@@ -137,6 +140,7 @@ class UserController
         }
     }
 
+    // Vérifie si le mot de passe est rempli correctement
     public function verifyPassword()
     {
         // Password: il faut au minimum 8 caractères dont 1 chiffre, 1 lettre minuscule et une lettre majuscule
@@ -157,26 +161,21 @@ class UserController
         }
     }
 
-    
+
 
     // Affiche le formulaire de connexion
-    public function displayConnexion($numberOfPaths)
+    public function displayConnexion()
     {
         include('../src/templates/configTwig.php');
-        $path = $this->helpers->pathToPublic($numberOfPaths);
-        $userSession = $this->helpers->isLogged();
         if (!empty($_SESSION['user']['logged'])) {
-            header("location: " . $path . "accueil");
+            header('location: ' . $this->path . 'accueil');
         } else {
-            $errorMessage = isset($_GET['errorMessage']) ? $_GET['errorMessage'] : "";
-            if (true === $userSession['logged']) {
-                $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $path, 'userSession' => $userSession]);
-            } else {
-                $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $path, 'userSession' => $userSession]);
-            }
+            $errorMessage = isset($_GET['errorMessage']) ? $_GET['errorMessage'] : '';
+                $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
         }
     }
 
+    // Connecte l'utilisateur
     public function connexion()
     {
         $user = new User();
@@ -184,8 +183,6 @@ class UserController
         $user->setPassword(htmlspecialchars($_POST['password']));
         $email = $user->getEmail();
         $password = $user->getPassword();
-        $path = $this->helpers->pathToPublic('dsqdqs');
-        $userSession = $this->helpers->isLogged();
 
         include('../src/templates/configTwig.php');
         if (null !== $email || null !== $password) {
@@ -193,15 +190,11 @@ class UserController
             $verifyPassword = $this->verifyPassword();
 
             if (false === $verifyEmail) {
-                $path = $this->helpers->pathToPublic(12);
-                $twig->display('connexion.twig', ['errorMessage' => 'emailError', 'pathToPublic' => $path, 'userSession' => $userSession]);
+                $twig->display('connexion.twig', ['errorMessage' => 'emailError', 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
                 return;
-
             } elseif (false === $verifyPassword) {
-                $path = $this->helpers->pathToPublic(12);
-                $twig->display('connexion.twig', ['errorMessage' => 'passwordError', 'pathToPublic' => $path, 'userSession' => $userSession]);
+                $twig->display('connexion.twig', ['errorMessage' => 'passwordError', 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
                 return;
-
             } else {
                 $getUserQuery = 'SELECT email, password, id, role FROM users WHERE email = :email;';
                 $getUser = $this->pdo->prepare($getUserQuery);
@@ -216,26 +209,26 @@ class UserController
                     $verifyHash = password_verify($password, $fetchUser[0]['password']);
 
                     if (true !== $verifyHash) {
-                        $errorMessage = "passwordError";
-                        $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $path, 'userSession' => $userSession]);
+                        $errorMessage = 'passwordError';
+                        $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
                     } else {
                         $_SESSION['user']['logged'] = true;
                         $_SESSION['user']['role'] = $fetchUser[0]['role'];
-                        header("location: " . $path . "accueil");
+                        header('location: ' . $this->path . 'accueil');
                     }
                 } else {
-                    $errorMessage = "emailError";
-                    $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $path, 'userSession' => $userSession]);
+                    $errorMessage = 'emailError';
+                    $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
                 }
             }
         }
     }
 
-    public function deconnexion($numberOfPaths)
+    // Déconnecte l'utilisateur
+    public function deconnexion()
     {
         session_unset();
         session_destroy();
-        $path = $this->helpers->pathToPublic($numberOfPaths);
-        header("location:" . $path . "accueil");
+        header('location:' . $this->path . 'accueil');
     }
 }

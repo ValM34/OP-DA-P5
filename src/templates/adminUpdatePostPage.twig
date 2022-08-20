@@ -21,6 +21,7 @@
 			</p>
 		{% endif %}
 		<div class="container-col-center">
+			{{ postList.name }} {{ postList.surname }}
 			<form action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" enctype="multipart/form-data" class="col-center">
 				<div>
 					<label for="postFile">Ajouter/Modifier une image</label>

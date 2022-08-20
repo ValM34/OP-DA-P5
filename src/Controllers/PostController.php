@@ -12,28 +12,29 @@ class PostController
         $connectDb = new ConnectDb();
         $this->pdo = $connectDb->connect();
         $this->helpers = new Helpers();
+        $this->path = $this->helpers->pathToPublic();
     }
 
-    public function displayPostList($numberOfPaths)
+    // Affiche la liste des articles
+    public function displayPostList()
     {
         $getPostListQuery = 'SELECT * FROM blog_posts;';
         $getPostListQuery = 'SELECT * FROM blog_posts;';
         $getPostList = $this->pdo->prepare($getPostListQuery);
         $getPostList->execute();
         $fetchPostList = $getPostList->fetchAll();
-        $pathToPublic = new Helpers();
-        $path = $pathToPublic->pathToPublic($numberOfPaths);
         $userSession = $this->helpers->isLogged();
         $fetchPostList = $this->helpers->dateConverter($fetchPostList);
         include_once(__DIR__ . '/../templates/configTwig.php');
         if (true === $userSession['logged']) {
-            $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path, 'userSession' => $userSession]);
+            $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
         } else {
-            $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $path]);
+            $twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
         }
     }
 
-    public function displayPost($numberOfPaths, $id_post, $errorMsg)
+    // Affiche l'article séléctionné
+    public function displayPost($id_post, $errorMsg)
     {
         $getPostQuery = '
                 SELECT B.*, U.name, U.surname
@@ -59,7 +60,6 @@ class PostController
         ]);
         $fetchComments = $getComments->fetchAll();
 
-        $path = $this->helpers->pathToPublic($numberOfPaths);
         $userSession = $this->helpers->isLogged();
         $fetchPost = $this->helpers->dateConverter($fetchPost);
         $fetchComments = $this->helpers->dateConverter($fetchComments);
@@ -67,13 +67,14 @@ class PostController
         $twig->display('post.twig', [
             'post' => $fetchPost[0],
             'comments' => $fetchComments,
-            'pathToPublic' => $path,
+            'pathToPublic' => $this->path,
             'userSession' => $userSession,
             'errorMsg' => $errorMsg
         ]);
     }
 
-    public function addComment($id_post_owner, $numberOfPaths)
+    // Ajoute un commentaire
+    public function addComment($id_post_owner)
     {
         $id = $id_post_owner;
         $userSession = $this->helpers->isLogged();
@@ -102,7 +103,7 @@ class PostController
             if (empty($content)) {
                 $errorMsg = true;
                 include(__DIR__ . '/../templates/configTwig.php');
-                $this->displayPost($numberOfPaths, $id, $userSession, $errorMsg);
+                $this->displayPost($id, $userSession, $errorMsg);
                 return;
             }
 
