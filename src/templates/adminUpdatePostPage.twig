@@ -21,8 +21,21 @@
 			</p>
 		{% endif %}
 		<div class="container-col-center">
-			{{ postList.name }} {{ postList.surname }}
+			{{ postList.name }}
+			{{ postList.surname }}
 			<form action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" enctype="multipart/form-data" class="col-center">
+				<div>
+					<label for="idUser">Modifier le rédacteur de l'article</label>
+					<select name="idUser" id="idUser">
+						<option value="{{postList.idUser}}" selected>{{postList.name}}-{{postList.surname}}-{{postList.idUser}}</option>
+						{% for adminUser in adminUsersList %}
+							{% if postList.idUser is same as(adminUser.id) is same as(false) %}
+								<option value="{{adminUser.id}}">{{adminUser.name}}-{{adminUser.surname}}-{{adminUser.id}}</option>
+							{% endif %}
+						{% endfor %}
+
+					</select>
+				</div>
 				<div>
 					<label for="postFile">Ajouter/Modifier une image</label>
 					<input name="postFile" id="postFile" type="file">

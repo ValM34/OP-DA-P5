@@ -22,6 +22,7 @@ class Router
         $this->path = $this->helpers->pathToPublic();
     }
 
+    // Execute une page en fonction du chemin de l'url
     public function execute()
     {
         // On divise l'url dans un tableau $data en fonction de "/" 

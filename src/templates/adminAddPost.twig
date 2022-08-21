@@ -23,6 +23,17 @@
 		<div class="container-col-center">
 			<form action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
 				<div>
+					<label for="idUser">Modifier le rédacteur de l'article</label>
+					<select name="idUser" id="idUser">
+						<option value="{{userSession.id}}" selected>{{userSession.name}}-{{userSession.surname}}-{{userSession.id}}</option>
+						{% for adminUser in adminUsersList %}
+							{% if postList.idUser is same as(adminUser.id) is same as(false) %}
+								<option value="{{adminUser.id}}">{{adminUser.name}}-{{adminUser.surname}}-{{adminUser.id}}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+				<div>
 					<label for="postFile">Ajouter une image</label>
 					<input name="postFile" id="postFile" type="file">
 				</div>

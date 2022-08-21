@@ -90,9 +90,22 @@ class AdminPostController
     // Affiche la page pour ajouter un article
     public function displayAddPostPage()
     {
+        $displayAdminUsersQuery = 'SELECT id, name, surname FROM users WHERE role = "admin";';
+        $displayAdminUsers = $this->pdo->prepare($displayAdminUsersQuery);
+        $displayAdminUsers->execute();
+        $fetchAdminUsers = $displayAdminUsers->fetchAll();
         $userSession = $this->helpers->isLogged();
+
+        for ($i = 0; $i < count($fetchAdminUsers); $i++) {
+            if ($fetchAdminUsers[$i]['id'] === $userSession['id']) {
+                $userSession['name'] = $fetchAdminUsers[$i]['name'];
+                $userSession['surname'] = $fetchAdminUsers[$i]['surname'];
+                break;
+            }
+        }
+
         include_once(__DIR__ . '/../templates/configTwig.php');
-        $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminAddPost.twig', ['adminUsersList' => $fetchAdminUsers, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
     // Crée un article
@@ -103,6 +116,7 @@ class AdminPostController
         $title = htmlspecialchars($_POST['postTitle']);
         $content = htmlspecialchars($_POST['postContent']);
         $chapo = htmlspecialchars($_POST['postChapo']);
+        $idUser = htmlspecialchars($_POST['idUser']);
 
         if (empty($title) || empty($content) || empty($chapo)) {
             include_once(__DIR__ . '/../templates/configTwig.php');
@@ -132,7 +146,7 @@ class AdminPostController
             $addPostQuery = 'INSERT INTO blog_posts (idUser, title, content, chapo, img_src) VALUES (:idUser, :title, :content, :chapo, :img_src);';
             $addPost = $this->pdo->prepare($addPostQuery);
             $addPost->execute([
-                'idUser' => $id,
+                'idUser' => $idUser,
                 'title' => $title,
                 'content' => $content,
                 'chapo' => $chapo,
@@ -143,7 +157,7 @@ class AdminPostController
             $addPostQuery = 'INSERT INTO blog_posts (idUser, title, content, chapo) VALUES (:idUser, :title, :content, :chapo);';
             $addPost = $this->pdo->prepare($addPostQuery);
             $addPost->execute([
-                'idUser' => $id,
+                'idUser' => $idUser,
                 'title' => $title,
                 'content' => $content,
                 'chapo' => $chapo
@@ -156,8 +170,11 @@ class AdminPostController
     public function displayUpdatePostPage($id_post)
     {
         $userSession = $this->helpers->isLogged();
+        $displayAdminUsersQuery = 'SELECT id, name, surname FROM users WHERE role = "admin";';
+        $displayAdminUsers = $this->pdo->prepare($displayAdminUsersQuery);
+        $displayAdminUsers->execute();
+        $fetchAdminUsers = $displayAdminUsers->fetchAll();
 
-        // $displayUpdatePostQuery = 'SELECT * FROM blog_posts WHERE id = :id;';
         $displayUpdatePostQuery = '
         SELECT 
         U.name, U.surname,
@@ -165,14 +182,13 @@ class AdminPostController
         FROM comments C, users U, blog_posts B
         WHERE B.idUser = U.id
         AND B.id = :id
-        ;'
-        ;
+        ;';
         $displayUpdatePost = $this->pdo->prepare($displayUpdatePostQuery);
         $displayUpdatePost->execute(['id' => $id_post]);
         $fetchPost = $displayUpdatePost->fetchAll();
 
         include_once(__DIR__ . '/../templates/configTwig.php');
-        $twig->display('adminUpdatePostPage.twig', ['postList' => $fetchPost[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminUpdatePostPage.twig', ['adminUsersList' => $fetchAdminUsers, 'postList' => $fetchPost[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
     }
 
     // Modifie un article
@@ -182,6 +198,7 @@ class AdminPostController
         $title = htmlspecialchars($_POST['title']);
         $content = htmlspecialchars($_POST['content']);
         $chapo = htmlspecialchars($_POST['chapo']);
+        $idUser = htmlspecialchars($_POST['idUser']);
 
         if (empty($title) || empty($content) || empty($chapo)) {
             include_once(__DIR__ . '/../templates/configTwig.php');
@@ -208,7 +225,7 @@ class AdminPostController
             $getImgSrc->execute(['id' => $id_post]);
             $fetchImgSrc = $getImgSrc->fetchAll();
             // Suppression de l'ancienne l'image
-            if (($fetchImgSrc[0]['img_src'] === null) !== true) {
+            if ($fetchImgSrc[0]['img_src'] !== null) {
                 $pathToDeleteImg = __DIR__ . '/../../public/' . $fetchImgSrc[0]['img_src'];
                 unlink($pathToDeleteImg);
             }
@@ -216,24 +233,26 @@ class AdminPostController
             move_uploaded_file($tmpName, $fileName);
             $src = 'images/posts/' . $uniqueName . $fileExt;
 
-            $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, img_src = :img_src, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
+            $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, img_src = :img_src, idUser = :idUser, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
             $updatePost = $this->pdo->prepare($updatePostQuery);
             $updatePost->execute([
                 'id' => $id_post,
                 'title' => $title,
                 'content' => $content,
                 'chapo' => $chapo,
-                'img_src' => $src
+                'img_src' => $src,
+                'idUser' => $idUser
             ]);
             header('Location: ' . $this->path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
         } else {
-            $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
+            $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, idUser = :idUser, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
             $updatePost = $this->pdo->prepare($updatePostQuery);
             $updatePost->execute([
                 'id' => $id_post,
                 'title' => $title,
                 'content' => $content,
-                'chapo' => $chapo
+                'chapo' => $chapo,
+                'idUser' => $idUser
             ]);
             header('Location: ' . $this->path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
         }
@@ -283,7 +302,15 @@ class AdminPostController
         array_shift($arrayIdPosts);
         $deleteSelectedQuery = 'DELETE FROM blog_posts WHERE ID = :id_post;';
         $deleteSelected = $this->pdo->prepare($deleteSelectedQuery);
+        $getImgSrcQuery = 'SELECT img_src FROM blog_posts WHERE id = :id;';
+        $getImgSrc = $this->pdo->prepare($getImgSrcQuery);
         foreach ($arrayIdPosts as $id_post) {
+            $getImgSrc->execute(['id' => $id_post]);
+            $fetchImgSrc = $getImgSrc->fetchAll();
+            if ($fetchImgSrc[0]['img_src'] !== null) {
+                $pathToDeleteImg = __DIR__ . '/../../public/' . $fetchImgSrc[0]['img_src'];
+                unlink($pathToDeleteImg);
+            }
             $deleteSelected->execute([
                 'id_post' => $id_post
             ]);
