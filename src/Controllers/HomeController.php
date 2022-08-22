@@ -20,8 +20,9 @@ class HomeController
     {
         include('../src/templates/configTwig.php');
         $message = '';
-        if (isset($_GET['message'])) {
-            $message = $_GET['message'];
+        $get['message'] = htmlspecialchars($this->globals->getGET('message'));
+        if (isset($get['message'])) {
+            $message = $get['message'];
         }
         $userSession = $this->helpers->isLogged();
         $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $this->path, 'userSession' => $userSession]);

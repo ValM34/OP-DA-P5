@@ -5,6 +5,7 @@ namespace Controllers;
 use Models\User;
 use Models\ConnectDb;
 use Router\Helpers;
+use Globals\Globals;
 
 class UserController
 {
@@ -15,6 +16,7 @@ class UserController
         $this->helpers = new Helpers();
         $this->path = $this->helpers->pathToPublic();
         $this->userSession = $this->helpers->isLogged();
+        $this->globals = new Globals();
     }
 
     // Affiche la page d'inscription
@@ -84,11 +86,15 @@ class UserController
     {
         $user = new User();
 
+        $post['name'] = htmlspecialchars($this->globals->getPOST('name'));
+        $post['surname'] = htmlspecialchars($this->globals->getPOST('surname'));
+        $post['email'] = htmlspecialchars($this->globals->getPOST('email'));
+        $post['password'] = htmlspecialchars($this->globals->getPOST('password'));
         $user
-            ->setName(htmlspecialchars($_POST['name']))
-            ->setSurname(htmlspecialchars($_POST['surname']))
-            ->setEmail(htmlspecialchars($_POST['email']))
-            ->setPassword(htmlspecialchars($_POST['password']));
+            ->setName($post['name'])
+            ->setSurname($post['surname'])
+            ->setEmail($post['email'])
+            ->setPassword($post['password']);
 
         return $user;
     }
@@ -96,18 +102,22 @@ class UserController
     // Vérifie si les champs remplis correctement
     public function verifieSiLesChampsSontRemplis()
     {
+        $post['email'] = htmlspecialchars($this->globals->getPOST('email'));
         // Il faut une adresse email valide format : adresse@email.com
-        $emailRegex = preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $_POST['email']);
+        $emailRegex = preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $post['email']);
+        $post['password'] = htmlspecialchars($this->globals->getPOST('password'));
         // Password: il faut au minimum 8 caractères dont 1 chiffre, 1 lettre minuscule et une lettre majuscule
-        $passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $_POST['password']);
+        $passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $post['password']);
 
-        if (!isset($_POST['name'])) {
+        $post['name'] = htmlspecialchars($this->globals->getPOST('name'));
+        $post['surname'] = htmlspecialchars($this->globals->getPOST('surname'));
+        if (!isset($post['name'])) {
             $verify = false;
             return $verify;
         } else {
             if (
-                empty($_POST['name']) ||
-                empty($_POST['surname']) ||
+                empty($post['name']) ||
+                empty($post['surname']) ||
                 $emailRegex !== 1 ||
                 $passwordRegex !== 1
             ) {
@@ -122,10 +132,11 @@ class UserController
     // Vérifie si l'email est rempli correctement
     public function verifyEmail()
     {
+        $post['email'] = htmlspecialchars($this->globals->getPOST('email'));
         // Il faut une adresse email valide format : adresse@email.com
-        $emailRegex = preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $_POST['email']);
+        $emailRegex = preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $post['email']);
 
-        if (!isset($_POST['email'])) {
+        if (!isset($post['email'])) {
             $verify = false;
             return $verify;
         } else {
@@ -143,10 +154,11 @@ class UserController
     // Vérifie si le mot de passe est rempli correctement
     public function verifyPassword()
     {
+        $post['password'] = htmlspecialchars($this->globals->getPOST('password'));
         // Password: il faut au minimum 8 caractères dont 1 chiffre, 1 lettre minuscule et une lettre majuscule
-        $passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $_POST['password']);
+        $passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $post['password']);
 
-        if (!isset($_POST['password'])) {
+        if (!isset($post['password'])) {
             $verify = false;
             return $verify;
         } else {
@@ -170,7 +182,8 @@ class UserController
         if (!empty($_SESSION['user']['logged'])) {
             header('location: ' . $this->path . 'accueil');
         } else {
-            $errorMessage = isset($_GET['errorMessage']) ? $_GET['errorMessage'] : '';
+            $get['errorMessage'] = htmlspecialchars($this->globals->getGET('errorMessage'));
+            $errorMessage = isset($get['errorMessage']) ? $get['errorMessage'] : '';
                 $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
         }
     }
@@ -179,8 +192,10 @@ class UserController
     public function connexion()
     {
         $user = new User();
-        $user->setEmail(htmlspecialchars($_POST['email']));
-        $user->setPassword(htmlspecialchars($_POST['password']));
+        $post['email'] = htmlspecialchars($this->globals->getPOST('email'));
+        $post['password'] = htmlspecialchars($this->globals->getPOST('password'));
+        $user->setEmail($post['email']);
+        $user->setPassword($post['password']);
         $email = $user->getEmail();
         $password = $user->getPassword();
 
