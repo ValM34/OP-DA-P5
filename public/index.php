@@ -20,22 +20,21 @@ spl_autoload_register(function ($class) {
 
 // test 
 $globals = new Globals;
-// $globals->request['test'] = '<b>test</b>';
-// var_dump($globals->request);
-
-/*$globals->GET['test'] = '<b>test</b>';
-function tester($arg) {
-    return htmlspecialchars(strip_tags($arg));
-}*/
-$helpers = new Helpers;
+/*$helpers = new Helpers;
 $globals->GET['test'] = $helpers->cleaner('<b>test</b>');
-var_dump($globals->GET);
+var_dump($globals->GET);*/
+$get = $globals->getGET();
+
+$cleanedGET = array_map('strip_tags', $get);
+
+var_dump($cleanedGET);
+var_dump($cleanedGET);
+var_dump($cleanedGET);
+var_dump($cleanedGET);
+var_dump($cleanedGET);
+var_dump($cleanedGET);
 
 
-/*
-var_dump(array_map('tester', $globals->GET));
-var_dump($globals->GET);
-*/
 // fin test
 
 if(!isset($_SESSION['user']['logged'])) {

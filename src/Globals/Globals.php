@@ -2,6 +2,7 @@
 
 namespace Globals;
 
+/*
 class Globals
 {
     public ?array $SERVER = null;
@@ -21,14 +22,14 @@ class Globals
         $this->SESSION = array_map('htmlspecialchars', $_SESSION['user']);
     }
 }
-
-/*Class Globals
+*/
+Class Globals
 {
     private $GET;
 
     public function __construct()
     {
-        $this->GET = filter_input_array(INPUT_GET);
+        $this->GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_ENCODED);
         $this->ENV = filter_input_array(INPUT_ENV);
     }
 
@@ -49,5 +50,5 @@ class Globals
         return $ENV;
     }
 }
-*/
+
 ?>
