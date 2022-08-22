@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Router\Helpers;
 use Models\Contact;
+use Globals\Globals;
 
 class HomeController
 {
@@ -11,6 +12,7 @@ class HomeController
     {
         $this->helpers = new Helpers();
         $this->path = $this->helpers->pathToPublic();
+        $this->globals = new Globals();
     }
 
     // Affiche la page d'accueil
@@ -30,11 +32,17 @@ class HomeController
     {
         $contact = new Contact();
 
-        $contact->setSujet(htmlspecialchars($_POST['sujet']));
-        $contact->setCorp(htmlspecialchars($_POST['corp']));
-        $contact->setName(htmlspecialchars($_POST['name']));
-        $contact->setLastName(htmlspecialchars($_POST['lastName']));
-        $contact->setEmail(htmlspecialchars($_POST['email']));
+        $post['sujet'] = htmlspecialchars($this->globals->getPOST('sujet'));
+        $post['corp'] = htmlspecialchars($this->globals->getPOST('corp'));
+        $post['name'] = htmlspecialchars($this->globals->getPOST('name'));
+        $post['lastName'] = htmlspecialchars($this->globals->getPOST('lastName'));
+        $post['email'] = htmlspecialchars($this->globals->getPOST('email'));
+        $contact->setSujet($post['sujet']);
+        $contact->setCorp($post['corp']);
+        $contact->setName($post['name']);
+        $contact->setLastName($post['lastName']);
+        $contact->setEmail($post['email']);
+        
         $contact->setDest($_ENV['contactEmail']);
         $contact->setHeaders('From: ' . $_ENV['contactEmail']);
 

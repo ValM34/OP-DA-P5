@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Router\Helpers;
 use Models\ConnectDb;
+use Globals\Globals;
 
 class AdminPostController
 {
@@ -19,6 +20,7 @@ class AdminPostController
         $this->helpers->isAdmin();
         $this->adminLink = $_ENV['adminLink'];
         $this->path = $this->helpers->pathToPublic();
+        $this->globals = new Globals;
     }
 
     // Affiche la page d'accueil de la page d'administration
@@ -113,10 +115,14 @@ class AdminPostController
     {
         $userSession = $this->helpers->isLogged();
         $id = $_SESSION['user']['id'];
-        $title = htmlspecialchars($_POST['postTitle']);
-        $content = htmlspecialchars($_POST['postContent']);
-        $chapo = htmlspecialchars($_POST['postChapo']);
-        $idUser = htmlspecialchars($_POST['idUser']);
+        $post['postTitle'] = htmlspecialchars($this->globals->getPOST('postTitle'));
+        $post['postContent'] = htmlspecialchars($this->globals->getPOST('postContent'));
+        $post['postChapo'] = htmlspecialchars($this->globals->getPOST('postChapo'));
+        $post['idUser'] = htmlspecialchars($this->globals->getPOST('idUser'));
+        $title = $post['postTitle'];
+        $content = $post['postContent'];
+        $chapo = $post['postChapo'];
+        $idUser = $post['idUser'];
 
         if (empty($title) || empty($content) || empty($chapo)) {
             include_once(__DIR__ . '/../templates/configTwig.php');
@@ -195,10 +201,14 @@ class AdminPostController
     public function updatePost($id_post)
     {
         $userSession = $this->helpers->isLogged();
-        $title = htmlspecialchars($_POST['title']);
-        $content = htmlspecialchars($_POST['content']);
-        $chapo = htmlspecialchars($_POST['chapo']);
-        $idUser = htmlspecialchars($_POST['idUser']);
+        $post['title'] = htmlspecialchars($this->globals->getPOST('title'));
+        $post['content'] = htmlspecialchars($this->globals->getPOST('content'));
+        $post['chapo'] = htmlspecialchars($this->globals->getPOST('chapo'));
+        $post['idUser'] = htmlspecialchars($this->globals->getPOST('idUser'));
+        $title = $post['title'];
+        $content = $post['content'];
+        $chapo = $post['chapo'];
+        $idUser = $post['idUser'];
 
         if (empty($title) || empty($content) || empty($chapo)) {
             include_once(__DIR__ . '/../templates/configTwig.php');

@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Models\ConnectDb;
 use Router\Helpers;
+use Globals\Globals;
 
 class PostController
 {
@@ -13,6 +14,7 @@ class PostController
         $this->pdo = $connectDb->connect();
         $this->helpers = new Helpers();
         $this->path = $this->helpers->pathToPublic();
+        $this->globals = new Globals;
     }
 
     // Affiche la liste des articles
@@ -98,8 +100,10 @@ class PostController
 
             $id_user = $_SESSION['user']['id'];
             $id_post = $id;
-            $content = htmlspecialchars($_POST['content']);
-
+            $post = $this->globals->getPOST('content');
+            $cleanedPOST = strip_tags($post);
+            $content = htmlspecialchars($cleanedPOST);
+            
             if (empty($content)) {
                 $errorMsg = true;
                 include(__DIR__ . '/../templates/configTwig.php');
