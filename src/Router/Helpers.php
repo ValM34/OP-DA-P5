@@ -94,4 +94,9 @@ class Helpers
         }
         return $array;
     }
+
+    // Nettoie et sécurise les informations d'une variable
+    public function cleaner($arg) {
+        return htmlspecialchars(strip_tags($arg));
+    }
 }

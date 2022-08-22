@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Router\Helpers;
 use Models\ConnectDb;
+use Globals\Globals;
 
 class AdminPostController
 {
@@ -17,7 +18,9 @@ class AdminPostController
         $this->pdo = $connectDb->connect();
         $this->helpers = new Helpers();
         $this->helpers->isAdmin();
-        $this->adminLink = $_ENV['adminLink'];
+        $globals = new Globals;
+        $globals->ENV['adminLink'] = $this->helpers->cleaner($_ENV['adminLink']);
+        $this->adminLink = $globals->ENV['adminLink'];
         $this->path = $this->helpers->pathToPublic();
     }
 
