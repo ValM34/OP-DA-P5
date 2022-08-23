@@ -220,7 +220,7 @@ class UserController
                     'email' => $email
                 ]);
                 $fetchUser = $getUser->fetchAll();
- 
+
                 if (isset($fetchUser[0]['id'])) {
                     $idUser = $fetchUser[0]['id'];
                     $_SESSION['user']['id'] = $idUser;
