@@ -43,7 +43,7 @@ function linkToPublishSelected() {
       window.location.href = `touslesarticles/publishselected/${idList}`;
     }
   });
-};
+}
 
 // Envoie les informations des articles séléctionnés au serveur pour masquer les articles
 function linkTohideSelected() {
@@ -56,14 +56,14 @@ function linkTohideSelected() {
   selectPublishAllLink.addEventListener("click", (e) => {
     e.preventDefault();
 
-    selectAllCheckbox.forEach(checkbox => {
+    selectAllCheckbox.forEach((checkbox) => {
       if (checkbox.checked === true) {
         let id_post = checkbox.id;
         arrayCheckbox.push(id_post.split("-")[1]);
       };
     });
 
-    arrayCheckbox.forEach(checkbox => {
+    arrayCheckbox.forEach((checkbox) => {
       idList += "-" + checkbox;
     });
     if (arrayCheckbox[0]) {
