@@ -5,7 +5,6 @@ session_start();
 use Router\Router;
 // test 
 use Globals\Globals;
-use Router\Helpers;
 // fin test
 
 require('../vendor/autoload.php');
@@ -18,33 +17,17 @@ spl_autoload_register(function ($class) {
     }
 });
 
-// test 
+// test
+
 $globals = new Globals;
-
-
-
-
-
+$session = $globals->getSESSION();
 
 // fin test
 
-if (!isset($_SESSION['user']['logged'])) {
-    $_SESSION['user']['logged'] = false;
-    $_SESSION['user']['role'] = 'visitor';
+if (!isset($session['user']['logged'])) {
+    $session['user']['logged'] = false;
+    $session['user']['role'] = 'visitor';
 }
-/*if (isset($_SESSION['user'])) {
-    if(isset($_SESSION['user']['logged']) & $_SESSION['user']['logged']) {
-        echo 'Vous êtes connecté.';
-    } else {
-        echo 'Vous êtes déconnecté';
-    }
-} else {
-    echo 'Vous êtes déconnecté';
-}*/
-
-
-
-
 
 $router = new Router();
 $router->execute();

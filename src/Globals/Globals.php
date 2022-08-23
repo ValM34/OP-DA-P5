@@ -7,6 +7,7 @@ class Globals
     private $GET;
     private $POST;
     public ?array $FILES = null;
+    public ?array $SESSION = null;
 
     public function __construct()
     {

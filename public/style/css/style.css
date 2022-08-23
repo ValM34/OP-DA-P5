@@ -285,12 +285,14 @@ button:hover {
   height: 500px;
 }
 
-.validation-msg-container, .error-msg-container {
+.validation-msg-container,
+.error-msg-container {
   display: flex;
   justify-content: center;
 }
 
-.error-msg, .validation-msg {
+.error-msg,
+.validation-msg {
   text-align: center;
   padding: 15px 30px;
 }

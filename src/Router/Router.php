@@ -32,8 +32,10 @@ class Router
         $data = explode('/', $this->url);
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
         // $numberOfPaths = count($data);
-        $userSession['logged'] = false;
-        
+
+        // test (((((((((((((((((((((((())))))))))))))))))))))))
+        // $userSession['logged'] = false;
+        // fin test (((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))
 
 
         // Je prépare ma variable qui me permet de créer mes liens dynamiques

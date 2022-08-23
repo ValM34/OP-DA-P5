@@ -2,11 +2,11 @@
 @import 'mixins';
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 18px;
-    font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-size: 18px;
+	font-family: 'Roboto', sans-serif;
 }
 
 h1,
@@ -14,308 +14,313 @@ h2,
 h3,
 h4,
 .title {
-    font-family: 'Oswald', sans-serif;
+	font-family: 'Oswald', sans-serif;
 }
 
 a {
-    text-decoration: none;
-    color: $orange;
-    font-weight: 700;
-    transition: color ease-in-out 0.3s;
+	text-decoration: none;
+	color: $orange;
+	font-weight: 700;
+	transition: color ease-in-out 0.3s;
 }
 
 a:hover {
-    color: $blue;
+	color: $blue;
 }
 
 header {
-    display: flex;
-    background-color: $blue;
+	display: flex;
+	background-color: $blue;
 }
 
 .h-navlinks {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
 
 .h-navlink:hover {
-    color: $orange;
+	color: $orange;
 }
 
 .h-navlink {
-    font-size: 25px;
-    margin-right: 15px;
-    padding: 5px 15px;
-    text-decoration: none;
-    color: $white;
+	font-size: 25px;
+	margin-right: 15px;
+	padding: 5px 15px;
+	text-decoration: none;
+	color: $white;
 }
 
 section {
-    padding: 50px 0;
+	padding: 50px 0;
 }
 
 section:nth-child(even) {
-    background-color: $grey;
+	background-color: $grey;
 }
 
 section:nth-child(odd) {
-    background-color: $grey2;
+	background-color: $grey2;
 }
 
 h1 {
-    font-size: 50px;
-    text-align: center;
-    margin: 10px 0 30px 0;
+	font-size: 50px;
+	text-align: center;
+	margin: 10px 0 30px 0;
 }
 
 h2 {
-    font-size: 35px;
-    text-align: center;
-    margin: 10px 0 20px 0;
+	font-size: 35px;
+	text-align: center;
+	margin: 10px 0 20px 0;
 }
 
 h3 {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 .input-txt {
-    width: 300px;
-    height: 45px;
-    border: 2px solid darken($grey, 10%);
-    border-radius: 8px;
-    outline: none;
-    margin-bottom: 5px;
-    padding: 0 10px;
+	width: 300px;
+	height: 45px;
+	border: 2px solid darken($grey, 10%);
+	border-radius: 8px;
+	outline: none;
+	margin-bottom: 5px;
+	padding: 0 10px;
 }
 
 input:focus,
 textarea:focus {
-    border: 2px solid $blue;
+	border: 2px solid $blue;
 }
 
 textarea {
-    width: 600px;
-    height: 200px;
-    border: 2px solid darken($grey, 10%);
-    border-radius: 8px;
-    outline: none;
-    margin-bottom: 5px;
-    padding: 5px 10px;
+	width: 600px;
+	height: 200px;
+	border: 2px solid darken($grey, 10%);
+	border-radius: 8px;
+	outline: none;
+	margin-bottom: 5px;
+	padding: 5px 10px;
 }
 
 button {
-    margin: 10px 0;
-    font-weight: 700;
-    border: 2px solid $blue;
-    border-radius: 8px;
-    padding: 10px 30px;
-    background-color: $blue;
-    color: $white;
-    transition: background-color ease-in-out 0.3s, color ease-in-out 0.3s;
+	margin: 10px 0;
+	font-weight: 700;
+	border: 2px solid $blue;
+	border-radius: 8px;
+	padding: 10px 30px;
+	background-color: $blue;
+	color: $white;
+	transition: background-color ease-in-out 0.3s, color ease-in-out 0.3s;
 }
 
 button:hover {
-    background-color: transparent;
-    color: $blue;
-    cursor: pointer;
+	background-color: transparent;
+	color: $blue;
+	cursor: pointer;
 }
 
 .img-valentin {
-    width: 300px;
+	width: 300px;
 }
 
 .flex-center {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .flex-col-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .blogPostsList {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .blogPostsList__container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    max-width: 1000px;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	max-width: 1000px;
 }
 
 .thumbnail-small {
-    height: 200px;
-    width: 200px;
+	height: 200px;
+	width: 200px;
 }
 
 .thumbnail-blogPostsList {
-    display: inline-block;
-    padding: 5px;
-    border: 2px solid $blue;
-    border-radius: 5px;
-    margin: 15px;
+	display: inline-block;
+	padding: 5px;
+	border: 2px solid $blue;
+	border-radius: 5px;
+	margin: 15px;
 
-    &__title {
-        display: block;
-        text-align: center;
-    }
+	&__title {
+		display: block;
+		text-align: center;
+	}
 
-    &__p {
-        display: block;
-        text-align: center;
-    }
+	&__p {
+		display: block;
+		text-align: center;
+	}
 
-    &__link {
-        display: block;
-        text-align: center;
-    }
+	&__link {
+		display: block;
+		text-align: center;
+	}
 }
 
 .blogPost-main {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 
-    &__container {
-        width: 80%;
-    }
+	&__container {
+		width: 80%;
+	}
 }
 
 .blogPost-comments {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-    &__container {
-        width: 80%;
-        padding: 15px;
-        margin-bottom: 15px;
-        border: 2px solid darken($grey, 30%);
-    }
-    &__container:nth-child(odd) {
-        background-color: $grey;
-    }
-    &__container:nth-child(even) {
-        background-color: $grey;
-    }
+	&__container {
+		width: 80%;
+		padding: 15px;
+		margin-bottom: 15px;
+		border: 2px solid darken($grey, 30%);
+	}
+
+	&__container:nth-child(odd) {
+		background-color: $grey;
+	}
+
+	&__container:nth-child(even) {
+		background-color: $grey;
+	}
 }
 
 .blogPost-comment {
-    display: flex;
-    justify-content: center;
-    text-align: center;
+	display: flex;
+	justify-content: center;
+	text-align: center;
 
-    &__container {
-        width: 80%;
-    }
+	&__container {
+		width: 80%;
+	}
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+	&__form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
-        &__textarea {
-            width: 100%;
-            height: 200px;
-        }
-    }
+		&__textarea {
+			width: 100%;
+			height: 200px;
+		}
+	}
 
 }
 
 // Blog post list admin
 
 .postListAdmin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .postListAdmin__post,
 .checkbox-all {
-    display: flex;
-    width: 1000px;
-    margin-bottom: 3px;
-    background-color: lighten($grey2, 20%);
-    transition: background-color 0.3s ease-in-out;
+	display: flex;
+	width: 1000px;
+	margin-bottom: 3px;
+	background-color: lighten($grey2, 20%);
+	transition: background-color 0.3s ease-in-out;
 }
 
 .checkbox-all {
-    padding: 10px 0;
+	padding: 10px 0;
 }
 
 .postListAdmin__post:hover {
-    background-color: $grey2;
+	background-color: $grey2;
 }
 
 .postListAdmin__img {
-    height: 90px;
-    margin: 5px;
+	height: 90px;
+	margin: 5px;
 }
 
 .postAdmin__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 }
 
 .postAdmin__linkContainer {
-    display: flex;
+	display: flex;
 }
 
 .postAdmin__title {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 .postAdmin__link {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 .blogPostListAdminCheckbox {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 // add blog post admin
 
 .container-col-center {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .col-center>div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 15px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 15px 0;
 }
 
 .postTitle-textarea {
-    height: 40px;
+	height: 40px;
 }
 
 .postContent-textarea {
-    height: 500px;
+	height: 500px;
 }
 
-.validation-msg-container, .error-msg-container {
-    display: flex;
-    justify-content: center;
+.validation-msg-container,
+.error-msg-container {
+	display: flex;
+	justify-content: center;
 }
 
-.error-msg, .validation-msg {
-    text-align: center;
-    padding: 15px 30px;
+.error-msg,
+.validation-msg {
+	text-align: center;
+	padding: 15px 30px;
 }
 
 .validation-msg {
-    border: 2px solid $green;
-    background-color: lighten($green, 60%);
+	border: 2px solid $green;
+	background-color: lighten($green, 60%);
 }
+
 .error-msg {
-    border: 2px solid $red;
-    background-color: lighten($red, 40%);
+	border: 2px solid $red;
+	background-color: lighten($red, 40%);
 }
