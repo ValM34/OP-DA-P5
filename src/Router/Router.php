@@ -112,7 +112,7 @@ class Router
                     $errorPage->display();
                 }
                 break;
-            case $this->globals->getSESSION('adminLink'):
+            case $this->globals->getENV('adminLink'):
                 if (!isset($data[1])) {
                     $adminHomePage = new AdminPostController();
                     $adminHomePage->displayHomePage();

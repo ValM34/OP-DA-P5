@@ -56,8 +56,6 @@ class Helpers
 			}
 		} else {
 			$session['user'] = $this->globals->getSESSION('user');
-			var_dump($session);
-			var_dump($_SESSION);
 			return $session['user'];
 		}
 	}
