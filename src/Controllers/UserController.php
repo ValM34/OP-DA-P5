@@ -32,7 +32,7 @@ class UserController
         $verify = $this->verifieSiLesChampsSontRemplis();
         if (false === $verify) {
             include_once(__DIR__ . '../../templates/configTwig.php');
-            echo $twig->render('subscribe.twig', [
+            $twig->display('subscribe.twig', [
                 'suscribedSuccessfully' => false,
                 'suscribedFailed' => false,
                 'pathToPublic' => $this->path,
@@ -53,7 +53,7 @@ class UserController
             if (isset($fetchUsers[0])) {
                 $suscribedFailed = "L'email existe déjà!";
                 include_once(__DIR__ . '../../templates/configTwig.php');
-                echo $twig->render('subscribe.twig', [
+                $twig->display('subscribe.twig', [
                     'suscribedSuccessfully' => false,
                     'suscribedFailed' => $suscribedFailed,
                     'pathToPublic' => $this->path,
@@ -71,7 +71,7 @@ class UserController
                 ]);
                 $suscribedSuccessfully = 'Votre inscription a bien été validée';
                 include_once(__DIR__ . '../../templates/configTwig.php');
-                echo $twig->render('subscribe.twig', [
+                $twig->display('subscribe.twig', [
                     'suscribedSuccessfully' => $suscribedSuccessfully,
                     'suscribedFailed' => false,
                     'pathToPublic' => $this->path,

@@ -63,11 +63,7 @@ class Contact
     // Envoie le message de succès ou d'erreur à l'issue de l'envoi d'un mail
     public function sendEmail($dest, $sujet, $corp, $headers)
     {
-        if (mail($dest, $sujet, $corp, $headers)) {
-            echo 'Email envoyé avec succès à' . $dest . '...';
-        } else {
-            echo "Échec de l'envoi de l'email...";
-        }
+        mail($dest, $sujet, $corp, $headers);
     }
 
 }

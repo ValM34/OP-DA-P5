@@ -47,19 +47,15 @@ class Helpers
         if (null !== $this->globals->getSESSION()) {
             $session['user'] = $this->globals->getSESSION('user');
             if (isset($session['user']['logged']) & $session['user']['logged'] === true & isset($session['user']['role']) & $session['user']['role'] === 'admin') {
-                echo 'Vous êtes connecté.';
                 $session['user']['adminLink'] = $this->adminLink;
                 return $session['user'];
             } elseif (isset($session['user']['logged']) & $session['user']['logged'] === true) {
-                echo 'Vous êtes connecté.';
                 return $session['user'];
             } else {
-                echo 'Vous êtes déconnecté';
                 return $session['user'];
             }
         } else {
             $session['user'] = $this->globals->getSESSION('user');
-            echo 'Vous êtes déconnecté';
             return $session['user'];
         }
     }
@@ -73,13 +69,13 @@ class Helpers
                 include('../src/templates/configTwig.php');
                 $path = $this->pathToPublic();
                 $twig->display('errorPage.twig', ['pathToPublic' => $path]);
-                die;
+                exit;
             }
         } else {
             include('../src/templates/configTwig.php');
             $path = $this->pathToPublic();
             $twig->display('errorPage.twig', ['pathToPublic' => $path]);
-            die;
+            exit;
         }
     }
 
@@ -102,7 +98,7 @@ class Helpers
     }
 
     // Nettoie et sécurise les informations d'une variable
-    public function cleaner($arg) {
+    /*public function cleaner($arg) {
         return htmlspecialchars(strip_tags($arg));
-    }
+    }*/
 }

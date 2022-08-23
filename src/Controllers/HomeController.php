@@ -51,7 +51,6 @@ class HomeController
 
         $dest = $contact->getDest();
         $headers = $contact->getHeaders();
-        echo $dest . ' / ' . $headers;
         $headers = $contact->getHeaders();
         $sujet = $contact->getTitle();
         $corp = $contact->getCorp();
