@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 * {
     margin: 0;
@@ -32,18 +33,6 @@ header {
     background-color: $blue;
 }
 
-section {
-    padding: 50px 0;
-}
-
-section:nth-child(even) {
-    background-color: $grey;
-}
-
-section:nth-child(odd) {
-    background-color: $grey2;
-}
-
 .h-navlinks {
     display: flex;
     justify-content: center;
@@ -60,6 +49,18 @@ section:nth-child(odd) {
     padding: 5px 15px;
     text-decoration: none;
     color: $white;
+}
+
+section {
+    padding: 50px 0;
+}
+
+section:nth-child(even) {
+    background-color: $grey;
+}
+
+section:nth-child(odd) {
+    background-color: $grey2;
 }
 
 h1 {
