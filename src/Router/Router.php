@@ -19,7 +19,6 @@ class Router
         $this->globals = new Globals();
         // On enlève les '/' au début et à la fin de l'url (s'il y en a)
         $this->url = trim($this->globals->getGET('url'), '/');
-        $this->adminLink = $_ENV['adminLink'];
         $this->helpers = new Helpers();
         $this->path = $this->helpers->pathToPublic();
     }
@@ -113,7 +112,7 @@ class Router
                     $errorPage->display();
                 }
                 break;
-            case $this->adminLink:
+            case $this->globals->getSESSION('adminLink'):
                 if (!isset($data[1])) {
                     $adminHomePage = new AdminPostController();
                     $adminHomePage->displayHomePage();

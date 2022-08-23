@@ -10,7 +10,6 @@ class AdminPostController
 {
     private $pdo;
     private $helpers;
-    private $adminLink;
 
     public function __construct()
     {

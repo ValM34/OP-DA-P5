@@ -11,8 +11,8 @@ class Helpers
 
 	public function __construct()
 	{
-		$this->adminLink = $_ENV['adminLink'];
 		$this->globals = new Globals();
+		$this->globals->getENV('adminLink');
 	}
 	/*public function pathToPublic($numberOfPaths)
     {
@@ -44,12 +44,10 @@ class Helpers
 	// Vérifie si un utilisateur est connecté
 	public function isLogged()
 	{
-		if (!isset($this->globals->getSESSION()['user'])) {
+		if (isset($this->globals->getSESSION()['user'])) {
 			$session['user'] = $this->globals->getSESSION('user');
-			var_dump($session);
-			var_dump($_SESSION);
 			if (isset($session['user']['logged']) & $session['user']['logged'] === true & isset($session['user']['role']) & $session['user']['role'] === 'admin') {
-				$session['user']['adminLink'] = $this->adminLink;
+				$session['user']['adminLink'] = $this->globals->getENV('adminLink');
 				return $session['user'];
 			} elseif (isset($session['user']['logged']) & $session['user']['logged'] === true) {
 				return $session['user'];
@@ -58,6 +56,8 @@ class Helpers
 			}
 		} else {
 			$session['user'] = $this->globals->getSESSION('user');
+			var_dump($session);
+			var_dump($_SESSION);
 			return $session['user'];
 		}
 	}

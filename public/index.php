@@ -16,6 +16,7 @@ spl_autoload_register(function ($class) {
 });
 
 $globals = new Globals();
+
 if (!isset($globals->getSESSION('user')['logged'])) {
     $_SESSION['user']['logged'] = false;
     $_SESSION['user']['role'] = 'visitor';
