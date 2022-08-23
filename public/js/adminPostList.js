@@ -101,4 +101,3 @@ checkbox();
 linkToPublishSelected();
 linkTohideSelected();
 linkToDeleteSelected();
- 
