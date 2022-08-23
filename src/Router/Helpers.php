@@ -69,13 +69,13 @@ class Helpers
                 include('../src/templates/configTwig.php');
                 $path = $this->pathToPublic();
                 $twig->display('errorPage.twig', ['pathToPublic' => $path]);
-                exit;
+                die;
             }
         } else {
             include('../src/templates/configTwig.php');
             $path = $this->pathToPublic();
             $twig->display('errorPage.twig', ['pathToPublic' => $path]);
-            exit;
+            die;
         }
     }
 
