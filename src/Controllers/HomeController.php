@@ -46,8 +46,8 @@ class HomeController
         $contact->setLastName($post['lastName']);
         $contact->setEmail($post['email']);
         
-        $contact->setDest($_ENV['contactEmail']);
-        $contact->setHeaders('From: ' . $_ENV['contactEmail']);
+        $contact->setDest($this->globals->getENV('contactEmail'));
+        $contact->setHeaders('From: ' . $this->globals->getENV('contactEmail'));
 
         $dest = $contact->getDest();
         $headers = $contact->getHeaders();

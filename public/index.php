@@ -3,9 +3,7 @@
 session_start();
 
 use Router\Router;
-// test 
 use Globals\Globals;
-// fin test
 
 require('../vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
@@ -17,16 +15,10 @@ spl_autoload_register(function ($class) {
     }
 });
 
-// test
-
-$globals = new Globals;
-$session = $globals->getSESSION();
-
-// fin test
-
-if (!isset($session['user']['logged'])) {
-    $session['user']['logged'] = false;
-    $session['user']['role'] = 'visitor';
+$globals = new Globals();
+if (!isset($globals->getSESSION('user')['logged'])) {
+    $_SESSION['user']['logged'] = false;
+    $_SESSION['user']['role'] = 'visitor';
 }
 
 $router = new Router();

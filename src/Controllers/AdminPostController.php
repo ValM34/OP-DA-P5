@@ -16,11 +16,11 @@ class AdminPostController
     {
         $connectDb = new ConnectDb();
         $this->pdo = $connectDb->connect();
+				$this->globals = new Globals();
+				$this->globals->getENV('adminLink');
         $this->helpers = new Helpers();
         $this->helpers->isAdmin();
-        $this->adminLink = $_ENV['adminLink'];
         $this->path = $this->helpers->pathToPublic();
-        $this->globals = new Globals();
     }
 
     // Affiche la page d'accueil de la page d'administration
@@ -28,7 +28,7 @@ class AdminPostController
     {
         include_once(__DIR__ . '/../templates/configTwig.php');
         $userSession = $this->helpers->isLogged();
-        $twig->display('adminHomePage.twig', ['userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminHomePage.twig', ['userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
     }
 
     // Affiche la liste des articles
@@ -41,7 +41,7 @@ class AdminPostController
         $userSession = $this->helpers->isLogged();
         include_once(__DIR__ . '/../templates/configTwig.php');
         $fetchPostList = $this->helpers->dateConverter($fetchPostList);
-        $twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
     }
 
     // Change le statut d'un article pour le masquer sur le site
@@ -50,7 +50,7 @@ class AdminPostController
             $hidePostQuery = 'UPDATE blog_posts SET status = "hidden" WHERE id = :id;';
             $hidePost = $this->pdo->prepare($hidePostQuery);
             $hidePost->execute(['id' => $id_post]);
-            header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+            header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
     }
 
     // Change le statut d'un article pour le publier sur le site
@@ -59,7 +59,7 @@ class AdminPostController
             $publishPostQuery = 'UPDATE blog_posts SET status = "published" WHERE id = :id;';
             $publishPost = $this->pdo->prepare($publishPostQuery);
             $publishPost->execute(['id' => $id_post]);
-            header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+            header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
     }
 
     // Supprime un article
@@ -78,7 +78,7 @@ class AdminPostController
         $hidePostQuery = 'DELETE FROM blog_posts WHERE id = :id;';
         $hidePost = $this->pdo->prepare($hidePostQuery);
         $hidePost->execute(['id' => $id_post]);
-        header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
     }
 
     // Affiche la page pour ajouter un article
@@ -99,7 +99,7 @@ class AdminPostController
         }
 
         include_once(__DIR__ . '/../templates/configTwig.php');
-        $twig->display('adminAddPost.twig', ['adminUsersList' => $fetchAdminUsers, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminAddPost.twig', ['adminUsersList' => $fetchAdminUsers, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
     }
 
     // Crée un article
@@ -117,7 +117,7 @@ class AdminPostController
 
         if (empty($title) || empty($content) || empty($chapo)) {
             include_once(__DIR__ . '/../templates/configTwig.php');
-            $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+            $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
             return;
         }
 
@@ -133,7 +133,7 @@ class AdminPostController
             $fileName = __DIR__ . '/../../public/images/posts/' .  $uniqueName . $fileExt;
             if ($file['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
                 include_once(__DIR__ . '/../templates/configTwig.php');
-                $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+                $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
                 return;
             }
 
@@ -150,7 +150,7 @@ class AdminPostController
                 'chapo' => $chapo,
                 'img_src' => $src
             ]);
-            header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+            header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
         } else {
             $addPostQuery = 'INSERT INTO blog_posts (idUser, title, content, chapo) VALUES (:idUser, :title, :content, :chapo);';
             $addPost = $this->pdo->prepare($addPostQuery);
@@ -160,7 +160,7 @@ class AdminPostController
                 'content' => $content,
                 'chapo' => $chapo
             ]);
-            header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+            header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
         }
     }
 
@@ -186,7 +186,7 @@ class AdminPostController
         $fetchPost = $displayUpdatePost->fetchAll();
 
         include_once(__DIR__ . '/../templates/configTwig.php');
-        $twig->display('adminUpdatePostPage.twig', ['adminUsersList' => $fetchAdminUsers, 'postList' => $fetchPost[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminUpdatePostPage.twig', ['adminUsersList' => $fetchAdminUsers, 'postList' => $fetchPost[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
     }
 
     // Modifie un article
@@ -204,7 +204,7 @@ class AdminPostController
 
         if (empty($title) || empty($content) || empty($chapo)) {
             include_once(__DIR__ . '/../templates/configTwig.php');
-            $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+            $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
             return;
         }
 
@@ -220,7 +220,7 @@ class AdminPostController
             $fileName = __DIR__ . '/../../public/images/posts/' .  $uniqueName . $fileExt;
             if ($file['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
                 include_once(__DIR__ . '/../templates/configTwig.php');
-                $twig->display('adminUpdatePostPage.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
+                $twig->display('adminUpdatePostPage.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
                 return;
             }
             $getImgSrcQuery = 'SELECT img_src FROM blog_posts WHERE id = :id;';
@@ -246,7 +246,7 @@ class AdminPostController
                 'img_src' => $src,
                 'idUser' => $idUser
             ]);
-            header('Location: ' . $this->path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
+            header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
         } else {
             $updatePostQuery = 'UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, idUser = :idUser, updated_at = CURRENT_TIMESTAMP WHERE id = :id;';
             $updatePost = $this->pdo->prepare($updatePostQuery);
@@ -257,7 +257,7 @@ class AdminPostController
                 'chapo' => $chapo,
                 'idUser' => $idUser
             ]);
-            header('Location: ' . $this->path . $this->adminLink . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
+            header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/article/' . $id_post . '/afficher'); // Envoyer vers la page de vue de l'article
         }
     }
 
@@ -265,7 +265,7 @@ class AdminPostController
     public function isUser($twig)
     {
         $userSession = $this->helpers->isLogged();
-        $twig->display('home.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('home.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
     }*/
 
     // Change le statut en 'published' tous les articles séléctionnés
@@ -280,7 +280,7 @@ class AdminPostController
                 'id_post' => $id_post
             ]);
         }
-        header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
     }
 
     // Change le statut en 'hidden' tous les articles séléctionnés
@@ -295,7 +295,7 @@ class AdminPostController
                 'id_post' => $id_post
             ]);
         }
-        header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
     }
 
     // Supprime tous les articles séléctionnés
@@ -319,7 +319,7 @@ class AdminPostController
             ]);
         }
         $path = $this->helpers->pathToPublic();
-        header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/touslesarticles');
     }
 
     // Affiche la liste des commentaires
@@ -339,7 +339,7 @@ class AdminPostController
         $userSession = $this->helpers->isLogged();
         include_once(__DIR__ . '/../templates/configTwig.php');
         $fetchCommentsList = $this->helpers->dateConverter($fetchCommentsList);
-        $twig->display('adminCommentsList.twig', ['CommentsList' => $fetchCommentsList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink]);
+        $twig->display('adminCommentsList.twig', ['CommentsList' => $fetchCommentsList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
     }
 
     // Change le statut d'un commentaire en 'published'
@@ -350,7 +350,7 @@ class AdminPostController
         $publishCommentQuery = 'UPDATE comments SET status = "published" WHERE id = :id;';
         $publishComment = $this->pdo->prepare($publishCommentQuery);
         $publishComment->execute(['id' => $id]);
-        header('Location: ' . $this->path . $this->adminLink . '/commentaires');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/commentaires');
     }
 
     // Change le statut d'un commentaire en 'rejected'
@@ -361,7 +361,7 @@ class AdminPostController
         $rejectCommentQuery = 'UPDATE comments SET status = "rejected" WHERE id = :id;';
         $rejectComment = $this->pdo->prepare($rejectCommentQuery);
         $rejectComment->execute(['id' => $id]);
-        header('Location: ' . $this->path . $this->adminLink . '/commentaires');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/commentaires');
     }
 
     // Supprime un commentaire
@@ -372,6 +372,6 @@ class AdminPostController
         $deleteCommentQuery = 'DELETE from comments WHERE id = :id;';
         $deleteComment = $this->pdo->prepare($deleteCommentQuery);
         $deleteComment->execute(['id' => $id]);
-        header('Location: ' . $this->path . $this->adminLink . '/commentaires');
+        header('Location: ' . $this->path . $this->globals->getENV('adminLink') . '/commentaires');
     }
 }
