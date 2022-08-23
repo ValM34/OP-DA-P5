@@ -1,9 +1,9 @@
 // check all checkbox or uncheck all
 function checkbox() {
-	let selectAllCheckbox = document.querySelectorAll('input[name="checkboxPost"]');
-	let globalCheckbox = document.querySelector('#checkbox-all');
+	let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
+	let globalCheckbox = document.querySelector("#checkbox-all");
 
-	globalCheckbox.addEventListener('change', function () {
+	globalCheckbox.addEventListener("change", function () {
 		if (this.checked) {
 			for (let i = 0; i < selectAllCheckbox.length; i++) {
 				selectAllCheckbox[i].checked = true;
@@ -19,18 +19,18 @@ function checkbox() {
 // Envoie les informations des articles séléctionnés au serveur pour publier les articles
 function linkToPublishSelected() {
 
-	let selectAllCheckbox = document.querySelectorAll('input[name="checkboxPost"]');
+	let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
 	let arrayCheckbox = [];
-	let selectPublishAllLink = document.getElementById('publishSelected');
+	let selectPublishAllLink = document.getElementById("publishSelected");
 	let idList = "";
 
-	selectPublishAllLink.addEventListener('click', (e) => {
+	selectPublishAllLink.addEventListener("click", (e) => {
 		e.preventDefault();
 
 		selectAllCheckbox.forEach(checkbox => {
 			if (checkbox.checked === true) {
 				let id_post = checkbox.id;
-				arrayCheckbox.push(id_post.split('-')[1]);
+				arrayCheckbox.push(id_post.split("-")[1]);
 			};
 		});
 
@@ -46,18 +46,18 @@ function linkToPublishSelected() {
 // Envoie les informations des articles séléctionnés au serveur pour masquer les articles
 function linkTohideSelected() {
 
-	let selectAllCheckbox = document.querySelectorAll('input[name="checkboxPost"]');
+	let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
 	let arrayCheckbox = [];
-	let selectPublishAllLink = document.getElementById('hideSelected');
+	let selectPublishAllLink = document.getElementById("hideSelected");
 	let idList = "";
 
-	selectPublishAllLink.addEventListener('click', (e) => {
+	selectPublishAllLink.addEventListener("click", (e) => {
 		e.preventDefault();
 
 		selectAllCheckbox.forEach(checkbox => {
 			if (checkbox.checked === true) {
 				let id_post = checkbox.id;
-				arrayCheckbox.push(id_post.split('-')[1]);
+				arrayCheckbox.push(id_post.split("-")[1]);
 			};
 		});
 
@@ -73,18 +73,18 @@ function linkTohideSelected() {
 // Envoie les informations des articles séléctionnés au serveur pour supprimer les articles
 function linkToDeleteSelected() {
 
-	let selectAllCheckbox = document.querySelectorAll('input[name="checkboxPost"]');
+	let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
 	let arrayCheckbox = [];
-	let selectPublishAllLink = document.getElementById('deleteAll');
+	let selectPublishAllLink = document.getElementById("deleteAll");
 	let idList = "";
 
-	selectPublishAllLink.addEventListener('click', (e) => {
+	selectPublishAllLink.addEventListener("click", (e) => {
 		e.preventDefault();
 
 		selectAllCheckbox.forEach(checkbox => {
 			if (checkbox.checked === true) {
 				let id_post = checkbox.id;
-				arrayCheckbox.push(id_post.split('-')[1]);
+				arrayCheckbox.push(id_post.split("-")[1]);
 			};
 		});
 
