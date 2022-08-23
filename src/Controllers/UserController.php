@@ -179,10 +179,13 @@ class UserController
     public function displayConnexion()
     {
         include('../src/templates/configTwig.php');
-        if (!empty($_SESSION['user']['logged'])) {
+        $session['user']['logged'] = $this->globals->getSESSION('logged');
+        if (true === $this->globals->SESSION['user']['logged']) {
             header('location: ' . $this->path . 'accueil');
         } else {
-            $get['errorMessage'] = htmlspecialchars($this->globals->getGET('errorMessage'));
+            if ($this->globals->getGET('errorMessage')) {
+                $get['errorMessage'] = htmlspecialchars($this->globals->getGET('errorMessage'));
+            }
             $errorMessage = isset($get['errorMessage']) ? $get['errorMessage'] : '';
                 $twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
         }

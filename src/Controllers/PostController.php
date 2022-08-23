@@ -98,7 +98,8 @@ class PostController
                 'id_post' => $id
             ]);
 
-            $id_user = $_SESSION['user']['id'];
+            $session['user']['id'] = $this->globals->getSESSION('id');
+            $id_user = $session['user']['id'];
             $id_post = $id;
             $post = $this->globals->getPOST('content');
             $cleanedPOST = strip_tags($post);

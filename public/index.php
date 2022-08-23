@@ -20,30 +20,18 @@ spl_autoload_register(function ($class) {
 
 // test 
 $globals = new Globals;
-/*$helpers = new Helpers;
-$globals->GET['test'] = $helpers->cleaner('<b>test</b>');
-var_dump($globals->GET);*//*
-$get = $globals->getGET();
-$cleanedGET = array_map('strip_tags', $get);
-var_dump($cleanedGET);
 
-$server = $globals->getSERVER('URI');
-var_dump($server);
 
-$env = $globals->getENV();
-var_dump($env);
 
-$session = $globals->getSESSION();
-var_dump($session);
-*/
+
+
 
 // fin test
 
-if(!isset($_SESSION['user']['logged'])) {
+if (!isset($_SESSION['user']['logged'])) {
     $_SESSION['user']['logged'] = false;
     $_SESSION['user']['role'] = 'visitor';
 }
-var_dump($_SESSION);
 /*if (isset($_SESSION['user'])) {
     if(isset($_SESSION['user']['logged']) & $_SESSION['user']['logged']) {
         echo 'Vous êtes connecté.';

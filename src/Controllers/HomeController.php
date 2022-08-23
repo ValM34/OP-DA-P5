@@ -20,7 +20,9 @@ class HomeController
     {
         include('../src/templates/configTwig.php');
         $message = '';
-        $get['message'] = htmlspecialchars($this->globals->getGET('message'));
+        if($this->globals->getGET('message')) {
+            $get['message'] = htmlspecialchars($this->globals->getGET('message'));
+        }
         if (isset($get['message'])) {
             $message = $get['message'];
         }

@@ -36,7 +36,7 @@ class Globals
         $this->SERVER = filter_input_array(INPUT_SERVER) ?? null;
         $this->COOKIE = filter_input_array(INPUT_COOKIE) ?? null;
         $this->ENV = filter_input_array(INPUT_ENV) ?? null;
-        // $this->SESSION = array_map('htmlspecialchars', $_SESSION['user']) ?? null;
+        $this->SESSION = $_SESSION ?? null;
     }
 
     public function getGET($key = null)

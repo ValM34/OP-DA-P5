@@ -20,7 +20,7 @@ class AdminPostController
         $this->helpers->isAdmin();
         $this->adminLink = $_ENV['adminLink'];
         $this->path = $this->helpers->pathToPublic();
-        $this->globals = new Globals;
+        $this->globals = new Globals();
     }
 
     // Affiche la page d'accueil de la page d'administration
@@ -47,27 +47,19 @@ class AdminPostController
     // Change le statut d'un article pour le masquer sur le site
     public function hide($id_post)
     {
-        if ($_SESSION['user']['role'] === 'admin') {
             $hidePostQuery = 'UPDATE blog_posts SET status = "hidden" WHERE id = :id;';
             $hidePost = $this->pdo->prepare($hidePostQuery);
             $hidePost->execute(['id' => $id_post]);
             header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
-        } else {
-            header('Location: ' . $this->path . 'accueil');
-        }
     }
 
     // Change le statut d'un article pour le publier sur le site
     public function publish($id_post)
     {
-        if ($_SESSION['user']['role'] === 'admin') {
             $publishPostQuery = 'UPDATE blog_posts SET status = "published" WHERE id = :id;';
             $publishPost = $this->pdo->prepare($publishPostQuery);
             $publishPost->execute(['id' => $id_post]);
             header('Location: ' . $this->path . $this->adminLink . '/touslesarticles');
-        } else {
-            header('Location: ' . $this->path . 'accueil');
-        }
     }
 
     // Supprime un article
@@ -114,7 +106,6 @@ class AdminPostController
     public function addPost()
     {
         $userSession = $this->helpers->isLogged();
-        $id = $_SESSION['user']['id'];
         $post['postTitle'] = htmlspecialchars($this->globals->getPOST('postTitle'));
         $post['postContent'] = htmlspecialchars($this->globals->getPOST('postContent'));
         $post['postChapo'] = htmlspecialchars($this->globals->getPOST('postChapo'));
