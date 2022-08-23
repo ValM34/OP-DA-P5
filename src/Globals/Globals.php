@@ -2,28 +2,6 @@
 
 namespace Globals;
 
-/*
-class Globals
-{
-    public ?array $SERVER = null;
-    public ?array $COOKIE = null;
-    public ?array $GET = null;
-    public ?array $FILES = null;
-    public ?array $POST = null;
-    public ?array $SESSION = null;
-
-    public function __construct()
-    {
-        $this->SERVER = array_map('htmlspecialchars', $_SERVER);
-        $this->GET = array_map('htmlspecialchars', $_GET);
-        $this->FILES = array_map('htmlspecialchars', $_FILES);
-        $this->POST = array_map('htmlspecialchars', $_POST);
-        $this->COOKIE = array_map('htmlspecialchars', $_COOKIE);
-        $this->SESSION = array_map('htmlspecialchars', $_SESSION['user']);
-    }
-}
-*/
-
 class Globals
 {
     private $GET;

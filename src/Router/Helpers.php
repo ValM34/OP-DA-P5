@@ -2,6 +2,8 @@
 
 namespace Router;
 
+use Globals\Globals;
+
 class Helpers
 {
     // private $dateConverter;
@@ -10,6 +12,7 @@ class Helpers
     public function __construct()
     {
         $this->adminLink = $_ENV['adminLink'];
+        $this->globals = new Globals();
     }
     /*public function pathToPublic($numberOfPaths)
     {
@@ -41,21 +44,23 @@ class Helpers
     // Vérifie si un utilisateur est connecté
     public function isLogged()
     {
-        if (isset($_SESSION['user'])) {
-            if (isset($_SESSION['user']['logged']) & $_SESSION['user']['logged'] === true & isset($_SESSION['user']['role']) & $_SESSION['user']['role'] === 'admin') {
+        if (null !== $this->globals->getSESSION()) {
+            $session['user'] = $this->globals->getSESSION('user');
+            if (isset($session['user']['logged']) & $session['user']['logged'] === true & isset($session['user']['role']) & $session['user']['role'] === 'admin') {
                 echo 'Vous êtes connecté.';
-                $_SESSION['user']['adminLink'] = $this->adminLink;
-                return $_SESSION['user'];
-            } elseif (isset($_SESSION['user']['logged']) & $_SESSION['user']['logged'] === true) {
+                $session['user']['adminLink'] = $this->adminLink;
+                return $session['user'];
+            } elseif (isset($_SESSION['user']['logged']) & $session['user']['logged'] === true) {
                 echo 'Vous êtes connecté.';
-                return $_SESSION['user'];
+                return $session['user'];
             } else {
                 echo 'Vous êtes déconnecté';
-                return $_SESSION['user'];
+                return $session['user'];
             }
         } else {
+            $session['user'] = $this->globals->getSESSION('user');
             echo 'Vous êtes déconnecté';
-            return $_SESSION['user'];
+            return $session['user'];
         }
     }
 
