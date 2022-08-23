@@ -121,16 +121,17 @@ class AdminPostController
             return;
         }
 
-        if ($_FILES['postFile']['size'] !== 0) {
+        $file = $this->globals->getFILES('postFile');
+        if ($file['size'] !== 0) {
             $maxSize = 3000000;
             $validExt = ['.jpg', '.jpeg', '.png'];
-            $fileSize = $_FILES['postFile']['size'];
-            $fileName = htmlspecialchars($_FILES['postFile']['name']);
+            $fileSize = $file['size'];
+            $fileName = htmlspecialchars($file['name']);
             $fileExt = '.' . strtolower(substr(strrchr($fileName, '.'), 1));
-            $tmpName = $_FILES['postFile']['tmp_name'];
+            $tmpName = $file['tmp_name'];
             $uniqueName = md5(uniqid(rand(), true));
             $fileName = __DIR__ . '/../../public/images/posts/' .  $uniqueName . $fileExt;
-            if ($_FILES['postFile']['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
+            if ($file['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
                 include_once(__DIR__ . '/../templates/configTwig.php');
                 $twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
                 return;
@@ -207,16 +208,17 @@ class AdminPostController
             return;
         }
 
-        if ($_FILES['postFile']['size'] !== 0) {
+        $file = $this->globals->getFILES('postFile');
+        if ($file['size'] !== 0) {
             $maxSize = 3000000;
             $validExt = ['.jpg', '.jpeg', '.png'];
-            $fileSize = $_FILES['postFile']['size'];
-            $fileName = htmlspecialchars($_FILES['postFile']['name']);
+            $fileSize = $file['size'];
+            $fileName = htmlspecialchars($file['name']);
             $fileExt = '.' . strtolower(substr(strrchr($fileName, '.'), 1));
-            $tmpName = $_FILES['postFile']['tmp_name'];
+            $tmpName = $file['tmp_name'];
             $uniqueName = md5(uniqid(rand(), true));
             $fileName = __DIR__ . '/../../public/images/posts/' .  $uniqueName . $fileExt;
-            if ($_FILES['postFile']['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
+            if ($file['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
                 include_once(__DIR__ . '/../templates/configTwig.php');
                 $twig->display('adminUpdatePostPage.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->adminLink, 'errorMsg' => true]);
                 return;

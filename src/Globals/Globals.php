@@ -6,6 +6,7 @@ class Globals
 {
     private $GET;
     private $POST;
+    public ?array $FILES = null;
 
     public function __construct()
     {
@@ -15,6 +16,7 @@ class Globals
         $this->COOKIE = filter_input_array(INPUT_COOKIE) ?? null;
         $this->ENV = filter_input_array(INPUT_ENV) ?? null;
         $this->SESSION = $_SESSION ?? null;
+        $this->FILES = $_FILES ?? null;
     }
 
     public function getGET($key = null)
@@ -63,5 +65,13 @@ class Globals
             return $this->SESSION[$key] ?? null;
         }
         return $this->SESSION;
+    }
+
+    public function getFILES($key = null)
+    {
+        if ($key !== null) {
+            return $this->FILES[$key] ?? null;
+        }
+        return $this->FILES;
     }
 }

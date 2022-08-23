@@ -7,6 +7,7 @@ use Controllers\UserController;
 use Controllers\PostController;
 use Controllers\AdminPostController;
 use Controllers\ErrorPageController;
+use Globals\Globals;
 
 class Router
 {
@@ -15,8 +16,9 @@ class Router
 
     public function __construct()
     {
+        $this->globals = new Globals();
         // On enlève les '/' au début et à la fin de l'url (s'il y en a)
-        $this->url = trim($_GET['url'], '/');
+        $this->url = trim($this->globals->getGET('url'), '/');
         $this->adminLink = $_ENV['adminLink'];
         $this->helpers = new Helpers();
         $this->path = $this->helpers->pathToPublic();
@@ -31,10 +33,7 @@ class Router
         // En fonction du premier mot de l'url, je choisis d'initier une instance de classe donnée
         // $numberOfPaths = count($data);
         $userSession['logged'] = false;
-        /*if (isset($_SESSION['user']['logged'])) {
-            $userSession = $_SESSION['user'];
-            $userSession['adminLink'] = $this->adminLink;
-        }*/
+        
 
 
         // Je prépare ma variable qui me permet de créer mes liens dynamiques
@@ -84,9 +83,6 @@ class Router
                 }
                 break;
             case 'deconnexion':
-                /*if (empty($_SESSION['user']['logged'])) {
-                    header("location: " . $this->helpers . "connexion");
-                }*/
                 if (!isset($data[1])) {
                     $deconnexion = new UserController();
                     $deconnexion->deconnexion();

@@ -28,7 +28,7 @@ class Helpers
     // Défini le nombre de '/' après public pour retourner un nombre de '../' équivalent
     public function pathToPublic()
     {
-        $url = $_SERVER['REQUEST_URI'];
+        $url = $this->globals->getSERVER('REQUEST_URI');
         $newUrl = str_replace('/op-da-p5/public/', '', $url);
         $arrayUrl = explode('/', $newUrl);
         $numberOfPaths = count($arrayUrl);
@@ -50,7 +50,7 @@ class Helpers
                 echo 'Vous êtes connecté.';
                 $session['user']['adminLink'] = $this->adminLink;
                 return $session['user'];
-            } elseif (isset($_SESSION['user']['logged']) & $session['user']['logged'] === true) {
+            } elseif (isset($session['user']['logged']) & $session['user']['logged'] === true) {
                 echo 'Vous êtes connecté.';
                 return $session['user'];
             } else {
@@ -67,8 +67,9 @@ class Helpers
     // Vérifie si un utilisateur est administrateur
     public function isAdmin()
     {
-        if (isset($_SESSION['user']['role'])) {
-            if ($_SESSION['user']['role'] !== 'admin') {
+        $session['user'] = $this->globals->getSESSION('user');
+        if (isset($session['user']['role'])) {
+            if ($session['user']['role'] !== 'admin') {
                 include('../src/templates/configTwig.php');
                 $path = $this->pathToPublic();
                 $twig->display('errorPage.twig', ['pathToPublic' => $path]);
