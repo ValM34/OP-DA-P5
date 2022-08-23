@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // check all checkbox or uncheck all
 function checkbox() {
@@ -29,14 +29,14 @@ function linkToPublishSelected() {
   selectPublishAllLink.addEventListener("click", (e) => {
     e.preventDefault();
 
-    selectAllCheckbox.forEach(checkbox => {
+    selectAllCheckbox.forEach((checkbox) => {
       if (checkbox.checked === true) {
         let id_post = checkbox.id;
         arrayCheckbox.push(id_post.split("-")[1]);
-      };
+      }
     });
 
-    arrayCheckbox.forEach(checkbox => {
+    arrayCheckbox.forEach((checkbox) => {
       idList += "-" + checkbox;
     });
     if (arrayCheckbox[0]) {
