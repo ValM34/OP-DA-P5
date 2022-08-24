@@ -7,7 +7,7 @@ use Globals\Globals;
 class Helpers
 {
 	// private $dateConverter;
-	private $adminLink;
+	// private $adminLink;
 
 	public function __construct()
 	{

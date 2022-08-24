@@ -12,7 +12,7 @@ use Globals\Globals;
 class Router
 {
     private $url;
-    private $adminLink;
+    // private $adminLink;
 
     public function __construct()
     {

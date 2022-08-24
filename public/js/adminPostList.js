@@ -18,12 +18,12 @@ function checkbox() {
   });
 }
 
-// Envoie les informations des articles séléctionnés au serveur pour publier les articles
-function linkToPublishSelected() {
+// Envoie les informations des articles séléctionnés au serveur pour effectuer l'action indiquée
+function action(action, link) {
 
   let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
   let arrayCheckbox = [];
-  let selectPublishAllLink = document.getElementById("publishSelected");
+  let selectPublishAllLink = document.getElementById(action);
   let idList = "";
 
   selectPublishAllLink.addEventListener("click", (e) => {
@@ -40,66 +40,12 @@ function linkToPublishSelected() {
       idList += "-" + checkbox;
     });
     if (arrayCheckbox[0]) {
-      window.location.href = `touslesarticles/publishselected/${idList}`;
+      window.location.href = `${link}/${idList}`;
     }
   });
 }
 
-// Envoie les informations des articles séléctionnés au serveur pour masquer les articles
-function linkTohideSelected() {
-
-  let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
-  let arrayCheckbox = [];
-  let selectPublishAllLink = document.getElementById("hideSelected");
-  let idList = "";
-
-  selectPublishAllLink.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    selectAllCheckbox.forEach((checkbox) => {
-      if (checkbox.checked === true) {
-        let id_post = checkbox.id;
-        arrayCheckbox.push(id_post.split("-")[1]);
-      }
-    });
-
-    arrayCheckbox.forEach((checkbox) => {
-      idList += "-" + checkbox;
-    });
-    if (arrayCheckbox[0]) {
-      window.location.href = `touslesarticles/hideselected/${idList}`;
-    }
-  });
-};
-
-// Envoie les informations des articles séléctionnés au serveur pour supprimer les articles
-function linkToDeleteSelected() {
-
-  let selectAllCheckbox = document.querySelectorAll("input[name='checkboxPost']");
-  let arrayCheckbox = [];
-  let selectPublishAllLink = document.getElementById("deleteAll");
-  let idList = "";
-
-  selectPublishAllLink.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    selectAllCheckbox.forEach((checkbox) => {
-      if (checkbox.checked === true) {
-        let id_post = checkbox.id;
-        arrayCheckbox.push(id_post.split("-")[1]);
-      };
-    });
-
-    arrayCheckbox.forEach((checkbox) => {
-      idList += "-" + checkbox;
-    });
-    if (arrayCheckbox[0]) {
-      window.location.href = `touslesarticles/deleteselected/${idList}`;
-    }
-  });
-};
-
 checkbox();
-linkToPublishSelected();
-linkTohideSelected();
-linkToDeleteSelected();
+action("publishSelected", "touslesarticles/publishselected");
+action("hideSelected", "touslesarticles/hideselected");
+action("deleteAll", "touslesarticles/deleteselected");
