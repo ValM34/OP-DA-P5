@@ -195,20 +195,14 @@ header .burger-header-btn:nth-child(3) {
 }
 header .burger-header-btn-open:nth-child(1) {
   top: 15px;
-}
-header .burger-header-btn-open:nth-child(2) {
-  top: 25px;
-}
-header .burger-header-btn-open:nth-child(3) {
-  top: 35px;
-}
-header .burger-header-btn-open:nth-child(1) {
   animation: animation-burger-menu1-open 300ms ease-in-out forwards;
 }
 header .burger-header-btn-open:nth-child(2) {
+  top: 25px;
   animation: animation-burger-menu2-open 300ms ease-in-out forwards;
 }
 header .burger-header-btn-open:nth-child(3) {
+  top: 35px;
   animation: animation-burger-menu3-open 300ms ease-in-out forwards;
 }
 header .burger-header-btn-close:nth-child(1) {
@@ -864,8 +858,8 @@ a:hover {
   padding-left: 0;
 }
 
-.section-admin-post {
-  background-color: #c2dbff !important;
+#section-admin-post {
+  background-color: #c2dbff;
 }
 
 .select-container {

@@ -95,25 +95,16 @@ header {
 
 	.burger-header-btn-open:nth-child(1) {
 		top: 15px;
-	}
-
-	.burger-header-btn-open:nth-child(2) {
-		top: 25px;
-	}
-
-	.burger-header-btn-open:nth-child(3) {
-		top: 35px;
-	}
-
-	.burger-header-btn-open:nth-child(1) {
 		animation: animation-burger-menu1-open 300ms ease-in-out forwards;
 	}
 
 	.burger-header-btn-open:nth-child(2) {
+		top: 25px;
 		animation: animation-burger-menu2-open 300ms ease-in-out forwards;
 	}
 
 	.burger-header-btn-open:nth-child(3) {
+		top: 35px;
 		animation: animation-burger-menu3-open 300ms ease-in-out forwards;
 	}
 

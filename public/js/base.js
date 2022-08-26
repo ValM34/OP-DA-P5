@@ -2,7 +2,7 @@
 
 let burgerMenu = document.querySelector(".burger-header-btn-container");
 
-function test(action1, action2, i, action3) {
+function changeClass(action1, action2, i, action3) {
   for (let i = 0; i < burgerMenuLines.length; i++) {
     burgerMenuLines[i].classList.remove(action1);
     burgerMenuLines[i].classList.add(action2);
@@ -13,17 +13,30 @@ function test(action1, action2, i, action3) {
   }
 }
 
-
-
 burgerMenu.addEventListener("click", () => {
   let burgerMenuLines = document.querySelectorAll(".burger-header-btn-container>span");
   for (let i = 0; i < burgerMenuLines.length; i++) {
     if (burgerMenuLines[i].classList.value === "burger-header-btn") {
-      test("burger-header-btn", "burger-header-btn-open", i, header.forEach(header => header.classList.remove("hidden")));
+      changeClass(
+        "burger-header-btn",
+        "burger-header-btn-open",
+        i,
+        header.forEach(header => header.classList.remove("hidden"))
+      );
     } else if (burgerMenuLines[i].classList.value === "burger-header-btn-close") {
-      test("burger-header-btn-close", "burger-header-btn-open", i, header.forEach(header => header.classList.remove("hidden")));
+      changeClass(
+        "burger-header-btn-close",
+        "burger-header-btn-open",
+        i,
+        header.forEach(header => header.classList.remove("hidden"))
+      );
     } else if (burgerMenuLines[i].classList.value === "burger-header-btn-open") {
-      test("burger-header-btn-open", "burger-header-btn-close", i, header.forEach(header => header.classList.add("hidden")));
+      changeClass(
+        "burger-header-btn-open",
+        "burger-header-btn-close",
+        i,
+        header.forEach(header => header.classList.add("hidden"))
+      );
     }
   }
 });
@@ -53,4 +66,4 @@ window.addEventListener("resize", () => {
       header[p].classList.remove("hidden");
     }
   }
-})
+});

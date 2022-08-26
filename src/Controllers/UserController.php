@@ -179,7 +179,6 @@ class UserController
 	public function displayConnexion()
 	{
 		include('../src/templates/configTwig.php');
-		$session['user']['logged'] = $this->globals->getSESSION('logged');
 		if (true === $this->globals->SESSION['user']['logged']) {
 			header('location: ' . $this->path . 'accueil');
 		} else {
