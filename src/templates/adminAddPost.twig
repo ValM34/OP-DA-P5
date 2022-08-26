@@ -21,7 +21,7 @@
 			</p>
 		{% endif %}
 		<div class="container-col-center">
-			<form action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
+			<form class="flex-col-center form-admin" action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
 				<div>
 					<label for="idUser">Modifier le rédacteur de l'article</label>
 					<select name="idUser" id="idUser">
@@ -33,25 +33,15 @@
 						{% endfor %}
 					</select>
 				</div>
-				<div>
 					<label for="postFile">Ajouter une image</label>
 					<input name="postFile" id="postFile" type="file">
-				</div>
-				<div>
 					<label for="postTitle">Titre de l'article</label>
 					<textarea name="postTitle" id="postTitle" class="postTitle-textarea"></textarea>
-				</div>
-				<div>
 					<label for="postChapo">Chapô</label>
 					<textarea name="postChapo" id="postChapo" class="postChapo-textarea"></textarea>
-				</div>
-				<div>
 					<label for="postContent">Contenu de l'article</label>
 					<textarea name="postContent" id="postContent" class="postContent-textarea"></textarea>
-				</div>
-				<div>
 					<button type="submit">Valider</button>
-				</div>
 			</form>
 		</div>
 	</section>

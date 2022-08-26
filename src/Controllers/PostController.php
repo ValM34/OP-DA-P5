@@ -98,8 +98,8 @@ class PostController
                 'id_post' => $id
             ]);
 
-            $session['user']['id'] = $this->globals->getSESSION('id');
-            $id_user = $session['user']['id'];
+            // $session['user']['id'] = $this->globals->getSESSION('id');  à voir si je peux créer un setter pour ça...
+            $id_user = $_SESSION['user']['id'];
             $id_post = $id;
             $post = $this->globals->getPOST('content');
             $cleanedPOST = strip_tags($post);
@@ -111,7 +111,7 @@ class PostController
                 $this->displayPost($id, $userSession, $errorMsg);
                 return;
             }
-
+						var_dump($id_user);
             $getAddPostQuery = 'INSERT INTO comments (id_post, id_user, content) VALUES (:id_post, :id_user, :content);';
             $getAddComment = $this->pdo->prepare($getAddPostQuery);
             $getAddComment->execute([

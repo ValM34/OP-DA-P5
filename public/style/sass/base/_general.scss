@@ -1,0 +1,77 @@
+h1 {
+	font-size: 30px;
+	text-align: center;
+
+	@include tablette {
+		font-size: 35px;
+	}
+
+	@include desktop {
+		font-size: 40px;
+	}
+}
+
+h2 {
+	font-size: 25px;
+	text-align: center;
+	margin: 10px 0 20px 0;
+
+	@include desktop {
+		font-size: 35px;
+	}
+
+	@include tablette {
+		font-size: 30px;
+	}
+}
+
+h3 {
+	font-size: 20px;
+}
+
+label {
+	margin-bottom: 6px;
+}
+
+input {
+	width: 90%;
+	max-width: 500px;
+	height: 45px;
+	border: none;
+	outline: none;
+	margin-bottom: 17px;
+	padding: 0 10px;
+	box-shadow: 0px 0px 5px lighten($blue, 42%);
+
+	@include desktop {
+		max-width: 600px;
+	}
+}
+
+textarea {
+	width: 90%;
+	max-width: 500px;
+	height: 200px;
+	border: none;
+	outline: none;
+	margin-bottom: 5px;
+	padding: 5px 10px;
+	box-shadow: 0px 0px 5px lighten($blue, 42%);
+
+	@include desktop {
+		max-width: 600px;
+	}
+}
+
+input:focus,
+textarea:focus {
+	border: 2px solid $blue;
+}
+
+.hidden {
+	display: none;
+}
+
+.form-admin {
+	width: 100%;
+}

@@ -8,85 +8,93 @@
 		<div class="postListAdmin">
 			{% for comment in CommentsList %}
 				{% if comment.status is same as('pending') %}
-					<div class="postListAdmin__post">
-						<div class="postAdmin__container">
+					<div class="comment-admin-container">
+						<div class="comment-admin-sub-container pending">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}post/{{comment.postId}}">
-									<b>Source :
-										{{comment.postTitle}}
-										(en attente) - rédigé le
-										{{comment.created_at}}</b>
+									{{comment.postTitle}}
 								</a>
+								 - 
+								<span class="pending-txt">
+								en attente
+								</span>
+								 - 
+								Rédigé le
+								{{comment.created_at}}
 								<p>Rédigé par :
 									{{comment.name}}
 									{{comment.surname}}</p>
 								<p>{{comment.content}}</p>
 							</div>
-							<div class="postAdmin__linkContainer">
-								<div class="postAdmin__link">
-									<a id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/publier/{{ comment.commentId }}">Publier</a>
+							<div class="comment-admin-link-container">
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/publier/{{ comment.commentId }}">Publier</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/rejeter/{{ comment.commentId }}">Rejeter</a>
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/rejeter/{{ comment.commentId }}">Rejeter</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="delete-{{comment.commentId}}" class="delete" href="{{pathToPublic}}{{adminLink}}/commentaires/supprimer/{{ comment.commentId }}">Supprimer</a>
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="delete-{{comment.commentId}}" class="delete" href="{{pathToPublic}}{{adminLink}}/commentaires/supprimer/{{ comment.commentId }}">Supprimer</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				{% elseif comment.status is same as('rejected') %}
-					<div class="postListAdmin__post">
-						<div class="postAdmin__container">
+					<div class="comment-admin-container">
+						<div class="comment-admin-sub-container rejected">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}post/{{comment.postId}}">
-									<b>Source :
-										{{comment.postTitle}}
-										(rejeté) - rédigé le
-										{{comment.created_at}}</b>
+									{{comment.postTitle}}
 								</a>
+								 - 
+								<span class="rejected-txt">
+								rejeté
+								</span>
+								- Rédigé le
+								{{comment.created_at}}
 								<p>Rédigé par :
 									{{comment.name}}
 									{{comment.surname}}</p>
 								<p>{{comment.content}}</p>
 							</div>
-							<div class="postAdmin__linkContainer">
-								<div class="postAdmin__link">
-									<a id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/publier/{{ comment.commentId }}">Publier</a>
+							<div class="comment-admin-link-container">
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/publier/{{ comment.commentId }}">Publier</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/rejeter/{{ comment.commentId }}">Rejeter</a>
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/rejeter/{{ comment.commentId }}">Rejeter</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="delete-{{comment.commentId}}" class="delete" href="{{pathToPublic}}{{adminLink}}/commentaires/supprimer/{{ comment.commentId }}">Supprimer</a>
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="delete-{{comment.commentId}}" class="delete" href="{{pathToPublic}}{{adminLink}}/commentaires/supprimer/{{ comment.commentId }}">Supprimer</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				{% elseif comment.status is same as('published') %}
-					<div class="postListAdmin__post">
-						<div class="postAdmin__container">
+					<div class="comment-admin-container">
+						<div class="comment-admin-sub-container published">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}post/{{comment.postId}}">
-									<b>Source :
-										{{comment.postTitle}}
-										(publié) - rédigé le
-										{{comment.created_at}}</b>
+									{{comment.postTitle}}
 								</a>
+								-
+								<span class="published-txt">publié</span>
+								- Rédigé le
+								{{comment.created_at}}
 								<p>Rédigé par :
 									{{comment.name}}
 									{{comment.surname}}</p>
 								<p>{{comment.content}}</p>
 							</div>
-							<div class="postAdmin__linkContainer">
-								<div class="postAdmin__link">
-									<a id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/publier/{{ comment.commentId }}">Publier</a>
+							<div class="comment-admin-link-container">
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/publier/{{ comment.commentId }}">Publier</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/rejeter/{{ comment.commentId }}">Rejeter</a>
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="publish-{{comment.commentId}}" class="publish" href="{{pathToPublic}}{{adminLink}}/commentaires/rejeter/{{ comment.commentId }}">Rejeter</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="delete-{{comment.commentId}}" class="delete" href="{{pathToPublic}}{{adminLink}}/commentaires/supprimer/{{ comment.commentId }}">Supprimer</a>
+								<div class="comment-admin-link-subcontainer">
+									<a class="tiny-button comment-admin-link" id="delete-{{comment.commentId}}" class="delete" href="{{pathToPublic}}{{adminLink}}/commentaires/supprimer/{{ comment.commentId }}">Supprimer</a>
 								</div>
 							</div>
 						</div>

@@ -20,10 +20,10 @@
 		{% endif %}
 		<h1>Inscription</h1>
 		<form class="flex-col-center" action="{{pathToPublic}}inscription-valider" method="POST">
-			<label for="name">Prénom</label><input class="input-txt" id="name" name="name" />
-			<label for="surname">Nom</label><input class="input-txt" id="surname" name="surname" />
-			<label for="email">Email</label><input class="input-txt" type="email" id="email" name="email"/>
-			<label for="password">Mot de passe</label><input class="input-txt" type="password" id="password" name="password"/>
+			<label for="name">Prénom</label><input class="input-txt" id="name" name="name" placeholder="Écrivez ici votre prénom..." />
+			<label for="surname">Nom</label><input class="input-txt" id="surname" name="surname" placeholder="Écrivez ici votre nom..." />
+			<label for="email">Email</label><input class="input-txt" type="email" id="email" name="email" placeholder="Écrivez ici votre email..." />
+			<label for="password">Mot de passe</label><input class="input-txt" type="password" id="password" name="password" placeholder="Écrivez ici votre mot de passe..." />
 			<button type="submit">Valider</button>
 		</form>
 	</section>

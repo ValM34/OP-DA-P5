@@ -1,128 +1,19 @@
-@import 'variables';
-@import 'mixins';
+@import 'utils/variables';
+@import 'utils/mixins';
+@import 'base/fonts';
+@import 'base/reset';
+@import 'base/general';
+@import 'base/sections';
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'components/buttons';
+@import 'components/links';
 
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-size: 18px;
-	font-family: 'Roboto', sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-.title {
-	font-family: 'Oswald', sans-serif;
-}
-
-a {
-	text-decoration: none;
-	color: $orange;
-	font-weight: 700;
-	transition: color ease-in-out 0.3s;
-}
-
-a:hover {
-	color: $blue;
-}
-
-header {
-	display: flex;
-	background-color: $blue;
-}
-
-.h-navlinks {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-
-.h-navlink {
-	font-size: 25px;
-	margin-right: 15px;
-	padding: 5px 15px;
-	text-decoration: none;
-	color: $white;
-}
-
-.h-navlink:hover {
-	color: $orange;
-}
-
-section {
-	padding: 50px 0;
-}
-
-section:nth-child(even) {
-	background-color: $grey;
-}
-
-section:nth-child(odd) {
-	background-color: $grey2;
-}
-
-h1 {
-	font-size: 50px;
-	text-align: center;
-	margin: 10px 0 30px 0;
-}
-
-h2 {
-	font-size: 35px;
-	text-align: center;
-	margin: 10px 0 20px 0;
-}
-
-h3 {
-	font-size: 20px;
-}
-
-.input-txt {
-	width: 300px;
-	height: 45px;
-	border: 2px solid darken($grey, 10%);
-	border-radius: 8px;
-	outline: none;
-	margin-bottom: 5px;
-	padding: 0 10px;
-}
-
-textarea {
-	width: 600px;
-	height: 200px;
-	border: 2px solid darken($grey, 10%);
-	border-radius: 8px;
-	outline: none;
-	margin-bottom: 5px;
-	padding: 5px 10px;
-}
-
-input:focus,
-textarea:focus {
-	border: 2px solid $blue;
-}
-
-button {
-	margin: 10px 0;
-	font-weight: 700;
-	border: 2px solid $blue;
-	border-radius: 8px;
-	padding: 10px 30px;
-	background-color: $blue;
-	color: $white;
-	transition: background-color ease-in-out 0.3s, color ease-in-out 0.3s;
-}
-
-button:hover {
-	background-color: transparent;
-	color: $blue;
-	cursor: pointer;
-}
-
-.img-valentin {
-	width: 300px;
+// Page spécifique : home.twig
+.img-home {
+	width: 90%;
+	max-width: 300px;
+	box-shadow: 0px 0px 5px lighten($blue, 42%);
 }
 
 .flex-center {
@@ -130,59 +21,122 @@ button:hover {
 	justify-content: center;
 }
 
-.flex-col-center {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+// Page spécifique : postList.twig
+.background-img-postList {
+	background-size: cover;
+	width: 90%;
+	background-position: center center;
+	height: 40vh;
 }
 
-.blogPostsList {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
+.postList-container {
 
-.blogPostsList__container {
-	display: flex;
-	justify-content: space-around;
-	flex-wrap: wrap;
-	max-width: 1000px;
-}
-
-.thumbnail-small {
-	height: 200px;
-	width: 200px;
-}
-
-.thumbnail-blogPostsList {
-	display: inline-block;
-	padding: 5px;
-	border: 2px solid $blue;
-	border-radius: 5px;
-	margin: 15px;
-
-	&__title {
-		display: block;
-		text-align: center;
+	@include desktop {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 
-	&__p {
-		display: block;
-		text-align: center;
+	@include tablette {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
 	}
 
-	&__link {
-		display: block;
-		text-align: center;
+	@media screen and (min-width: 450px) and (max-width: 767px) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.post-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.post-infos {
+			width: 90%;
+			text-align: center;
+
+			h3 {
+				font-size: 25px;
+				text-transform: uppercase;
+			}
+
+			a {
+				width: 100%;
+				margin-bottom: 30px;
+			}
+		}
 	}
 }
 
+
+// Page spécifique : post.twig
 .blogPost-main {
 	display: flex;
 	justify-content: center;
 
-	&__container {
-		width: 80%;
+	h1 {
+		margin-bottom: 15px;
+
+		@include desktop {
+			margin-bottom: 20px;
+		}
+
+		@include tablette {
+			margin-bottom: 20px;
+		}
+	}
+
+	.blogPost-main__container {
+		width: 90%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+
+		@include tablette {
+			width: 70%;
+		}
+
+		@include desktop {
+			width: 70%;
+		}
+
+		@media screen and (min-width: 450px) and (max-width: 767px) {
+			max-width: 70%;
+		}
+
+		.post-content,
+		.post-update,
+		.post-chapo {
+			text-align: left;
+			width: 100%;
+		}
+
+		.post-chapo {
+			font-size: 20px;
+			margin-top: 20px;
+		}
+
+		.post-update {
+			font-style: italic;
+			margin-bottom: 30px;
+			font-size: 15px;
+		}
+	}
+}
+
+.background-img-post {
+	background-size: cover;
+	width: 100%;
+	background-position: center center;
+	height: 40vh;
+
+	@include desktop {
+		height: 50vh;
+	}
+
+	@include tablette {
+		height: 50vh;
 	}
 }
 
@@ -191,19 +145,29 @@ button:hover {
 	flex-direction: column;
 	align-items: center;
 
-	&__container {
+	.blogPost-comments-container {
 		width: 80%;
 		padding: 15px;
 		margin-bottom: 15px;
-		border: 2px solid darken($grey, 30%);
+		border: none;
+
+		div:nth-child(1) {
+			font-style: italic;
+			font-size: 15px;
+		}
+
+		div:nth-child(2) {
+			font-weight: 700;
+			margin-bottom: 15px;
+		}
 	}
 
-	&__container:nth-child(odd) {
-		background-color: $grey;
+	.blogPost-comments-container:nth-child(odd) {
+		background-color: $grey2;
 	}
 
-	&__container:nth-child(even) {
-		background-color: $grey;
+	.blogPost-comments-container:nth-child(even) {
+		background-color: lighten($grey2, 6%);
 	}
 }
 
@@ -221,6 +185,10 @@ button:hover {
 		flex-direction: column;
 		align-items: center;
 
+		button {
+			width: 100%;
+		}
+
 		&__textarea {
 			width: 100%;
 			height: 200px;
@@ -229,7 +197,374 @@ button:hover {
 
 }
 
-// Blog post list admin
+// Page spécifique : adminPostList.twig
+.checkbox-all {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px 0;
+	width: 90%;
+
+	@include desktop {
+		flex-direction: row;
+	}
+
+	@include tablette {
+		flex-direction: row;
+		width: 97%;
+	}
+
+	.checkbox-container {
+
+		@include desktop {
+			display: flex;
+			width: 230px;
+			align-items: center;
+		}
+
+		@include tablette {
+			display: flex;
+			width: 250px;
+			align-items: center;
+		}
+
+		label {
+			margin-bottom: 0;
+			vertical-align: middle;
+
+			@include tablette {
+				margin-right: 10px;
+			}
+		}
+
+		input {
+			vertical-align: middle;
+			
+			@include desktop {
+				margin-right: 8px;
+			}
+
+			@include tablette {
+				margin-right: 8px;
+			}
+		}
+
+	}
+
+	.post-list-admin-link-container {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		@include desktop {
+			flex-direction: row;
+		}
+
+		@include tablette {
+			flex-direction: row;
+		}
+
+		.post-admin-link {
+			width: 100%;
+
+			.tiny-button {
+				margin: 5px 0;
+
+				@include desktop {
+					max-width: 220px;
+				}
+
+				@include tablette {
+					max-width: 180px;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+.blogPostListAdminCheckbox {
+	height: 30px;
+	width: 30px;
+	margin: 0;
+}
+
+.post-list-admin-container {
+	width: 100%;
+
+	@include desktop {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-left: 10%;
+	}
+
+	@include tablette {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-left: 3%;
+	}
+
+	.postListAdmin__post {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 20px;
+
+		@include desktop {
+			flex-direction: row;
+			background-color: $grey2;
+			width: 90%;
+			padding: 10px;
+		}
+
+		@include tablette {
+			flex-direction: row;
+			background-color: $grey2;
+			width: 97%;
+			padding: 10px;
+		}
+
+		.postListAdmin__img__container {
+			width: 100%;
+
+			@include desktop {
+				width: auto;
+			}
+
+			@include tablette {
+				width: auto;
+			}
+
+			.postListAdmin__img {
+				background-size: cover;
+				background-position: center center;
+				height: 30vh;
+				width: 90%;
+
+				@include desktop {
+					width: 100px;
+					height: 100px;
+				}
+
+				@include tablette {
+					width: 100px;
+					height: 100px;
+				}
+			}
+
+
+		}
+
+		.postAdmin__container {
+
+			@include desktop {
+				height: 100px;
+			}
+
+			@include tablette {
+				height: 100px;
+			}
+
+			.post-list-admin-link-container {
+
+				@include desktop {
+					display: flex;
+					height: 100%;
+					align-items: flex-end;
+				}
+
+				@include tablette {
+					display: flex;
+					height: 100%;
+					align-items: flex-end;
+				}
+
+				.post-admin-link {
+
+					.tiny-button {
+
+						@include desktop {
+							padding: 3px 15px;
+							margin-top: 0;
+							margin-bottom: 0;
+							margin-right: 10px;
+						}
+
+						@include tablette {
+							padding: 3px 15px;
+							margin-top: 0;
+							margin-bottom: 0;
+							margin-right: 10px;
+						}
+					}
+				}
+
+				.post-admin-link:nth-child(1) {
+
+					.tiny-button {
+
+						@include desktop {
+							margin-left: 10px;
+						}
+
+						@include tablette {
+							margin-left: 10px;
+						}
+					}
+				}
+
+				.post-admin-link:nth-child(2) {
+
+					.tiny-button {
+
+						@include desktop {
+							width: 170px;
+						}
+
+						@include tablette {
+							width: 170px;
+						}
+					}
+				}
+			}
+		}
+
+		.blogPostListAdminCheckbox {
+			margin-bottom: 10px;
+
+			@include desktop {
+				margin: 0 10px;
+			}
+
+			@include tablette {
+				margin: 0 10px;
+			}
+		}
+	}
+}
+
+
+
+.postAdmin__container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 90%;
+}
+
+// Page spécifique : adminCommentsList
+.comment-admin-container {
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	margin-bottom: 3px;
+	background-color: transparent;
+	transition: background-color 0.3s ease-in-out;
+
+	.comment-admin-sub-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		margin-bottom: 15px;
+		background-color: lighten($grey2, 20%);
+
+		.pending-txt {
+			font-weight: 700;
+			color: grey;
+		}
+
+		.rejected-txt {
+			font-weight: 700;
+			color: $red;
+		}
+
+		.published-txt {
+			font-weight: 700;
+			color: $green;
+		}
+
+		.comment-admin-link-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			@media screen and (min-width: 500px) and (max-width: 767px) {
+				flex-direction: row;
+			}
+
+			@include tablette {
+				flex-direction: row;
+			}
+
+			@include desktop {
+				flex-direction: row;
+			}
+
+			.comment-admin-link-subcontainer {
+				margin: 0 5px;
+				width: 100%;
+
+				.comment-admin-link {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+
+	.pending {
+		border: 2px solid grey;
+		padding: 15px;
+	}
+
+	.rejected {
+		border: 2px solid $red;
+		padding: 15px;
+	}
+
+	.published {
+		border: 2px solid $green;
+		padding: 15px;
+	}
+}
+
+
+
+
+
+
+
+
+
+// Sur plusieurs pages en même temps : 
+
+
+
+.flex-col-center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.flex-row-center {
+	@include desktop {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	@include tablette {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+}
 
 .postListAdmin {
 	display: flex;
@@ -237,37 +572,7 @@ button:hover {
 	align-items: center;
 }
 
-.postListAdmin__post,
-.checkbox-all {
-	display: flex;
-	width: 1000px;
-	margin-bottom: 3px;
-	background-color: lighten($grey2, 20%);
-	transition: background-color 0.3s ease-in-out;
-}
 
-.checkbox-all {
-	padding: 10px 0;
-}
-
-.postListAdmin__post:hover {
-	background-color: $grey2;
-}
-
-.postListAdmin__img {
-	height: 90px;
-	margin: 5px;
-}
-
-.postAdmin__container {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-}
-
-.postAdmin__linkContainer {
-	display: flex;
-}
 
 .postAdmin__title {
 	margin: 0 5px;
@@ -276,12 +581,6 @@ button:hover {
 .postAdmin__link {
 	margin: 0 5px;
 }
-
-.blogPostListAdminCheckbox {
-	margin: 0 5px;
-}
-
-// add blog post admin
 
 .container-col-center {
 	display: flex;
@@ -324,3 +623,5 @@ button:hover {
 	border: 2px solid $red;
 	background-color: lighten($red, 40%);
 }
+
+// //////////////////////////////////////

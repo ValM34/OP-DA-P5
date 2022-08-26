@@ -1,0 +1,41 @@
+button,
+.button,
+.tiny-button {
+	width: 90%;
+	max-width: 500px;
+	margin: 10px 0;
+	font-weight: 700;
+	border: 2px solid $blue;
+	padding: 10px 30px;
+	background-color: $blue;
+	color: $white;
+	box-shadow: 0px 0px 5px lighten($blue, 42%);
+	transition: background-color ease-in-out 0.3s, color ease-in-out 0.3s, box-shadow ease-in-out 0.3s;
+
+	@include desktop {
+		max-width: 600px;
+	}
+}
+
+button:hover,
+.button:hover,
+.tiny-button:hover {
+	background-color: transparent;
+	box-shadow: 0px 0px 2px lighten($blue, 10%);
+	color: $blue;
+	cursor: pointer;
+}
+
+.button {
+	display: block;
+	text-align: center;
+}
+
+.tiny-button {
+	display: block;
+	text-align: center;
+	width: auto;
+	max-width: none;
+	padding: 3px 0px;
+	font-weight: 400;
+}

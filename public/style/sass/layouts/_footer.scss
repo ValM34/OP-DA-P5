@@ -1,0 +1,13 @@
+footer {
+	display: flex;
+	justify-content: center;
+
+	a.button {
+		background-color: $orange;
+		border-color: $orange;
+	}
+
+	a.button:hover {
+		color: $orange;
+	}
+}

@@ -1,0 +1,226 @@
+header {
+	display: flex;
+	flex-direction: column;
+	
+	@include mobile {
+		position: fixed;
+		width: 100%;
+	}
+	
+	@include desktop {
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	@include tablette {
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	.burger-header-btn-container {
+
+		position: absolute;
+		border: none;
+		height: 55px;
+		width: 55px;
+		cursor: pointer;
+		transition: transform 300ms ease-in-out;
+
+		@include desktop {
+			display: none;
+		}
+
+		@include tablette {
+			display: none;
+		}
+	}
+
+	@keyframes animation-burger-menu1-open {
+		0% {
+
+			transform: rotate(0);
+		}
+
+		100% {
+
+			transform: translateY(10px) rotate(135deg);
+		}
+	}
+
+	@keyframes animation-burger-menu2-open {
+		0% {
+			transform: rotate(0) scale(100%, 100%);
+		}
+
+		100% {
+
+			transform: scaleX(1%);
+		}
+	}
+
+	@keyframes animation-burger-menu3-open {
+		0% {
+
+			transform: rotate(0);
+		}
+
+		100% {
+
+			transform: translateY(-10px) rotate(-135deg);
+		}
+	}
+
+	.burger-header-btn,
+	.burger-header-btn-open,
+	.burger-header-btn-close {
+		position: absolute;
+		background-color: $orange;
+		border: none;
+		height: 3px;
+		width: 30px;
+		left: 10px;
+	}
+
+	.burger-header-btn:nth-child(1) {
+		top: 15px;
+	}
+
+	.burger-header-btn:nth-child(2) {
+		top: 25px;
+	}
+
+	.burger-header-btn:nth-child(3) {
+		top: 35px;
+	}
+
+	.burger-header-btn-open:nth-child(1) {
+		top: 15px;
+	}
+
+	.burger-header-btn-open:nth-child(2) {
+		top: 25px;
+	}
+
+	.burger-header-btn-open:nth-child(3) {
+		top: 35px;
+	}
+
+	.burger-header-btn-open:nth-child(1) {
+		animation: animation-burger-menu1-open 300ms ease-in-out forwards;
+	}
+
+	.burger-header-btn-open:nth-child(2) {
+		animation: animation-burger-menu2-open 300ms ease-in-out forwards;
+	}
+
+	.burger-header-btn-open:nth-child(3) {
+		animation: animation-burger-menu3-open 300ms ease-in-out forwards;
+	}
+
+	.burger-header-btn-close:nth-child(1) {
+		top: 15px;
+	}
+
+	.burger-header-btn-close:nth-child(2) {
+		top: 25px;
+	}
+
+	.burger-header-btn-close:nth-child(3) {
+		top: 35px;
+	}
+
+	.burger-header-btn-close:nth-child(1) {
+		animation: animation-burger-menu1-close 300ms ease-in-out forwards;
+	}
+
+	.burger-header-btn-close:nth-child(2) {
+		animation: animation-burger-menu2-close 300ms ease-in-out forwards;
+	}
+
+	.burger-header-btn-close:nth-child(3) {
+		animation: animation-burger-menu3-close 300ms ease-in-out forwards;
+	}
+
+	@keyframes animation-burger-menu1-close {
+		0% {
+			transform: translateY(10px) rotate(135deg);
+		}
+		100% {
+			transform: rotate(0);
+		}
+	}
+
+	@keyframes animation-burger-menu2-close {
+		0% {
+			transform: scaleX(1%);
+		}
+		100% {
+			transform: rotate(0) scale(100%, 100%);
+		}
+	}
+
+	@keyframes animation-burger-menu3-close {
+		0% {
+			transform: translateY(-10px) rotate(-135deg);
+		}
+		100% {
+			transform: rotate(0);
+		}
+	}
+
+
+
+
+
+	a {
+
+		text-align: center;
+		text-decoration: none;
+		color: $white;
+		padding: 5px;
+		border-bottom: 2px solid $blue;
+		border-right: 2px solid $blue;
+		width: 100%;
+		background-color: $blue;
+		transition: 300ms border ease-in-out, 300ms background-color ease-in-out, 300ms color ease-in-out;
+
+		@include mobile {
+			border-left: 2px solid $blue;
+		}
+
+		@include desktop {
+			font-size: 25px;
+			padding-bottom: 8px;
+			border-top: 2px solid $blue;
+		}
+
+		@include tablette {
+			font-size: 25px;
+			padding-bottom: 8px;
+			border-top: 2px solid $blue;
+		}
+	}
+
+	a:nth-child(2) {
+
+		@include mobile {
+			border-top: 2px solid $blue;
+		}
+
+		@include desktop {
+			border-left: 2px solid $blue;
+		}
+
+		@include tablette {
+			border-left: 2px solid $blue;
+		}
+	}
+
+	a:hover {
+		background-color: $white;
+		border-color: $blue;
+		color: $blue;
+	}
+
+
+}

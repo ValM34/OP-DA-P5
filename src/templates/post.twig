@@ -6,13 +6,22 @@
 
 	<section class="blogPost-main">
 		<div class="blogPost-main__container">
-			{% if errorMsg is same as(true) %}<div class="error-msg">Erreur : votre commentaire est vide!</div>{% endif %}
+			{% if errorMsg is same as(true) %}
+				<div class="error-msg">Erreur : votre commentaire est vide!</div>
+			{% endif %}
 			<h1>{{post.title}}</h1>
-			<img src="{{pathToPublic}}{{post.img_src}}" />
-			<p>{{post.name}} {{post.surname}}</p>
-			<p>{{post.updated_at}}</p>
-			<b>{{post.chapo}}</b>
-			<p>{{post.content}}</p>
+			{% if post.img_src != null %}
+				<div class="background-img-post" style="background-image: url('{{pathToPublic}}{{post.img_src}}');"></div>
+			{% else %}
+				<div class="background-img-post" style="background-image: url('{{pathToPublic}}images/posts/background-base.jpg');"></div>
+			{% endif %}
+			<b class="post-chapo">{{post.chapo}}</b>
+			<p class="post-update">Édité par
+				{{post.name}}
+				{{post.surname}}
+				le
+				{{post.updated_at}}</p>
+			<p class="post-content">{{post.content}}</p>
 		</div>
 	</section>
 
@@ -30,10 +39,10 @@
 		</div>
 	</section>
 	<section class="blogPost-comments">
-
+		<h2>Commentaires</h2>
 		{% for comment in comments %}
 			{% if comment.status is same as('published') %}
-				<div class="blogPost-comments__container">
+				<div class="blogPost-comments-container">
 					<div>
 						{{comment.name}}
 						{{comment.surname}}
@@ -44,7 +53,7 @@
 				</div>
 			{% endif %}
 			{% if (userSession.role is same as('admin')) and (comment.status is same as('pending')) %}
-				<div class="blogPost-comments__container">
+				<div class="blogPost-comments-container">
 					<div>Ce commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
 					<div>
 						{{comment.name}}
@@ -56,8 +65,8 @@
 				</div>
 			{% endif %}
 			{% if (userSession.role is same as('user')) and (comment.status is same as('pending')) and (comment.id_user is same as(userSession.id)) %}
-				<div class="blogPost-comments__container">
-					<div>Votre commentaire est <b>en attente</b> de publication et n'est pas visible pour les utilisateurs</div>
+				<div class="blogPost-comments-container">
+					<div>Votre commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
 					<div>
 						{{comment.name}}
 						{{comment.surname}}
@@ -68,7 +77,7 @@
 				</div>
 			{% endif %}
 			{% if (userSession.role is same as('admin')) and (comment.status is same as('rejected')) %}
-				<div class="blogPost-comments__container">
+				<div class="blogPost-comments-container">
 					<div>Ce commentaire a été rejeté et n'est pas visible pour les utilisateurs</div>
 					<div>
 						{{comment.name}}

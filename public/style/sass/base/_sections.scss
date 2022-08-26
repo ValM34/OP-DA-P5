@@ -1,0 +1,11 @@
+section {
+	padding: 50px 0;
+}
+
+section:nth-child(even) {
+	background-color: $grey;
+}
+
+section:nth-child(odd) {
+	background-color: $grey2;
+}
