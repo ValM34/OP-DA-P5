@@ -66,14 +66,14 @@ class Helpers
 		$session['user'] = $this->globals->getSESSION('user');
 		if (isset($session['user']['role'])) {
 			if ($session['user']['role'] !== 'admin') {
-				include('../src/templates/configTwig.php');
+				include_once '../src/templates/configTwig.php';
 				$path = $this->pathToPublic();
 				$twig->display('errorPage.twig', ['pathToPublic' => $path]);
 				die;
 			}
 			return;
 		} else {
-			include('../src/templates/configTwig.php');
+			include_once '../src/templates/configTwig.php';
 			$path = $this->pathToPublic();
 			$twig->display('errorPage.twig', ['pathToPublic' => $path]);
 			die;

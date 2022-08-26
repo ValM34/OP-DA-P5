@@ -25,7 +25,7 @@ class AdminPostController
 	// Affiche la page d'accueil de la page d'administration
 	public function displayHomePage()
 	{
-		include_once(__DIR__ . '/../templates/configTwig.php');
+		include_once __DIR__ . '/../templates/configTwig.php';
 		$userSession = $this->helpers->isLogged();
 		$twig->display('adminHomePage.twig', ['userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
@@ -38,7 +38,7 @@ class AdminPostController
 		$getPostList->execute();
 		$fetchPostList = $getPostList->fetchAll();
 		$userSession = $this->helpers->isLogged();
-		include_once(__DIR__ . '/../templates/configTwig.php');
+		include_once __DIR__ . '/../templates/configTwig.php';
 		$fetchPostList = $this->helpers->dateConverter($fetchPostList);
 		$twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
@@ -97,7 +97,7 @@ class AdminPostController
 			}
 		}
 
-		include_once(__DIR__ . '/../templates/configTwig.php');
+		include_once __DIR__ . '/../templates/configTwig.php';
 		$twig->display('adminAddPost.twig', ['adminUsersList' => $fetchAdminUsers, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
 
@@ -115,7 +115,7 @@ class AdminPostController
 		$idUser = $post['idUser'];
 
 		if (empty($title) || empty($content) || empty($chapo)) {
-			include_once(__DIR__ . '/../templates/configTwig.php');
+			include_once __DIR__ . '/../templates/configTwig.php';
 			$twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
 			return;
 		}
@@ -131,7 +131,7 @@ class AdminPostController
 			$uniqueName = md5(uniqid(rand(), true));
 			$fileName = __DIR__ . '/../../public/images/posts/' .  $uniqueName . $fileExt;
 			if ($file['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
-				include_once(__DIR__ . '/../templates/configTwig.php');
+				include_once __DIR__ . '/../templates/configTwig.php';
 				$twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
 				return;
 			}
@@ -184,7 +184,7 @@ class AdminPostController
 		$displayUpdatePost->execute(['id' => $id_post]);
 		$fetchPost = $displayUpdatePost->fetchAll();
 
-		include_once(__DIR__ . '/../templates/configTwig.php');
+		include_once __DIR__ . '/../templates/configTwig.php';
 		$twig->display('adminUpdatePostPage.twig', ['adminUsersList' => $fetchAdminUsers, 'postList' => $fetchPost[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
 
@@ -202,7 +202,7 @@ class AdminPostController
 		$idUser = $post['idUser'];
 
 		if (empty($title) || empty($content) || empty($chapo)) {
-			include_once(__DIR__ . '/../templates/configTwig.php');
+			include_once __DIR__ . '/../templates/configTwig.php';
 			$twig->display('adminAddPost.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
 			return;
 		}
@@ -218,7 +218,7 @@ class AdminPostController
 			$uniqueName = md5(uniqid(rand(), true));
 			$fileName = __DIR__ . '/../../public/images/posts/' .  $uniqueName . $fileExt;
 			if ($file['error'] || $fileSize > $maxSize || !in_array($fileExt, $validExt)) {
-				include_once(__DIR__ . '/../templates/configTwig.php');
+				include_once __DIR__ . '/../templates/configTwig.php';
 				$twig->display('adminUpdatePostPage.twig', ['pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink'), 'errorMsg' => true]);
 				return;
 			}
@@ -335,7 +335,7 @@ class AdminPostController
 		$getCommentsList->execute();
 		$fetchCommentsList = $getCommentsList->fetchAll();
 		$userSession = $this->helpers->isLogged();
-		include_once(__DIR__ . '/../templates/configTwig.php');
+		include_once __DIR__ . '/../templates/configTwig.php';
 		$fetchCommentsList = $this->helpers->dateConverter($fetchCommentsList);
 		$twig->display('adminCommentsList.twig', ['CommentsList' => $fetchCommentsList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}

@@ -35,7 +35,7 @@ burgerMenu.addEventListener("click", () => {
         "burger-header-btn-open",
         "burger-header-btn-close",
         i,
-        header.forEach(header => header.classList.add("hidden"))
+        header.forEach((header) => header.classList.add("hidden"))
       );
     }
   }

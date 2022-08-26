@@ -22,7 +22,7 @@ class UserController
 	// Affiche la page d'inscription
 	public function displaySubscription()
 	{
-		include('../src/templates/configTwig.php');
+		include '../src/templates/configTwig.php';
 		$twig->display('subscribe.twig', ['pathToPublic' => $this->path, 'userSession' => $this->userSession]);
 	}
 
@@ -31,7 +31,7 @@ class UserController
 	{
 		$verify = $this->verifieSiLesChampsSontRemplis();
 		if (false === $verify) {
-			include_once(__DIR__ . '../../templates/configTwig.php');
+			include_once __DIR__ . '../../templates/configTwig.php';
 			$twig->display('subscribe.twig', [
 				'suscribedSuccessfully' => false,
 				'suscribedFailed' => false,
@@ -52,7 +52,7 @@ class UserController
 			$fetchUsers = $getUsers->fetchAll();
 			if (isset($fetchUsers[0])) {
 				$suscribedFailed = "L'email existe déjà!";
-				include_once(__DIR__ . '../../templates/configTwig.php');
+				include_once __DIR__ . '../../templates/configTwig.php';
 				$twig->display('subscribe.twig', [
 					'suscribedSuccessfully' => false,
 					'suscribedFailed' => $suscribedFailed,
@@ -70,7 +70,7 @@ class UserController
 					'password' => $hash
 				]);
 				$suscribedSuccessfully = 'Votre inscription a bien été validée';
-				include_once(__DIR__ . '../../templates/configTwig.php');
+				include_once __DIR__ . '../../templates/configTwig.php';
 				$twig->display('subscribe.twig', [
 					'suscribedSuccessfully' => $suscribedSuccessfully,
 					'suscribedFailed' => false,
@@ -178,7 +178,7 @@ class UserController
 	// Affiche le formulaire de connexion
 	public function displayConnexion()
 	{
-		include('../src/templates/configTwig.php');
+		include '../src/templates/configTwig.php';
 		if (true === $this->globals->SESSION['user']['logged']) {
 			header('location: ' . $this->path . 'accueil');
 		} else {
@@ -201,7 +201,7 @@ class UserController
 		$email = $user->getEmail();
 		$password = $user->getPassword();
 
-		include('../src/templates/configTwig.php');
+		include '../src/templates/configTwig.php';
 		if (null !== $email || null !== $password) {
 			$verifyEmail = $this->verifyEmail();
 			$verifyPassword = $this->verifyPassword();

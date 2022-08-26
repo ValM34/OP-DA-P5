@@ -110,25 +110,16 @@ header {
 
 	.burger-header-btn-close:nth-child(1) {
 		top: 15px;
-	}
-
-	.burger-header-btn-close:nth-child(2) {
-		top: 25px;
-	}
-
-	.burger-header-btn-close:nth-child(3) {
-		top: 35px;
-	}
-
-	.burger-header-btn-close:nth-child(1) {
 		animation: animation-burger-menu1-close 300ms ease-in-out forwards;
 	}
 
 	.burger-header-btn-close:nth-child(2) {
+		top: 25px;
 		animation: animation-burger-menu2-close 300ms ease-in-out forwards;
 	}
 
 	.burger-header-btn-close:nth-child(3) {
+		top: 35px;
 		animation: animation-burger-menu3-close 300ms ease-in-out forwards;
 	}
 

@@ -26,7 +26,7 @@ class PostController
 		$fetchPostList = $getPostList->fetchAll();
 		$userSession = $this->helpers->isLogged();
 		$fetchPostList = $this->helpers->dateConverter($fetchPostList);
-		include_once(__DIR__ . '/../templates/configTwig.php');
+		include_once __DIR__ . '/../templates/configTwig.php';
 		if (true === $userSession['logged']) {
 			$twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
 		} else {
@@ -64,7 +64,7 @@ class PostController
 		$userSession = $this->helpers->isLogged();
 		$fetchPost = $this->helpers->dateConverter($fetchPost);
 		$fetchComments = $this->helpers->dateConverter($fetchComments);
-		include(__DIR__ . '/../templates/configTwig.php');
+		include __DIR__ . '/../templates/configTwig.php';
 		$twig->display('post.twig', [
 			'post' => $fetchPost[0],
 			'comments' => $fetchComments,
@@ -106,7 +106,7 @@ class PostController
 
 			if (empty($content)) {
 				$errorMsg = true;
-				include(__DIR__ . '/../templates/configTwig.php');
+				include __DIR__ . '/../templates/configTwig.php';
 				$this->displayPost($id, $errorMsg);
 				return;
 			}
@@ -118,12 +118,12 @@ class PostController
 				'content' => $content
 			]);
 			$errorMsg = false;
-			include(__DIR__ . '/../templates/configTwig.php');
+			include __DIR__ . '/../templates/configTwig.php';
 			$this->displayPost($id, $errorMsg);
 			return;
 		} else {
 			$errorMsg = false;
-			include(__DIR__ . '/../templates/configTwig.php');
+			include __DIR__ . '/../templates/configTwig.php';
 			$this->displayPost($id, $errorMsg);
 			return;
 		}

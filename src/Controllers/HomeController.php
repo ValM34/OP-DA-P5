@@ -18,7 +18,7 @@ class HomeController
     // Affiche la page d'accueil
     public function display($message)
     {
-        include('../src/templates/configTwig.php');
+        include_once '../src/templates/configTwig.php';
         $userSession = $this->helpers->isLogged();
         $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
     }
@@ -50,7 +50,7 @@ class HomeController
 
         $contact->sendEmail($dest, $sujet, $corp, $headers);
         $message = urlencode('Votre email a bien été envoyé');
-				include_once('../src/templates/configTwig.php');
+				include_once '../src/templates/configTwig.php';
         $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $this->path]);
     }
 }
