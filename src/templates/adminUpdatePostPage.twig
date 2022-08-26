@@ -3,7 +3,7 @@
 	Modifier un article
 {% endblock %}
 {% block mainContent %}
-	<section>
+	<section class="section-admin-post">
 		<h1>Modifier un article</h1>
 		{% if errorMsg is same as(true) %}
 			<p class="error-msg">
@@ -24,7 +24,7 @@
 			{{ postList.name }}
 			{{ postList.surname }}
 			<form class="flex-col-center form-admin" action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" enctype="multipart/form-data" class="col-center">
-				<div>
+				<div class="select-container">
 					<label for="idUser">Modifier le rédacteur de l'article</label>
 					<select name="idUser" id="idUser">
 						<option value="{{postList.idUser}}" selected>{{postList.name}}-{{postList.surname}}-{{postList.idUser}}</option>

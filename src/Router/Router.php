@@ -44,10 +44,10 @@ class Router
             case 'accueil':
                 if (!isset($data[1])) {
                     $home = new HomeController();
-                    $home->display();
+                    $home->display('');
                 } elseif ($data[1] === 'contact') {
                     $home = new HomeController();
-                    $home->sendMail();
+                    $home->sendMail(urlencode('Votre email a bien été envoyé'));
                 } else {
                     $errorPage = new ErrorPageController();
                     $errorPage->display();

@@ -509,11 +509,11 @@ a:hover {
   margin-bottom: 15px;
   border: none;
 }
-.blogPost-comments .blogPost-comments-container div:nth-child(1) {
+.blogPost-comments .blogPost-comments-container div.comment-info1 {
   font-style: italic;
   font-size: 15px;
 }
-.blogPost-comments .blogPost-comments-container div:nth-child(2) {
+.blogPost-comments .blogPost-comments-container div.comment-info2 {
   font-weight: 700;
   margin-bottom: 15px;
 }
@@ -857,6 +857,30 @@ a:hover {
 .comment-admin-container .published {
   border: 2px solid green;
   padding: 15px;
+}
+
+#postFile {
+  box-shadow: none;
+  padding-left: 0;
+}
+
+.section-admin-post {
+  background-color: #c2dbff !important;
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+}
+@media screen and (min-width: 1200px) {
+  .select-container {
+    max-width: 600px;
+  }
+}
+.select-container select#idUser {
+  height: 40px;
 }
 
 .flex-col-center {

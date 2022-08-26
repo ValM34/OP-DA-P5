@@ -3,7 +3,7 @@
 	Ajouter un article
 {% endblock %}
 {% block mainContent %}
-	<section>
+	<section class="section-admin-post">
 		<h1>Ajouter un article</h1>
 		{% if errorMsg is same as(true) %}
 			<p class="error-msg">
@@ -22,7 +22,7 @@
 		{% endif %}
 		<div class="container-col-center">
 			<form class="flex-col-center form-admin" action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
-				<div>
+				<div class="select-container">
 					<label for="idUser">Modifier le rédacteur de l'article</label>
 					<select name="idUser" id="idUser">
 						<option value="{{userSession.id}}" selected>{{userSession.name}}-{{userSession.surname}}-{{userSession.id}}</option>

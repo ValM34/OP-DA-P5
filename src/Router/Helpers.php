@@ -71,6 +71,7 @@ class Helpers
 				$twig->display('errorPage.twig', ['pathToPublic' => $path]);
 				die;
 			}
+			return;
 		} else {
 			include('../src/templates/configTwig.php');
 			$path = $this->pathToPublic();

@@ -43,7 +43,7 @@
 		{% for comment in comments %}
 			{% if comment.status is same as('published') %}
 				<div class="blogPost-comments-container">
-					<div>
+					<div class="comment-info2">
 						{{comment.name}}
 						{{comment.surname}}
 						-
@@ -54,8 +54,8 @@
 			{% endif %}
 			{% if (userSession.role is same as('admin')) and (comment.status is same as('pending')) %}
 				<div class="blogPost-comments-container">
-					<div>Ce commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
-					<div>
+					<div class="comment-info1">Ce commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
+					<div class="comment-info2">
 						{{comment.name}}
 						{{comment.surname}}
 						-
@@ -66,8 +66,8 @@
 			{% endif %}
 			{% if (userSession.role is same as('user')) and (comment.status is same as('pending')) and (comment.id_user is same as(userSession.id)) %}
 				<div class="blogPost-comments-container">
-					<div>Votre commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
-					<div>
+					<div class="comment-info1">Votre commentaire est en attente de publication et n'est pas visible pour les utilisateurs</div>
+					<div class="comment-info2">
 						{{comment.name}}
 						{{comment.surname}}
 						-
@@ -78,8 +78,8 @@
 			{% endif %}
 			{% if (userSession.role is same as('admin')) and (comment.status is same as('rejected')) %}
 				<div class="blogPost-comments-container">
-					<div>Ce commentaire a été rejeté et n'est pas visible pour les utilisateurs</div>
-					<div>
+					<div class="comment-info1">Ce commentaire a été rejeté et n'est pas visible pour les utilisateurs</div>
+					<div class="comment-info2">
 						{{comment.name}}
 						{{comment.surname}}
 						-

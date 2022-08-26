@@ -13,14 +13,17 @@ class User
     {
         return $this->name;
     }
+
     public function getSurname(): ?string
     {
         return $this->surname;
     }
+
     public function getEmail(): ?string
     {
         return $this->email;
     }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -32,18 +35,21 @@ class User
 
         return $this;
     }
+
     public function setSurname(?string $surname): self
     {
         $this->surname = $surname;
 
         return $this;
     }
+		
     public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
+
     public function setPassword(?string $password): self
     {
         $this->password = $password;

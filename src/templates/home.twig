@@ -19,10 +19,10 @@
 		<div>
 			<h2>Me contacter</h2>
 			<form class="flex-col-center" action="accueil/contact" method="POST">
-				<label>Nom</label><input id="lastName" name="lastName" class="input-txt" placeholder="Écrivez ici votre nom..." />
-				<label>Prénom</label><input id="name" name="name" class="input-txt" placeholder="Écrivez ici votre prénom..." />
-				<label>Email</label><input type="email" id="email" name="email" class="input-txt" placeholder="Écrivez ici votre email..." />
-				<label>Titre</label><input id="sujet" name="sujet" class="input-txt" placeholder="Écrivez ici le sujet..." />
+				<label>Nom</label><input id="lastName" name="lastName" class="input-txt" placeholder="Écrivez ici votre nom..." required />
+				<label>Prénom</label><input id="name" name="name" class="input-txt" placeholder="Écrivez ici votre prénom..." required />
+				<label>Email</label><input type="email" id="email" name="email" class="input-txt" placeholder="Écrivez ici votre email..." required />
+				<label>Titre</label><input id="sujet" name="sujet" class="input-txt" placeholder="Écrivez ici le sujet..." required />
 				<label>Message</label>
 				<textarea id="corp" name="corp" placeholder="Ecrivez votre message ici..."></textarea>
 				<button type="submit">Envoyer</button>

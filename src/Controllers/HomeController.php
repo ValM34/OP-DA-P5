@@ -16,16 +16,9 @@ class HomeController
     }
 
     // Affiche la page d'accueil
-    public function display()
+    public function display($message)
     {
         include('../src/templates/configTwig.php');
-        $message = '';
-        if($this->globals->getGET('message')) {
-            $get['message'] = htmlspecialchars($this->globals->getGET('message'));
-        }
-        if (isset($get['message'])) {
-            $message = $get['message'];
-        }
         $userSession = $this->helpers->isLogged();
         $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
     }
@@ -57,6 +50,7 @@ class HomeController
 
         $contact->sendEmail($dest, $sujet, $corp, $headers);
         $message = urlencode('Votre email a bien été envoyé');
-        header('Location: http://localhost/op-da-p5/public/accueil?message=' . $message);
+				include_once('../src/templates/configTwig.php');
+        $twig->display('home.twig', ['message' => $message, 'pathToPublic' => $this->path]);
     }
 }
