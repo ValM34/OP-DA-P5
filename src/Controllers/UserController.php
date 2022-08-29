@@ -34,7 +34,7 @@ class UserController
 			include_once __DIR__ . '../../templates/configTwig.php';
 			$twig->display('subscribe.twig', [
 				'suscribedSuccessfully' => false,
-				'suscribedFailed' => false,
+				'suscribedFailed' => true,
 				'pathToPublic' => $this->path,
 				'userSession' => $this->userSession
 			]);
@@ -205,7 +205,7 @@ class UserController
 		if (null !== $email || null !== $password) {
 			$verifyEmail = $this->verifyEmail();
 			$verifyPassword = $this->verifyPassword();
-
+			
 			if (false === $verifyEmail) {
 				$twig->display('connexion.twig', ['errorMessage' => 'emailError', 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
 				return;

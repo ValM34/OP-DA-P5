@@ -15,7 +15,7 @@ class ErrorPageController
     // Affiche la page d'erreur
     public function display()
     {
-        include('../src/templates/configTwig.php');
+        include '../src/templates/configTwig.php';
         $userSession = $this->helpers->isLogged();
 
         if (true === $userSession['logged']) {

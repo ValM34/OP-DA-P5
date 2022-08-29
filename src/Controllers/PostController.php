@@ -5,6 +5,8 @@ namespace Controllers;
 use Models\ConnectDb;
 use Router\Helpers;
 use Globals\Globals;
+use Models\Post;
+use Models\Comment;
 
 class PostController
 {
@@ -15,6 +17,8 @@ class PostController
 		$this->helpers = new Helpers();
 		$this->path = $this->helpers->pathToPublic();
 		$this->globals = new Globals;
+		$this->post = new Post();
+		$this->comment = new Comment();
 	}
 
 	// Affiche la liste des articles
@@ -23,14 +27,16 @@ class PostController
 		$getPostListQuery = 'SELECT * FROM blog_posts;';
 		$getPostList = $this->pdo->prepare($getPostListQuery);
 		$getPostList->execute();
-		$fetchPostList = $getPostList->fetchAll();
+		$this->post->setPost($getPostList->fetchAll());
+		$postList = $this->post->getPost();
+
 		$userSession = $this->helpers->isLogged();
-		$fetchPostList = $this->helpers->dateConverter($fetchPostList);
+		$postList = $this->helpers->dateConverter($postList);
 		include_once __DIR__ . '/../templates/configTwig.php';
 		if (true === $userSession['logged']) {
-			$twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
+			$twig->display('postList.twig', ['postList' => $postList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
 		} else {
-			$twig->display('postList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
+			$twig->display('postList.twig', ['postList' => $postList, 'pathToPublic' => $this->path, 'userSession' => $userSession]);
 		}
 	}
 
@@ -46,7 +52,9 @@ class PostController
         ';
 		$getPost = $this->pdo->prepare($getPostQuery);
 		$getPost->execute(['id' => $id_post]);
-		$fetchPost = $getPost->fetchAll();
+		$this->post->setPost($getPost->fetchAll());
+		$post = $this->post->getPost();
+		$post = $this->helpers->dateConverter($post);
 		$getCommentsQuery = '
                 SELECT J.id, J.id_post, J.id_user, J.content, J.status, J.created_at, J.updated_at, J.id_user, P.name, P.surname
                 FROM comments J 
@@ -59,15 +67,15 @@ class PostController
 		$getComments->execute([
 			'id_post' => $id_post
 		]);
-		$fetchComments = $getComments->fetchAll();
-
+		$this->comment->setComment($getComments->fetchAll());
+		$comments = $this->comment->getComment();
+		$comments = $this->helpers->dateConverter($comments);
 		$userSession = $this->helpers->isLogged();
-		$fetchPost = $this->helpers->dateConverter($fetchPost);
-		$fetchComments = $this->helpers->dateConverter($fetchComments);
+		
 		include __DIR__ . '/../templates/configTwig.php';
 		$twig->display('post.twig', [
-			'post' => $fetchPost[0],
-			'comments' => $fetchComments,
+			'post' => $post[0],
+			'comments' => $comments,
 			'pathToPublic' => $this->path,
 			'userSession' => $userSession,
 			'errorMsg' => $errorMsg
@@ -80,15 +88,11 @@ class PostController
 		$id = $id_post_owner;
 		$userSession = $this->helpers->isLogged();
 		if (true === $userSession['logged']) {
-			$getPostQuery = 'SELECT * FROM blog_posts WHERE id = :id;';
-			$getPost = $this->pdo->prepare($getPostQuery);
-			$getPost->execute(['id' => $id]);
-
 			$getCommentsQuery = '
-                SELECT J.id, J.id_post, J.id_user, J.content, J.created_at, J.updated_at, P.name, P.surname
-                FROM comments J 
-                JOIN users P
-                ON J.id_user = P.id
+                SELECT C.id, C.id_post, C.id_user, C.content, C.created_at, C.updated_at, U.name, U.surname
+                FROM comments C 
+                JOIN users U
+                ON C.id_user = U.id
                 WHERE id_post = :id_post
                 ORDER BY created_at;
             ';
@@ -97,7 +101,6 @@ class PostController
 				'id_post' => $id
 			]);
 
-			// $session['user']['id'] = $this->globals->getSESSION('id');  à voir si je peux créer un setter pour ça...
 			$id_user = $_SESSION['user']['id'];
 			$id_post = $id;
 			$post = $this->globals->getPOST('content');

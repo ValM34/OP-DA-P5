@@ -4,9 +4,9 @@ namespace Globals;
 
 class Globals
 {
-  private $GET;
-  private $POST;
-  public ?array $FILES = null;
+  private ?array $GET = null;
+  private ?array $POST = null;
+  private ?array $FILES = null;
   public ?array $SESSION = null;
   public ?array $ENV = null;
 

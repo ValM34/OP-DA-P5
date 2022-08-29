@@ -5,6 +5,8 @@ namespace Controllers;
 use Router\Helpers;
 use Models\ConnectDb;
 use Globals\Globals;
+use Models\Post;
+use Models\Comment;
 
 class AdminPostController
 {
@@ -20,6 +22,8 @@ class AdminPostController
 		$this->helpers = new Helpers();
 		$this->helpers->isAdmin();
 		$this->path = $this->helpers->pathToPublic();
+		$this->post = new Post();
+		$this->comment = new Comment();
 	}
 
 	// Affiche la page d'accueil de la page d'administration
@@ -36,11 +40,12 @@ class AdminPostController
 		$getPostListQuery = 'SELECT * FROM blog_posts ORDER BY created_at desc;';
 		$getPostList = $this->pdo->prepare($getPostListQuery);
 		$getPostList->execute();
-		$fetchPostList = $getPostList->fetchAll();
+		$this->post->setPost($getPostList->fetchAll());
+		$post = $this->post->getPost();
 		$userSession = $this->helpers->isLogged();
 		include_once __DIR__ . '/../templates/configTwig.php';
-		$fetchPostList = $this->helpers->dateConverter($fetchPostList);
-		$twig->display('adminPostList.twig', ['postList' => $fetchPostList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
+		$post = $this->helpers->dateConverter($post);
+		$twig->display('adminPostList.twig', ['postList' => $post, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
 
 	// Change le statut d'un article pour le masquer sur le site
@@ -67,10 +72,11 @@ class AdminPostController
 		$getImgSrcQuery = 'SELECT img_src FROM blog_posts WHERE id = :id;';
 		$getImgSrc = $this->pdo->prepare($getImgSrcQuery);
 		$getImgSrc->execute(['id' => $id_post]);
-		$fetchImgSrc = $getImgSrc->fetchAll();
+		$this->post->setPost($getImgSrc->fetchAll());
+		$imgSrc = $this->post->getPost();
 
-		if ($fetchImgSrc[0]['img_src'] !== null) {
-			$pathToDeleteImg = __DIR__ . '/../../public/' . $fetchImgSrc[0]['img_src'];
+		if ($imgSrc[0]['img_src'] !== null) {
+			$pathToDeleteImg = __DIR__ . '/../../public/' . $imgSrc[0]['img_src'];
 			unlink($pathToDeleteImg);
 		}
 
@@ -182,10 +188,11 @@ class AdminPostController
         ;';
 		$displayUpdatePost = $this->pdo->prepare($displayUpdatePostQuery);
 		$displayUpdatePost->execute(['id' => $id_post]);
-		$fetchPost = $displayUpdatePost->fetchAll();
+		$this->post->setPost($displayUpdatePost->fetchAll());
+		$post = $this->post->getPost();
 
 		include_once __DIR__ . '/../templates/configTwig.php';
-		$twig->display('adminUpdatePostPage.twig', ['adminUsersList' => $fetchAdminUsers, 'postList' => $fetchPost[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
+		$twig->display('adminUpdatePostPage.twig', ['adminUsersList' => $fetchAdminUsers, 'postList' => $post[0], 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
 
 	// Modifie un article
@@ -225,10 +232,11 @@ class AdminPostController
 			$getImgSrcQuery = 'SELECT img_src FROM blog_posts WHERE id = :id;';
 			$getImgSrc = $this->pdo->prepare($getImgSrcQuery);
 			$getImgSrc->execute(['id' => $id_post]);
-			$fetchImgSrc = $getImgSrc->fetchAll();
+			$this->post->setPost($getImgSrc->fetchAll());
+			$imgSrc = $this->post->getPost();
 			// Suppression de l'ancienne l'image
-			if ($fetchImgSrc[0]['img_src'] !== null) {
-				$pathToDeleteImg = __DIR__ . '/../../public/' . $fetchImgSrc[0]['img_src'];
+			if ($imgSrc[0]['img_src'] !== null) {
+				$pathToDeleteImg = __DIR__ . '/../../public/' . $imgSrc[0]['img_src'];
 				unlink($pathToDeleteImg);
 			}
 
@@ -308,9 +316,10 @@ class AdminPostController
 		$getImgSrc = $this->pdo->prepare($getImgSrcQuery);
 		foreach ($arrayIdPosts as $id_post) {
 			$getImgSrc->execute(['id' => $id_post]);
-			$fetchImgSrc = $getImgSrc->fetchAll();
-			if ($fetchImgSrc[0]['img_src'] !== null) {
-				$pathToDeleteImg = __DIR__ . '/../../public/' . $fetchImgSrc[0]['img_src'];
+			$this->post->setPost($getImgSrc->fetchAll());
+			$post = $this->post->getPost();
+			if ($post[0]['img_src'] !== null) {
+				$pathToDeleteImg = __DIR__ . '/../../public/' . $post[0]['img_src'];
 				unlink($pathToDeleteImg);
 			}
 			$deleteSelected->execute([
@@ -329,15 +338,16 @@ class AdminPostController
 				FROM comments C, users U, blog_posts B
 				WHERE C.id_user = U.id
 				AND C.id_post = B.id
-				ORDER BY created_at;
+				ORDER BY created_at DESC;
         ';
 		$getCommentsList = $this->pdo->prepare($getCommentsListQuery);
 		$getCommentsList->execute();
-		$fetchCommentsList = $getCommentsList->fetchAll();
+		$this->comment->setComment($getCommentsList->fetchAll());
+		$comment = $this->comment->getComment();
 		$userSession = $this->helpers->isLogged();
 		include_once __DIR__ . '/../templates/configTwig.php';
-		$fetchCommentsList = $this->helpers->dateConverter($fetchCommentsList);
-		$twig->display('adminCommentsList.twig', ['CommentsList' => $fetchCommentsList, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
+		$comment = $this->helpers->dateConverter($comment);
+		$twig->display('adminCommentsList.twig', ['CommentsList' => $comment, 'pathToPublic' => $this->path, 'userSession' => $userSession, 'adminLink' => $this->globals->getENV('adminLink')]);
 	}
 
 	// Change le statut d'un commentaire en 'published'

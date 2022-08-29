@@ -8,7 +8,7 @@
 			<div class="error-msg-container">
 				<b class="error-msg">
 					{% if errorMessage is same as("emailError")%}Connexion refusée (L'email n'existe pas){% endif %}
-                    {% if errorMessage is same as("passwordError")%}Connexion refusée (mot de passe incorrect){% endif %}
+                    {% if errorMessage is same as("passwordError")%}Connexion refusée (email ou mot de passe incorrect){% endif %}
                 </b>
 			</div>
 		{% endif %}
