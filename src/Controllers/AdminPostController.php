@@ -111,10 +111,10 @@ class AdminPostController
 	public function addPost()
 	{
 		$userSession = $this->helpers->isLogged();
-		$post['postTitle'] = htmlspecialchars($this->globals->getPOST('postTitle'));
-		$post['postContent'] = htmlspecialchars($this->globals->getPOST('postContent'));
-		$post['postChapo'] = htmlspecialchars($this->globals->getPOST('postChapo'));
-		$post['idUser'] = htmlspecialchars($this->globals->getPOST('idUser'));
+		$post['postTitle'] = htmlspecialchars($this->globals->getPOST('postTitle'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['postContent'] = htmlspecialchars($this->globals->getPOST('postContent'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['postChapo'] = htmlspecialchars($this->globals->getPOST('postChapo'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['idUser'] = htmlspecialchars($this->globals->getPOST('idUser'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		$title = $post['postTitle'];
 		$content = $post['postContent'];
 		$chapo = $post['postChapo'];
@@ -131,7 +131,7 @@ class AdminPostController
 			$maxSize = 3000000;
 			$validExt = ['.jpg', '.jpeg', '.png'];
 			$fileSize = $file['size'];
-			$fileName = htmlspecialchars($file['name']);
+			$fileName = htmlspecialchars($file['name'], FILTER_FLAG_NO_ENCODE_QUOTES);
 			$fileExt = '.' . strtolower(substr(strrchr($fileName, '.'), 1));
 			$tmpName = $file['tmp_name'];
 			$uniqueName = md5(uniqid(rand(), true));
@@ -199,10 +199,10 @@ class AdminPostController
 	public function updatePost($id_post)
 	{
 		$userSession = $this->helpers->isLogged();
-		$post['title'] = htmlspecialchars($this->globals->getPOST('title'));
-		$post['content'] = htmlspecialchars($this->globals->getPOST('content'));
-		$post['chapo'] = htmlspecialchars($this->globals->getPOST('chapo'));
-		$post['idUser'] = htmlspecialchars($this->globals->getPOST('idUser'));
+		$post['title'] = htmlspecialchars($this->globals->getPOST('title'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['content'] = htmlspecialchars($this->globals->getPOST('content'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['chapo'] = htmlspecialchars($this->globals->getPOST('chapo'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['idUser'] = htmlspecialchars($this->globals->getPOST('idUser'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		$title = $post['title'];
 		$content = $post['content'];
 		$chapo = $post['chapo'];
@@ -219,7 +219,7 @@ class AdminPostController
 			$maxSize = 3000000;
 			$validExt = ['.jpg', '.jpeg', '.png'];
 			$fileSize = $file['size'];
-			$fileName = htmlspecialchars($file['name']);
+			$fileName = htmlspecialchars($file['name'], FILTER_FLAG_NO_ENCODE_QUOTES);
 			$fileExt = '.' . strtolower(substr(strrchr($fileName, '.'), 1));
 			$tmpName = $file['tmp_name'];
 			$uniqueName = md5(uniqid(rand(), true));

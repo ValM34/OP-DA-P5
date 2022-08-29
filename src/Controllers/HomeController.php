@@ -28,11 +28,11 @@ class HomeController
     {
         $contact = new Contact();
 
-        $post['sujet'] = htmlspecialchars($this->globals->getPOST('sujet'));
-        $post['corp'] = htmlspecialchars($this->globals->getPOST('corp'));
-        $post['name'] = htmlspecialchars($this->globals->getPOST('name'));
-        $post['lastName'] = htmlspecialchars($this->globals->getPOST('lastName'));
-        $post['email'] = htmlspecialchars($this->globals->getPOST('email'));
+        $post['sujet'] = htmlspecialchars($this->globals->getPOST('sujet'), FILTER_FLAG_NO_ENCODE_QUOTES);
+        $post['corp'] = htmlspecialchars($this->globals->getPOST('corp'), FILTER_FLAG_NO_ENCODE_QUOTES);
+        $post['name'] = htmlspecialchars($this->globals->getPOST('name'), FILTER_FLAG_NO_ENCODE_QUOTES);
+        $post['lastName'] = htmlspecialchars($this->globals->getPOST('lastName'), FILTER_FLAG_NO_ENCODE_QUOTES);
+        $post['email'] = htmlspecialchars($this->globals->getPOST('email'), FILTER_FLAG_NO_ENCODE_QUOTES);
         $contact->setSujet($post['sujet']);
         $contact->setCorp($post['corp']);
         $contact->setName($post['name']);

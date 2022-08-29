@@ -86,10 +86,10 @@ class UserController
 	{
 		$user = new User();
 
-		$post['name'] = htmlspecialchars($this->globals->getPOST('name'));
-		$post['surname'] = htmlspecialchars($this->globals->getPOST('surname'));
-		$post['email'] = htmlspecialchars($this->globals->getPOST('email'));
-		$post['password'] = htmlspecialchars($this->globals->getPOST('password'));
+		$post['name'] = htmlspecialchars($this->globals->getPOST('name'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['surname'] = htmlspecialchars($this->globals->getPOST('surname'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['email'] = htmlspecialchars($this->globals->getPOST('email'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['password'] = htmlspecialchars($this->globals->getPOST('password'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		$user
 			->setName($post['name'])
 			->setSurname($post['surname'])
@@ -102,15 +102,15 @@ class UserController
 	// Vérifie si les champs remplis correctement
 	public function verifieSiLesChampsSontRemplis()
 	{
-		$post['email'] = htmlspecialchars($this->globals->getPOST('email'));
+		$post['email'] = htmlspecialchars($this->globals->getPOST('email'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		// Il faut une adresse email valide format : adresse@email.com
 		$emailRegex = preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $post['email']);
-		$post['password'] = htmlspecialchars($this->globals->getPOST('password'));
+		$post['password'] = htmlspecialchars($this->globals->getPOST('password'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		// Password: il faut au minimum 8 caractères dont 1 chiffre, 1 lettre minuscule et une lettre majuscule
 		$passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $post['password']);
 
-		$post['name'] = htmlspecialchars($this->globals->getPOST('name'));
-		$post['surname'] = htmlspecialchars($this->globals->getPOST('surname'));
+		$post['name'] = htmlspecialchars($this->globals->getPOST('name'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['surname'] = htmlspecialchars($this->globals->getPOST('surname'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		if (!isset($post['name'])) {
 			$verify = false;
 			return $verify;
@@ -132,7 +132,7 @@ class UserController
 	// Vérifie si l'email est rempli correctement
 	public function verifyEmail()
 	{
-		$post['email'] = htmlspecialchars($this->globals->getPOST('email'));
+		$post['email'] = htmlspecialchars($this->globals->getPOST('email'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		// Il faut une adresse email valide format : adresse@email.com
 		$emailRegex = preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $post['email']);
 
@@ -154,7 +154,7 @@ class UserController
 	// Vérifie si le mot de passe est rempli correctement
 	public function verifyPassword()
 	{
-		$post['password'] = htmlspecialchars($this->globals->getPOST('password'));
+		$post['password'] = htmlspecialchars($this->globals->getPOST('password'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		// Password: il faut au minimum 8 caractères dont 1 chiffre, 1 lettre minuscule et une lettre majuscule
 		$passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $post['password']);
 
@@ -183,7 +183,7 @@ class UserController
 			header('location: ' . $this->path . 'accueil');
 		} else {
 			if ($this->globals->getGET('errorMessage')) {
-				$get['errorMessage'] = htmlspecialchars($this->globals->getGET('errorMessage'));
+				$get['errorMessage'] = htmlspecialchars($this->globals->getGET('errorMessage'), FILTER_FLAG_NO_ENCODE_QUOTES);
 			}
 			$errorMessage = isset($get['errorMessage']) ? $get['errorMessage'] : '';
 			$twig->display('connexion.twig', ['errorMessage' => $errorMessage, 'pathToPublic' => $this->path, 'userSession' => $this->userSession]);
@@ -194,8 +194,8 @@ class UserController
 	public function connexion()
 	{
 		$user = new User();
-		$post['email'] = htmlspecialchars($this->globals->getPOST('email'));
-		$post['password'] = htmlspecialchars($this->globals->getPOST('password'));
+		$post['email'] = htmlspecialchars($this->globals->getPOST('email'), FILTER_FLAG_NO_ENCODE_QUOTES);
+		$post['password'] = htmlspecialchars($this->globals->getPOST('password'), FILTER_FLAG_NO_ENCODE_QUOTES);
 		$user->setEmail($post['email']);
 		$user->setPassword($post['password']);
 		$email = $user->getEmail();

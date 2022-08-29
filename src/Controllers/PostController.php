@@ -71,7 +71,7 @@ class PostController
 		$comments = $this->comment->getComment();
 		$comments = $this->helpers->dateConverter($comments);
 		$userSession = $this->helpers->isLogged();
-		
+
 		include __DIR__ . '/../templates/configTwig.php';
 		$twig->display('post.twig', [
 			'post' => $post[0],
@@ -105,7 +105,7 @@ class PostController
 			$id_post = $id;
 			$post = $this->globals->getPOST('content');
 			$cleanedPOST = strip_tags($post);
-			$content = htmlspecialchars($cleanedPOST);
+			$content = htmlspecialchars($cleanedPOST, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 			if (empty($content)) {
 				$errorMsg = true;
@@ -121,9 +121,8 @@ class PostController
 				'content' => $content
 			]);
 			$errorMsg = false;
-			include __DIR__ . '/../templates/configTwig.php';
-			$this->displayPost($id, $errorMsg);
-			return;
+			var_dump($this->globals->getSERVER('HTTP_REFERER'));
+			header('location: ' . $this->globals->getSERVER('HTTP_REFERER'));
 		} else {
 			$errorMsg = false;
 			include __DIR__ . '/../templates/configTwig.php';
