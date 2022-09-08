@@ -4,17 +4,108 @@ namespace Models;
 
 class Post
 {
-	private ?array $post = null;
+  private $post = null;
+  //
+  private $id;
+  private $id_post;
+  private $id_user;
+  private $content;
+  private $created_at;
+  private $updated_at;
 
-	public function getPost()
-	{
-		return $this->post;
-	}
+  public function __construct($id = null, $id_post = null, $id_user = null, $content = null, $created_at = null, $updated_at = null)
+  {
+    $this->id = $id;
+    $this->id = $id_post;
+    $this->id = $id_user;
+    $this->id = $content;
+    $this->id = $created_at;
+    $this->id = $updated_at;
+  }
 
-	public function setPost(?array $array): self
-	{
-		$this->post = $array;
+  public function getId()
+  {
+    return $this->id;
+  }
 
-		return $this;
-	}
+  public function getIdPost()
+  {
+    return $this->id_post;
+  }
+
+  public function getIdUser()
+  {
+    return $this->id_user;
+  }
+
+  public function getContent()
+  {
+    return $this->content;
+  }
+
+  public function getCreatedAt()
+  {
+    return $this->created_at;
+  }
+
+  public function getUpdatedAt()
+  {
+    return $this->updated_at;
+  }
+
+  public function getPost()
+  {
+    return $this->post;
+  }
+
+  public function setId(?int $id): self
+  {
+    $this->id = $id;
+
+    return $this;
+  }
+
+  public function setIdPost(?int $id_post): self
+  {
+    $this->id_post = $id_post;
+
+    return $this;
+  }
+
+  public function setIdUser(?int $id_user): self
+  {
+    $this->id_user = $id_user;
+
+    return $this;
+  }
+
+  public function setContent(?string $content): self
+  {
+    $this->content = $content;
+
+    return $this;
+  }
+
+  public function setCreatedAt(?string $created_at): self
+  {
+    $this->created_at = $created_at;
+
+    return $this;
+  }
+
+  public function setUpdatedAt(?string $updated_at): self
+  {
+    $this->updated_at = $updated_at;
+
+    return $this;
+  }
+
+  public function setPost($array): self
+  {
+    $this->post = $array;
+
+    return $this;
+  }
+
+  
 }

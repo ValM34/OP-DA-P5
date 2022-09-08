@@ -9,6 +9,8 @@ class Globals
   private ?array $FILES = null;
   public ?array $SESSION = null;
   public ?array $ENV = null;
+  public ?array $SERVER = null;
+  public ?array $COOKIE = null;
 
   public function __construct()
   {

@@ -6,24 +6,11 @@ use Globals\Globals;
 
 class Helpers
 {
-	// private $dateConverter;
-	// private $adminLink;
-
 	public function __construct()
 	{
 		$this->globals = new Globals();
 		$this->globals->getENV('adminLink');
 	}
-	/*public function pathToPublic($numberOfPaths)
-    {
-        $link = '';
-        $link2 = $link;
-        for ($i = 1; $i < $numberOfPaths; $i++) {
-            $link2 = sprintf("%s%s", $link, '../');
-            $link = $link2;
-        }
-        return $link;
-    }*/
 
 	// Défini le nombre de '/' après public pour retourner un nombre de '../' équivalent
 	public function pathToPublic()
@@ -96,10 +83,5 @@ class Helpers
 			}
 		}
 		return $array;
-	}
-
-	// Nettoie et sécurise les informations d'une variable
-	/*public function cleaner($arg) {
-        return htmlspecialchars(strip_tags($arg));
-    }*/
+	}	
 }
