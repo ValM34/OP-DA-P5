@@ -7,43 +7,54 @@
 		<h1>Liste des articles</h1>
 		<div class="postListAdmin">
 			<div class="checkbox-all">
-				<input name="checkbox-all" id="checkbox-all" class="blogPostListAdminCheckbox" type="checkbox"/>
-				<label for="checkbox-all">Tout sélectionner</label>
-				<div class="postAdmin__linkContainer">
-					<div class="postAdmin__link">
-						<a id="publishSelected" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Publier les articles séléctionnés</a>
+				<div class="checkbox-container">
+					<input name="checkbox-all" id="checkbox-all" class="blogPostListAdminCheckbox" type="checkbox"/>
+					<label for="checkbox-all">Tout sélectionner</label>
+				</div>
+				<div class="post-list-admin-link-container">
+					<div class="post-admin-link">
+						<a class="tiny-button" id="publishSelected" class="tiny-button" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Publier la séléction</a>
 					</div>
-					<div class="postAdmin__link">
-						<a id="hideSelected" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Masquer les articles séléctionnés</a>
+					<div class="post-admin-link">
+						<a class="tiny-button" id="hideSelected" class="tiny-button" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Masquer la séléction</a>
 					</div>
-					<div class="postAdmin__link">
-						<a id="deleteAll" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer les articles séléctionnés</a>
+					<div class="post-admin-link">
+						<a class="tiny-button" id="deleteAll" class="tiny-button" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer la séléction</a>
 					</div>
 				</div>
 			</div>
-			<a href="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle">Ajouter un article</a>
+			<a class="button" href="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle">Ajouter un article</a>
+			<div class="post-list-admin-container">
 			{% for post in postList %}
 				{% if post.status == 'hidden' %}
 					<div class="postListAdmin__post">
 						<input id="checkbox-{{post.id}}" class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost"/>
-						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}{{post.img_src}}"/></div>
+						<div class="postListAdmin__img__container flex-center">
+							{% if post.img_src != null %}
+								<div class="postListAdmin__img" style="background-image: url('{{pathToPublic}}{{post.img_src}}');"></div>
+							{% else %}
+								<div class="postListAdmin__img" style="background-image: url('{{pathToPublic}}images/posts/background-base.jpg');"></div>
+							{% endif %}
+						</div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}{{adminLink}}/article/{{post.id}}/afficher">
-									<b>{{post.title}}
-										(masqué) - publié le
-										{{post.created_at}}</b>
+									<b>{{post.title}}</b>
 								</a>
+								<p>
+									masqué - rédigé le
+									{{post.created_at}}
+								</p>
 							</div>
-							<div class="postAdmin__linkContainer">
-								<div class="postAdmin__link">
-									<a id="update-{{post.id}}" class="update" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/afficher">Modifier</a>
+							<div class="post-list-admin-link-container">
+								<div class="post-admin-link">
+									<a class="tiny-button" id="update-{{post.id}}" class="update" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/afficher">Modifier</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="publish-{{post.id}}" class="publish" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Publier l'article</a>
+								<div class="post-admin-link">
+									<a class="tiny-button" id="publish-{{post.id}}" class="publish" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/publier">Publier l'article</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="delete-{{post.id}}" class="delete" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer</a>
+								<div class="post-admin-link">
+									<a class="tiny-button" id="delete-{{post.id}}" class="delete" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer</a>
 								</div>
 							</div>
 						</div>
@@ -51,32 +62,43 @@
 				{% else %}
 					<div class="postListAdmin__post">
 						<input id="checkbox-{{post.id}}" class="blogPostListAdminCheckbox" type="checkbox" name="checkboxPost"/>
-						<div class="postListAdmin__img__container"><img class="postListAdmin__img" src="{{pathToPublic}}{{post.img_src}}"/></div>
+						<div class="postListAdmin__img__container flex-center">
+							{% if post.img_src != null %}
+								<div class="postListAdmin__img" style="background-image: url('{{pathToPublic}}{{post.img_src}}');"></div>
+							{% else %}
+								<div class="postListAdmin__img" style="background-image: url('{{pathToPublic}}images/posts/background-base.jpg');"></div>
+							{% endif %}
+						</div>
 						<div class="postAdmin__container">
 							<div class="postAdmin__title">
 								<a href="{{pathToPublic}}{{adminLink}}/article/{{post.id}}/afficher">
-									<b>{{post.title}}
-										- publié le
-										{{post.created_at}}</b>
+									<b>{{post.title}}</b>
 								</a>
+								<p>
+									publié - rédigé le
+									{{post.created_at}}
+								</p>
 							</div>
-							<div class="postAdmin__linkContainer">
-								<div class="postAdmin__link">
-									<a id="update-{{post.id}}" class="update" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/afficher">Modifier</a>
+							<div class="post-list-admin-link-container">
+								<div class="post-admin-link">
+									<a class="tiny-button" id="update-{{post.id}}" class="update" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/afficher">Modifier</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="publish-{{post.id}}" class="publish" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/masquer">Masquer l'article</a>
+								<div class="post-admin-link">
+									<a class="tiny-button" id="publish-{{post.id}}" class="publish" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/masquer">Masquer l'article</a>
 								</div>
-								<div class="postAdmin__link">
-									<a id="delete-{{post.id}}" class="delete" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer</a>
+								<div class="post-admin-link">
+									<a class="tiny-button" id="delete-{{post.id}}" class="delete" href="{{pathToPublic}}{{adminLink}}/article/{{ post.id }}/supprimer">Supprimer</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				{% endif %}
 			{% endfor %}
+			</div>
 		</div>
 	</section>
 {% endblock %}
 
-{% block scriptJs %}<script type="module" src="{{pathToPublic}}index.js"></script>{% endblock %}
+{% block scriptJs %}
+	<script type="module" src="{{pathToPublic}}js/adminPostList.js"></script>
+{% endblock %}

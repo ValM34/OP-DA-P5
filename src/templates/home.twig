@@ -12,30 +12,30 @@
 			</div>
 		{% endif %}
 		<h1>Valentin Moreau</h1>
-		<div class="flex-center"><img src="{{pathToPublic}}images/photoValentin.jfif" class="img-valentin"/></div>
+		<div class="flex-center"><img src="{{pathToPublic}}images/photoValentin.jfif" class="img-home"/></div>
 		<h2>Valentin Moreau, le développeur qu'il vous faut !</h2>
 	</section>
 	<section>
 		<div>
 			<h2>Me contacter</h2>
 			<form class="flex-col-center" action="accueil/contact" method="POST">
-				<label>Nom</label><input id="lastName" name="lastName" class="input-txt" />
-				<label>Prénom</label><input id="name" name="name" class="input-txt" />
-				<label>Email</label><input type="email" id="email" name="email" class="input-txt" />
-				<label>Titre</label><input id="sujet" name="sujet" class="input-txt" />
+				<label>Nom</label><input id="lastName" name="lastName" class="input-txt" placeholder="Écrivez ici votre nom..." required />
+				<label>Prénom</label><input id="name" name="name" class="input-txt" placeholder="Écrivez ici votre prénom..." required />
+				<label>Email</label><input type="email" id="email" name="email" class="input-txt" placeholder="Écrivez ici votre email..." required />
+				<label>Titre</label><input id="sujet" name="sujet" class="input-txt" placeholder="Écrivez ici le sujet..." required />
 				<label>Message</label>
-				<textarea id="corp" name="corp"></textarea>
+				<textarea id="corp" name="corp" placeholder="Ecrivez votre message ici..."></textarea>
 				<button type="submit">Envoyer</button>
 			</form>
 		</div>
 
 	</section>
 	<section>
-		<div class="flex-col-center">
+		<div class="flex-row-center">
 			<div class="flex-col-center">
 				<h2>Mon CV</h2>
 				<div>
-					<a href="#">Lien vers mon CV</a>
+					<a href="images/cv.pdf">Lien vers mon CV</a>
 				</div>
 			</div>
 			<div class="flex-col-center">

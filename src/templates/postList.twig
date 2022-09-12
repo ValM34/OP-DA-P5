@@ -3,21 +3,23 @@
 	Tous les articles
 {% endblock %}
 {% block mainContent %}
-	<section class="blogPostsList">
+	<section>
 		<h1>Tous mes articles de blog</h1>
 
-		<div class="blogPostsList__container">
+		<div class="postList-container">
 			{% for post in postList %}
 				{% if post.status is same as('published') %}
-					<div class="blogPostsList__container__sub">
-						<div class="thumbnail-blogPostsList">
-							<img class="thumbnail-small" src="{{pathToPublic}}{{post.img_src}}"/>
-							<div>
-								<h3 class="thumbnail-blogPostsList__title">{{ post.title }}</h3>
-								<b class="thumbnail-blogPostsList__p">{{post.chapo}}</b>
-								<p class="thumbnail-blogPostsList__p">{{ post.updated_at }}</p>
-								<a class="thumbnail-blogPostsList__link" href="{{pathToPublic}}post/{{ post.id }}">En savoir plus</a>
-							</div>
+					<div class="post-container">
+						{% if post.img_src != null %}
+							<div class="background-img-postList" style="background-image: url('{{pathToPublic}}{{post.img_src}}');"></div>
+						{% else %}
+							<div class="background-img-postList" style="background-image: url('{{pathToPublic}}images/posts/background-base.jpg');"></div>
+						{% endif %}
+						<div class="flex-col-center post-infos">
+							<h3>{{ post.title }}</h3>
+							<p>{{post.chapo}}</p>
+							<p>{{ post.updated_at }}</p>
+							<a class="button" href="{{pathToPublic}}post/{{ post.id }}">En savoir plus</a>
 						</div>
 					</div>
 				{% endif %}
