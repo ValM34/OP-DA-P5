@@ -3,10 +3,16 @@
 	Modifier un article
 {% endblock %}
 {% block mainContent %}
-	<section>
+	<section id="section-admin-post">
 		<h1>Modifier un article</h1>
 		{% if errorMsg is same as(true) %}
 			<p class="error-msg">
+				<b>Erreur</b>
+				<br/>
+				Aucun champ de texte ne doit être vide
+				<br/>
+				ou
+				<br/>
 				Le transfert du fichier n'a pas fonctionné.
 				<br/>
 				Taille maximale autorisée : 3Mo
@@ -14,27 +20,31 @@
 				Extensions acceptées : .jpg, .jpeg, .png
 			</p>
 		{% endif %}
-		<div class="container-col-center">
-			<form action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" enctype="multipart/form-data" class="col-center">
-				<div>
+		<div class="flex-col-center">
+			{{ postList.name }}
+			{{ postList.surname }}
+			<form class="flex-col-center form-admin" action="{{pathToPublic}}{{adminLink}}/article/{{postList.id}}/modifier" method="POST" enctype="multipart/form-data" class="col-center">
+				<div class="select-container">
+					<label for="idUser">Modifier le rédacteur de l'article</label>
+					<select name="idUser" id="idUser">
+						<option value="{{postList.idUser}}" selected>{{postList.name}}-{{postList.surname}}-{{postList.idUser}}</option>
+						{% for adminUser in adminUsersList %}
+							{% if postList.idUser is same as(adminUser.id) is same as(false) %}
+								<option value="{{adminUser.id}}">{{adminUser.name}}-{{adminUser.surname}}-{{adminUser.id}}</option>
+							{% endif %}
+						{% endfor %}
+
+					</select>
+				</div>
 					<label for="postFile">Ajouter/Modifier une image</label>
 					<input name="postFile" id="postFile" type="file">
-				</div>
-				<div>
 					<label for="title">Titre de l'article</label>
 					<textarea name="title" id="title" class="postTitle-textarea">{{ postList.title }}</textarea>
-				</div>
-				<div>
 					<label for="chapo">Chapô</label>
 					<textarea name="chapo" id="chapo" class="chapo-textarea">{{ postList.chapo }}</textarea>
-				</div>
-				<div>
 					<label for="content">Contenu de l'article</label>
 					<textarea name="content" id="content" class="postContent-textarea">{{ postList.content }}</textarea>
-				</div>
-				<div>
 					<button type="submit">Valider</button>
-				</div>
 			</form>
 		</div>
 	</section>

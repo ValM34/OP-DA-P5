@@ -3,37 +3,46 @@
 	Ajouter un article
 {% endblock %}
 {% block mainContent %}
-	<section>
-        <h1>Ajouter un article</h1>
-        {% if errorMsg is same as(true) %}
-            <p class="error-msg">
-            Le transfert du fichier n'a pas fonctionné. <br />
-            Taille maximale autorisée : 3Mo <br />
-            Extensions acceptées : .jpg, .jpeg, .png
-            </p>
-        {% endif %}
-        <div class="container-col-center">
-            <form action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
-                <div>
-                    <label for="postFile">Ajouter une image</label>
-                    <input name="postFile" id="postFile" type="file">
-                </div>
-                <div>
-                    <label for="postTitle">Titre de l'article</label>
-                    <textarea name="postTitle" id="postTitle" class="postTitle-textarea"></textarea>
-                </div>
-                <div>
-                    <label for="postChapo">Chapô</label>
-                    <textarea name="postChapo" id="postChapo" class="postChapo-textarea"></textarea>
-                </div>
-                <div>
-                    <label for="postContent">Contenu de l'article</label>
-                    <textarea name="postContent" id="postContent" class="postContent-textarea"></textarea>
-                </div>
-                <div>
-                    <button type="submit">Valider</button>
-                </div>
-            </form>
-        </div>
-    </section>
+	<section id="section-admin-post">
+		<h1>Ajouter un article</h1>
+		{% if errorMsg is same as(true) %}
+			<p class="error-msg">
+				<b>Erreur</b>
+				<br/>
+				Aucun champ de texte ne doit être vide
+				<br/>
+				ou
+				<br/>
+				Le transfert du fichier n'a pas fonctionné.
+				<br/>
+				Taille maximale autorisée : 3Mo
+				<br/>
+				Extensions acceptées : .jpg, .jpeg, .png
+			</p>
+		{% endif %}
+		<div class="container-col-center">
+			<form class="flex-col-center form-admin" action="{{pathToPublic}}{{adminLink}}/article/ajouterunarticle/envoyer" method="POST" enctype="multipart/form-data" class="col-center">
+				<div class="select-container">
+					<label for="idUser">Modifier le rédacteur de l'article</label>
+					<select name="idUser" id="idUser">
+						<option value="{{userSession.id}}" selected>{{userSession.name}}-{{userSession.surname}}-{{userSession.id}}</option>
+						{% for adminUser in adminUsersList %}
+							{% if postList.idUser is same as(adminUser.id) is same as(false) %}
+								<option value="{{adminUser.id}}">{{adminUser.name}}-{{adminUser.surname}}-{{adminUser.id}}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+					<label for="postFile">Ajouter une image</label>
+					<input name="postFile" id="postFile" type="file">
+					<label for="postTitle">Titre de l'article</label>
+					<textarea name="postTitle" id="postTitle" class="postTitle-textarea"></textarea>
+					<label for="postChapo">Chapô</label>
+					<textarea name="postChapo" id="postChapo" class="postChapo-textarea"></textarea>
+					<label for="postContent">Contenu de l'article</label>
+					<textarea name="postContent" id="postContent" class="postContent-textarea"></textarea>
+					<button type="submit">Valider</button>
+			</form>
+		</div>
+	</section>
 {% endblock %}

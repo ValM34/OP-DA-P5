@@ -7,28 +7,40 @@
 		<link rel="stylesheet" href="{{pathToPublic}}style/css/style.css"/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 		<title>
 			{% block title %}
-			blog
+				blog
 			{% endblock %}
 		</title>
 	</head>
 
 	<body>
-		<header>
-			<div class="h-navlinks">
-					<a href="{{pathToPublic}}accueil" class="h-navlink title">Accueil</a>
-					<a href="{{pathToPublic}}touslesarticles" class="h-navlink title">Articles</a>
-					<a href="{{pathToPublic}}connexion" class="h-navlink title">Connexion</a>
-					<a href="{{pathToPublic}}inscription" class="h-navlink title">S'inscrire</a>
-					{% if userSession.logged is same as(true) %}<a href="{{pathToPublic}}deconnexion" class="h-navlink title">Déconnexion</a>{% endif %}
+		<header class="burger-header">
+			<div class="burger-header-btn-container">
+				<span class="burger-header-btn"></span>
+				<span class="burger-header-btn"></span>
+				<span class="burger-header-btn"></span>
 			</div>
+			<a href="{{pathToPublic}}accueil" class="h-navlink title hidden">Accueil</a>
+			<a href="{{pathToPublic}}touslesarticles" class="h-navlink title hidden">Articles</a>
+			{% if userSession.logged is same as(false) %}
+				<a href="{{pathToPublic}}connexion" class="h-navlink title hidden">Connexion</a>
+				<a href="{{pathToPublic}}inscription" class="h-navlink title hidden">S'inscrire</a>
+			{% endif %}
+			{% if userSession.logged is same as(true) %}
+				<a href="{{pathToPublic}}deconnexion" class="h-navlink title hidden">Déconnexion</a>
+			{% endif %}
 		</header>
 		{% block mainContent %}{% endblock %}
-		<footer>{% if userSession.role is same as('admin') %}<a href="{{pathToPublic}}{{userSession.adminLink}}/touslesarticles">Administration</a>{% endif %}</footer>
+		<footer>
+			{% if userSession.role is same as('admin') %}
+				<a class="button" href="{{pathToPublic}}{{userSession.adminLink}}">Administration</a>
+			{% endif %}
+		</footer>
 
 		{% block scriptJs %}{% endblock %}
+		<script src="{{pathToPublic}}js/base.js"></script>
 	</body>
 
 </html>

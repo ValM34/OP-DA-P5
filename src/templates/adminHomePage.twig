@@ -3,9 +3,9 @@
 	Administration
 {% endblock %}
 {% block mainContent %}
-	<section>
+	<section class="flex-col-center">
 		<h1>Administration</h1>
-		<div><a href="{{pathToPublic}}{{adminLink}}/touslesarticles">Tous les articles</a></div>
-		<div><a href="{{pathToPublic}}{{adminLink}}/commentaires">Tous les commentaires</a></div>
+		<a class="button" href="{{pathToPublic}}{{adminLink}}/touslesarticles">Tous les articles</a>
+		<a class="button" href="{{pathToPublic}}{{adminLink}}/commentaires">Tous les commentaires</a>
 	</section>
 {% endblock %}
