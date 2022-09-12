@@ -18,8 +18,6 @@ class PostController
     $this->helpers = new Helpers();
     $this->path = $this->helpers->pathToPublic();
     $this->globals = new Globals;
-    $this->post = new Post();
-    $this->comment = new Comment();
     $this->postManager = new PostManager();
   }
 
@@ -62,22 +60,6 @@ class PostController
     $id = $id_post_owner;
     $userSession = $this->helpers->isLogged();
     if (true === $userSession['logged']) {
-      // Manager ici 
-      /*
-      $getCommentsQuery = '
-                SELECT C.id, C.id_post, C.id_user, C.content, C.created_at, C.updated_at, U.name, U.surname
-                FROM comments C 
-                JOIN users U
-                ON C.id_user = U.id
-                WHERE id_post = :id_post
-                ORDER BY created_at;
-            ';
-      $getComments = $this->pdo->prepare($getCommentsQuery);
-      $getComments->execute([
-        'id_post' => $id
-      ]);
-      */
-      // Fin manager
       $id_user = $_SESSION['user']['id'];
       $id_post = $id;
       $post = $this->globals->getPOST('content');

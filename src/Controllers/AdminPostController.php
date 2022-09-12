@@ -23,8 +23,6 @@ class AdminPostController
     $this->helpers = new Helpers();
     $this->helpers->isAdmin();
     $this->path = $this->helpers->pathToPublic();
-    $this->post = new Post();
-    $this->comment = new Comment();
     $this->adminPostManager = new AdminPostManager();
   }
 
@@ -223,7 +221,6 @@ class AdminPostController
     array_shift($arrayIdPosts);
     $arrayImgSrc = $this->adminPostManager->deleteSelectedComments($arrayIdPosts);
     foreach ($arrayImgSrc as $imgToDelete) {
-      var_dump($imgToDelete);
       $pathToDeleteImg = __DIR__ . '/../../public/' . $imgToDelete;
       unlink($pathToDeleteImg);
     }

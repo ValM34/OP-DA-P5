@@ -2,12 +2,8 @@
 
 namespace Managers;
 
-use PDO;
-use PDOException;
 use Models\Post;
-use Models\Comment;
 use Models\ConnectDb;
-use Globals\Globals;
 
 class PostManager
 {
@@ -21,6 +17,7 @@ class PostManager
     $this->post = new Post();
   }
 
+  // Séléctionne tous les posts classés du plus récent au plus ancien
   public function readAll()
   {
     $this->pdoStatement = $this->pdo->prepare('SELECT * FROM blog_posts ORDER BY created_at DESC');
@@ -30,6 +27,7 @@ class PostManager
     return $allPost;
   }
 
+  // Récupère les informations d'un post en fonction de son id
   public function readOnePost(?int $id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('
@@ -45,6 +43,7 @@ class PostManager
     return $post;
   }
 
+  // Renvoie les commentaires (et les informations des utilisateurs qui ont écrit les commentaire) d'un post en fonction de son id_post
   public function readComments(?int $id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('
@@ -61,6 +60,7 @@ class PostManager
     return $comments;
   }
 
+  // Ajoute un commentaire en BDD
   public function addComment(?int $id_post, ?int $id_user, ?string $content)
   {
     $this->pdoStatement = $this->pdo->prepare(

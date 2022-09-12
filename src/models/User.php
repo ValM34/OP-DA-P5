@@ -11,16 +11,6 @@ class User
   private $password;
   private $role;
 
-  public function __construct($id = null, $name = null, $surname = null, $email = null, $password = null, $role = null)
-  {
-    $this->id = $id;
-    $this->name = $name;
-    $this->surname = $surname;
-    $this->email = $email;
-    $this->password = $password;
-    $this->role = $role;
-  }
-
   public function getId(): ?int
   {
     return $this->id;

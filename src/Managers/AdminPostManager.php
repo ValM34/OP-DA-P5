@@ -2,12 +2,8 @@
 
 namespace Managers;
 
-use PDO;
-use PDOException;
 use Models\Post;
-use Models\Comment;
 use Models\ConnectDb;
-use Globals\Globals;
 
 class AdminPostManager
 {
@@ -21,6 +17,7 @@ class AdminPostManager
     $this->post = new Post();
   }
 
+  // Récupère tous les posts en BDD classés du plus récent au plus ancien
   public function readAllPosts()
   {
     $this->pdoStatement = $this->pdo->prepare('SELECT * FROM blog_posts ORDER BY created_at desc');
@@ -30,6 +27,7 @@ class AdminPostManager
     return $allPost;
   }
 
+  // Change le statut d'un post en "hidden" en BDD
   public function hidePost($id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE blog_posts SET status = "hidden" WHERE id = :id');
@@ -38,6 +36,7 @@ class AdminPostManager
     return;
   }
 
+  // Change le statut d'un post en "published" en BDD
   public function publishPost($id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE blog_posts SET status = "published" WHERE id = :id');
@@ -46,6 +45,7 @@ class AdminPostManager
     return;
   }
 
+  // Retourne le chemin vers l'image séléctionnée
   public function getImgSrc($id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('SELECT img_src FROM blog_posts WHERE id = :id');
@@ -55,6 +55,7 @@ class AdminPostManager
     return $imgSrc['img_src'];
   }
 
+  // Supprime le post en BDD en fonction de l'id séléctionné
   public function deletePost($id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('DELETE FROM blog_posts WHERE id = :id');
@@ -63,6 +64,7 @@ class AdminPostManager
     return;
   }
 
+  // Récupère tous les utilisateurs ayant le rôle "admin" en BDD
   public function getAdmins()
   {
     $this->pdoStatement = $this->pdo->prepare('SELECT id, name, surname FROM users WHERE role = "admin"');
@@ -72,6 +74,7 @@ class AdminPostManager
     return $admins;
   }
 
+  // Ajoute un post en BDD
   public function addPost(?int $idUser, ?string $title, ?string $content, ?string $chapo, ?string $src)
   {
     $this->pdoStatement = $this->pdo->prepare('INSERT INTO blog_posts (idUser, title, content, chapo, img_src) VALUES (:idUser, :title, :content, :chapo, :img_src)');
@@ -86,6 +89,7 @@ class AdminPostManager
     return;
   }
 
+  // Met à jour un post en BDD
   public function updatePost(?int $id_post, ?int $idUser, ?string $title, ?string $content, ?string $chapo, ?string $src)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE blog_posts SET title = :title, content = :content, chapo = :chapo, idUser = :idUser, img_src = :img_src, updated_at = CURRENT_TIMESTAMP WHERE id = :id');
@@ -101,6 +105,7 @@ class AdminPostManager
     return;
   }
 
+  // Récupère les informations d'un post en fonction de l'id envoyé en argument
   public function getPostData(?int $id_post)
   {
     $this->pdoStatement = $this->pdo->prepare('
@@ -117,6 +122,7 @@ class AdminPostManager
     return $postData;
   }
 
+  // Change le statut des posts envoyés dans la méthode en "published" dans la BDD
   public function publishSelectedComments($arrayIdPosts)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE blog_posts SET status = "published" WHERE ID = :id_post');
@@ -129,6 +135,7 @@ class AdminPostManager
     return;
   }
 
+  // Change le statut des posts envoyés dans la méthode en "hidden" dans la BDD
   public function hideSelectedComments($arrayIdPosts)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE blog_posts SET status = "hidden" WHERE ID = :id_post');
@@ -141,6 +148,7 @@ class AdminPostManager
     return;
   }
 
+  // Supprimme les posts envoyés dans la méthode de la BDD
   public function deleteSelectedComments($arrayIdPosts)
   {
     $this->pdoStatement = $this->pdo->prepare('DELETE FROM blog_posts WHERE ID = :id_post');
@@ -160,6 +168,7 @@ class AdminPostManager
     return $arrayImgSrc;
   }
 
+  // Récupère tous les commentaires de la BDD classés du plus récent au plus ancien
   public function readAllComments()
   {
     $this->pdoStatement = $this->pdo->prepare('
@@ -175,6 +184,7 @@ class AdminPostManager
     return $allComments;
   }
 
+  // Change le statut du commentaire envoyé dans la méthode en "published" de la BDD
   public function publishComment($id_comment)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE comments SET status = "published" WHERE id = :id');
@@ -183,6 +193,7 @@ class AdminPostManager
     return;
   }
 
+  // Change le statut du commentaire envoyé dans la méthode en "rejected" de la BDD
   public function rejectComment($id_comment)
   {
     $this->pdoStatement = $this->pdo->prepare('UPDATE comments SET status = "rejected" WHERE id = :id');
@@ -191,6 +202,7 @@ class AdminPostManager
     return;
   }
 
+  // Supprime le commentaire envoyé dans la méthode de la BDD
   public function deleteComment($id_comment)
   {
     $this->pdoStatement = $this->pdo->prepare('DELETE from comments WHERE id = :id');

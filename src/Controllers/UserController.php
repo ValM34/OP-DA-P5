@@ -102,7 +102,6 @@ class UserController
     $post['password'] = htmlspecialchars($this->globals->getPOST('password'), FILTER_FLAG_NO_ENCODE_QUOTES);
     // Password: il faut au minimum 8 caractères dont 1 chiffre, 1 lettre minuscule et une lettre majuscule
     $passwordRegex = preg_match('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/', $post['password']);
-
     $post['name'] = htmlspecialchars($this->globals->getPOST('name'), FILTER_FLAG_NO_ENCODE_QUOTES);
     $post['surname'] = htmlspecialchars($this->globals->getPOST('surname'), FILTER_FLAG_NO_ENCODE_QUOTES);
     if (!isset($post['name'])) {
@@ -167,8 +166,6 @@ class UserController
     }
   }
 
-
-
   // Affiche le formulaire de connexion
   public function displayConnexion()
   {
@@ -194,7 +191,6 @@ class UserController
     $user->setPassword($post['password']);
     $email = $user->getEmail();
     $password = $user->getPassword();
-
     include '../src/templates/configTwig.php';
     if (null !== $email || null !== $password) {
       $verifyEmail = $this->verifyEmail();
@@ -249,7 +245,6 @@ class UserController
   {
     $arrayOfUsers = $this->userManager->readAll();
     $userData = [];
-    // var_dump($arrayOfUsers);
     foreach ($arrayOfUsers[0] as $user) {
       $this->user
         ->setId($user['id'])
@@ -258,11 +253,7 @@ class UserController
         ->setEmail($user['email'])
         ->setPassword($user['password'])
         ->setRole($user['role']);
-
-      // var_dump($this->user);
-      // $userData[] = $this->user;
       array_push($userData, clone $this->user);
-      var_dump($userData);
     }
 
     include '../src/templates/configTwig.php';

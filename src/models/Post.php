@@ -4,24 +4,12 @@ namespace Models;
 
 class Post
 {
-  private $post = null;
-  //
   private $id;
   private $id_post;
   private $id_user;
   private $content;
   private $created_at;
   private $updated_at;
-
-  public function __construct($id = null, $id_post = null, $id_user = null, $content = null, $created_at = null, $updated_at = null)
-  {
-    $this->id = $id;
-    $this->id = $id_post;
-    $this->id = $id_user;
-    $this->id = $content;
-    $this->id = $created_at;
-    $this->id = $updated_at;
-  }
 
   public function getId()
   {
@@ -99,13 +87,4 @@ class Post
 
     return $this;
   }
-
-  public function setPost($array): self
-  {
-    $this->post = $array;
-
-    return $this;
-  }
-
-  
 }
